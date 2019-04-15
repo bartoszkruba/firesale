@@ -1,5 +1,6 @@
 <template>
-  <HelloWorld />
+  <p>sdffssdfsdffdsdsf</p>
+<!--  <HelloWorld />-->
 </template>
 
 <script>
