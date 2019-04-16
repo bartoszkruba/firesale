@@ -21,15 +21,19 @@
 </template>
 
 <script>
+    import test from './services/test'
+
     export default {
         name: 'App',
-        components: {
-
-        },
+        components: {},
         data() {
             return {
                 //
             }
+        },
+        async created() {
+            let response = await test.test("Hello");
+            console.log(response.data);
         }
     }
 </script>
