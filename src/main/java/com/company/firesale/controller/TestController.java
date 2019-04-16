@@ -7,12 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/test")
+@RequestMapping("/api/")
 public class TestController {
 
-    @GetMapping("/{testString}")
+    @GetMapping("/test/{testString}")
     public TestJsonClass test(@PathVariable String testString) {
         return new TestJsonClass(testString);
+    }
+
+    @GetMapping("/login/success")
+    public boolean loginSucces() {
+        return true;
     }
 
 }
