@@ -1,4 +1,4 @@
-package com.company.firesale.entities;
+package com.company.firesale.json_classes;
 
 public class TestJsonClass {
 
