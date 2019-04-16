@@ -1,7 +1,5 @@
 <template>
     <v-app>
-
-
         <v-content>
             <router-view/>
             <Toolbar></Toolbar>
@@ -24,3 +22,12 @@
         }
     }
 </script>
+
+<style>
+    * {
+        font-family: "Segoe UI", arial, sans-serif;
+    }
+    .v-content{
+        background-image: linear-gradient(white, grey);
+    }
+</style>
