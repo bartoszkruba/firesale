@@ -10,8 +10,7 @@ public class ActionEntityServis {
 
     @Autowired
     ActionEntityRepository actionEntityRepository;
-
-
+    
     public ActionEntity createActionEntity(){
         ActionEntity actionEntity = new ActionEntity();
         actionEntityRepository.save(actionEntity);

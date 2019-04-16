@@ -12,12 +12,12 @@ public class ActionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
-    private final String title = null;
-    private final String description = null;
-    private final Date opendAt = null;
-    private final Date closeAt = null;
-    private final double startUpPrice = 0;
-    private final double buyOutPrice = 0;
+    private String title = null;
+    private String description = null;
+    private Date openAt = null;
+    private Date closeAt = null;
+    private double startUpPrice = 0;
+    private double buyOutPrice = 0;
 
     private enum ActionStatus{ Open, Close}
     @Enumerated(value = EnumType.STRING)
@@ -39,8 +39,8 @@ public class ActionEntity {
         return description;
     }
 
-    public Date getOpendAt() {
-        return opendAt;
+    public Date getOpenAt() {
+        return openAt;
     }
 
     public Date getCloseAt() {
@@ -55,9 +55,35 @@ public class ActionEntity {
         return buyOutPrice;
     }
 
-    public String getStatus() {
-        return this.status.name();
+    public ActionStatus getStatus() {
+        return status;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOpenAt(Date openAt) {
+        this.openAt = openAt;
+    }
+
+    public void setCloseAt(Date closeAt) {
+        this.closeAt = closeAt;
+    }
+
+    public void setStartUpPrice(double startUpPrice) {
+        this.startUpPrice = startUpPrice;
+    }
+
+    public void setBuyOutPrice(double buyOutPrice) {
+        this.buyOutPrice = buyOutPrice;
+    }
+
+    public void setStatus(ActionStatus status) {
+        this.status = status;
+    }
 }
