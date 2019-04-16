@@ -1,5 +1,7 @@
 package com.company.firesale.config;
 
+import com.company.firesale.config.handlers.MySavedRequestAwareAuthenticationSuccessHandler;
+import com.company.firesale.config.handlers.MySimpleUrlAuthenticationFailureHandler;
 import com.company.firesale.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -31,14 +33,13 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
+        http.authorizeRequests()
+                .antMatchers("/api/test/**").hasRole("USER")
+                .and()
+                .csrf()
                 .disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/test/**")
-                .hasRole("USER")
                 .and()
                 .formLogin().permitAll()
                 .successHandler(mySuccesHandler)
@@ -51,7 +52,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
 
 
-    // pictures should lie in assets
+    // pictures should be in assets
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/assets/**");

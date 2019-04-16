@@ -1,4 +1,4 @@
-package com.company.firesale.config;
+package com.company.firesale.config.handlers;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
