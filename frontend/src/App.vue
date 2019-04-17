@@ -28,6 +28,6 @@
         font-family: "Segoe UI", arial, sans-serif;
     }
     .v-content{
-        background-image: linear-gradient(white, grey);
+        background-color: #BDBDBD;
     }
 </style>

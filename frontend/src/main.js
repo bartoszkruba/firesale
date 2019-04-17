@@ -11,9 +11,10 @@ import colors from 'vuetify/es5/util/colors'
 
 Vue.use(Vuetify, {
     theme: {
-        primary: colors.amber.lighten1, // #E53935
+        primary: colors.amber, // #E53935
         secondary: colors.orange.lighten4, // #FFCDD2
-        accent: colors.indigo.base // #3F51B5
+        accent: colors.indigo.base, // #3F51B5
+        background: colors.grey.lighten1
     }
 });
 
