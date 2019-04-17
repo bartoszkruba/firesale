@@ -1,7 +1,7 @@
-package com.company.firesale.config.Servis;
+package com.company.firesale.service;
 
-import com.company.firesale.config.Interface.ActionEntityRepository;
-import com.company.firesale.config.Tabeller.ActionEntity;
+import com.company.firesale.entity.Auction;
+import com.company.firesale.repositories.AuctionEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,26 +10,27 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ActionEntityServis {
+public class AuctionService {
+
+    private AuctionEntityRepository actionEntityRepository;
 
     @Autowired
-    ActionEntityRepository actionEntityRepository;
-
-    public ActionEntityServis() {
+    public AuctionService(AuctionEntityRepository actionEntityRepository) {
+        this.actionEntityRepository = actionEntityRepository;
     }
 
-    public Page<ActionEntity> findTenByDate(int page) {
+    public Page<Auction> findTenByDate(int page) {
         Pageable PageWithTen = PageRequest.of(page, 10, Sort.by("closeAt"));
         return actionEntityRepository.findAll(PageWithTen);
     }
 
-    public Page<ActionEntity> findTenById(int page) {
+    public Page<Auction> findTenById(int page) {
         Pageable PageWithTen = PageRequest.of(page, 10);
         return actionEntityRepository.findAll(PageWithTen);
     }
 
-    public ActionEntity createActionEntity() {
-        ActionEntity actionEntity = new ActionEntity();
+    public Auction createActionEntity() {
+        Auction actionEntity = new Auction();
         actionEntityRepository.save(actionEntity);
         return actionEntity;
     }

@@ -1,34 +1,31 @@
-package com.company.firesale.config.Tabeller;
-
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-import org.aspectj.apache.bcel.classfile.Module;
+package com.company.firesale.entity;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class ActionEntity {
+public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private long id;
     private String title = null;
+    @Column(columnDefinition = "TEXT")
     private String description = null;
-    private Date openAt = null;
-    private Date closeAt = null;
+    private Date openedAt = null;
+    private Date closingTime = null;
     private double startUpPrice = 0;
     private double buyOutPrice = 0;
 
-    private enum ActionStatus{ Open, Close}
     @Enumerated(value = EnumType.STRING)
-    private ActionStatus status;
+    private AuctionStatus status;
 
 
-    public ActionEntity(){
+    public Auction() {
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public String getTitle() {
@@ -39,12 +36,12 @@ public class ActionEntity {
         return description;
     }
 
-    public Date getOpenAt() {
-        return openAt;
+    public Date getOpenedAt() {
+        return openedAt;
     }
 
-    public Date getCloseAt() {
-        return closeAt;
+    public Date getClosingTime() {
+        return closingTime;
     }
 
     public double getStartUpPrice() {
@@ -55,7 +52,7 @@ public class ActionEntity {
         return buyOutPrice;
     }
 
-    public ActionStatus getStatus() {
+    public AuctionStatus getStatus() {
         return status;
     }
 
@@ -67,12 +64,12 @@ public class ActionEntity {
         this.description = description;
     }
 
-    public void setOpenAt(Date openAt) {
-        this.openAt = openAt;
+    public void setOpenedAt(Date openedAt) {
+        this.openedAt = openedAt;
     }
 
-    public void setCloseAt(Date closeAt) {
-        this.closeAt = closeAt;
+    public void setClosingTime(Date closingTime) {
+        this.closingTime = closingTime;
     }
 
     public void setStartUpPrice(double startUpPrice) {
@@ -83,7 +80,7 @@ public class ActionEntity {
         this.buyOutPrice = buyOutPrice;
     }
 
-    public void setStatus(ActionStatus status) {
+    public void setStatus(AuctionStatus status) {
         this.status = status;
     }
 }
