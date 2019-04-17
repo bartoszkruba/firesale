@@ -13,6 +13,7 @@ public class AuctionFilterController {
 
     @GetMapping()
     public Map getFilteredAuctions(@RequestParam Map<String,String> allParams){
+        System.out.println(allParams);
         return allParams;
     }
 
