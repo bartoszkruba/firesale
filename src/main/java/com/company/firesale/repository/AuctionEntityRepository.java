@@ -1,4 +1,4 @@
-package com.company.firesale.repositories;
+package com.company.firesale.repository;
 
 import com.company.firesale.entity.Auction;
 import org.springframework.data.repository.PagingAndSortingRepository;

@@ -1,4 +1,4 @@
-package com.company.firesale.controllers;
+package com.company.firesale.controller;
 
 import com.company.firesale.entity.Auction;
 import com.company.firesale.service.AuctionService;

@@ -1,7 +1,7 @@
 package com.company.firesale.service;
 
 import com.company.firesale.entity.Auction;
-import com.company.firesale.repositories.AuctionEntityRepository;
+import com.company.firesale.repository.AuctionEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
