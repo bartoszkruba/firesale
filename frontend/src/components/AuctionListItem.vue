@@ -12,7 +12,7 @@
 
         </div>
         <v-btn id="buybutton"
-               color="#ffc400"
+               color="primary"
                absolute
                bottom
                right
@@ -103,7 +103,6 @@
     }
 
     #buybutton {
-        background-color: #FFE600;;
         color: black;
         margin-bottom: 10px;
     }
