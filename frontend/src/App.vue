@@ -21,6 +21,8 @@
 
 <script>
 
+    import auth from './services/authentication'
+
     export default {
         name: 'App',
         components: {},
@@ -28,6 +30,12 @@
             return {}
         },
         async created() {
+
+            // true false
+            auth.login("john69", "password1234");
+
+            // true false
+            auth.logout();
         }
     }
 </script>
