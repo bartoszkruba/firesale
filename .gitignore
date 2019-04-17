@@ -1,6 +1,7 @@
 HELP.md
 /target/
 /src/msin/resources/static
+/src/msin/resources/application.propertie
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
