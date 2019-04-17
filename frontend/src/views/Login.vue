@@ -21,9 +21,10 @@
                                         </v-alert>
                                         <v-text-field prepend-icon="person" name="usename" label="Username"
                                                       type="text" color="primary" v-model="username"
-                                                      @keydown.enter="login"></v-text-field>
+                                                      @keydown.enter="login"
+                                                      :error-messages="usernameError"></v-text-field>
                                         <v-text-field prepend-icon="lock" name="password" label="Password"
-                                                      type="password" color="primary"
+                                                      type="password" color="primary" :error-messages="passwordError"
                                                       v-model="password" @keydown.enter="login"></v-text-field>
                                     </v-form>
                                 </v-card-text>
@@ -59,19 +60,41 @@
             return {
                 username: "",
                 password: "",
-                usernameError: "Username and password doesn't match",
+                usernameError: "",
+                passwordError: "",
                 showError: false
             }
         }
         ,
         methods: {
             async login() {
-                let status = await auth.login(this.username, this.password);
-                this.showError = !status;
-                if (status) {
-                    this.$store.commit("setLoggedIn", true);
-                    this.$router.push("/")
+                this.showError = false;
+                this.usernameError = "";
+                this.passwordError = "";
+
+                if (this.validateUsername() && this.validatePassword()) {
+                    let status = await auth.login(this.username, this.password);
+                    this.showError = !status;
+                    if (status) {
+                        this.$store.commit("setLoggedIn", true);
+                        this.$router.push("/")
+                    }
                 }
+
+            },
+            validateUsername() {
+                if (this.username === "") {
+                    this.usernameError = "Enter your username";
+                    return false;
+                }
+                return true;
+            },
+            validatePassword() {
+                if (this.password === "") {
+                    this.passwordError = "Enter your password";
+                    return false;
+                }
+                return true;
             }
         }
     }
