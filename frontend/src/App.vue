@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import auth from './services/authentication';
 
     export default {
         name: 'App',
@@ -28,6 +29,7 @@
             return {}
         },
         async created() {
+            console.log(auth.login("john69", "password1234"));
         }
     }
 </script>
