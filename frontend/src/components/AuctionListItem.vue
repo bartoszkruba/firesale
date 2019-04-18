@@ -12,11 +12,11 @@
 
         </div>
         <v-btn id="buybutton"
-                color="#ffc400"
-                absolute
-                bottom
-                right
-                fab
+               color="primary"
+               absolute
+               bottom
+               right
+               fab
 
         >
             <v-icon>attach_money</v-icon>
@@ -62,42 +62,47 @@
         max-width: 25%;
     }
 
-        #auctionimg {
-            object-fit: cover;
-            height: 100%;
-            width: auto;
-            max-width: 100%;
-        }
+    #auctionimg {
+        object-fit: cover;
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+    }
+
     #auctiontextcontent {
         display: flex;
         flex-direction: column;
         padding: 5px;
     }
-        #auctiontitle{
-            font-family: "Segoe UI";
-            text-align: left;
-            font-size: medium;
-        }
-        #auctiondescription {
-            font-family: "Segoe UI";
-            text-align: left;
-            font-size: small;
-            padding-bottom: 5px;
-        }
-        #auctionprice {
-            font-family: "Segoe UI";
-            text-align: left;
-            font-size: small;
-            padding-bottom: 5px;
-        }
+
+    #auctiontitle {
+        font-family: "Segoe UI";
+        text-align: left;
+        font-size: medium;
+    }
+
+    #auctiondescription {
+        font-family: "Segoe UI";
+        text-align: left;
+        font-size: small;
+        padding-bottom: 5px;
+    }
+
+    #auctionprice {
+        font-family: "Segoe UI";
+        text-align: left;
+        font-size: small;
+        padding-bottom: 5px;
+    }
+
     #auctiontime {
         font-family: "Segoe UI";
         text-align: left;
         font-size: small;
         padding-bottom: 5px;
     }
+
     #buybutton {
-        background-color: #FFE600;;
         color: black;
         margin-bottom: 10px;
     }

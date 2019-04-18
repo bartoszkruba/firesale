@@ -1,6 +1,8 @@
 package com.company.firesale.data.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -17,7 +19,21 @@ public class User {
     private String firstName;
     private String lastName;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
     public User() {
+    }
+
+    public User addRole(Role role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(role);
+        return this;
     }
 
     public Long getId() {
@@ -90,5 +106,13 @@ public class User {
     public User setLastName(String lastName) {
         this.lastName = lastName;
         return this;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

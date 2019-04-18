@@ -5,19 +5,20 @@ import AuctionService from '@/services/auctionsService'
 
 Vue.use(Vuex);
 
-
 export default new Vuex.Store({
     state: {
+        loggedIn: false,
         auctions: [],
         filterParams: {
             searchText: null,
             selectedCategory: 'All',
             maxPrice: null,
-            showAllAuctions: false,
-            showFilters: false
         }
     },
     mutations: {
+        setLoggedIn(state, value) {
+            this.state.loggedIn = value;
+        },
         setFilterParams(state, params){
             state.filterParams = params;
         },
@@ -29,7 +30,6 @@ export default new Vuex.Store({
         async setAuctions(context, params) {
             await AuctionService().getFilteredAuctions(params)
                 .then(response => context.commit('setAuctions', response.data));
-            console.log(this.state.auctions);
         },
     }
 })
