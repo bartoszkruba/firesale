@@ -2,23 +2,20 @@
     <div>
         <HelloWorld/>
         <AuctionsFilter/>
-        <AuctionListItem/>
-        <AuctionListItem/>
-        <AuctionListItem/>
-        <AuctionListItem/>
+        <AuctionList/>
     </div>
 </template>
 
 <script>
     import HelloWorld from '../components/HelloWorld'
-    import AuctionsFilter from '../components/AuctionsFilter'
-    import AuctionListItem from '../components/AuctionListItem'
+    import AuctionList from "../components/AuctionList";
+    import AuctionsFilter from "../components/AuctionsFilter";
 
     export default {
         components: {
-            HelloWorld,
             AuctionsFilter,
-            AuctionListItem
+            AuctionList,
+            HelloWorld,
         }
     }
 </script>
