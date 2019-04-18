@@ -9,7 +9,6 @@
 
 <script>
     import Toolbar from "./components/Toolbar";
-    import test from './services/test'
 
     export default {
         name: 'App',
@@ -23,8 +22,6 @@
             }
         },
         async created() {
-            console.log(await test.test());
-
         }
     }
 </script>

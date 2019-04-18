@@ -21,9 +21,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-
-        return userService.registerUser(user);
+    public ResponseEntity<String> registerNewUser(@RequestBody User user) {
+        return userService.registerNewUser(user);
     }
 
 }

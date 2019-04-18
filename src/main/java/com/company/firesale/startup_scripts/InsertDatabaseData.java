@@ -4,8 +4,7 @@ package com.company.firesale.startup_scripts;
 import com.company.firesale.data.entity.Role;
 import com.company.firesale.data.entity.User;
 import com.company.firesale.data.repository.RoleRepository;
-import com.company.firesale.data.repository.UserRepository;
-import com.company.firesale.service.MyUserDetailsService;
+import com.company.firesale.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -13,14 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class InsertDatabaseData implements CommandLineRunner {
 
-    private UserRepository userRepository;
-    private MyUserDetailsService myUserDetailsService;
+    private UserService userService;
     private RoleRepository roleRepository;
 
     @Autowired
-    public InsertDatabaseData(UserRepository userRepository, MyUserDetailsService userDetailsService, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.myUserDetailsService = userDetailsService;
+    public InsertDatabaseData(UserService userService, RoleRepository roleRepository) {
+        this.userService = userService;
         this.roleRepository = roleRepository;
     }
 
@@ -44,7 +41,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .addRole(adminRole)
                 .addRole(userRole);
 
-        myUserDetailsService.addUser(user1);
+        userService.registerNewUser(user1);
 
         User user2 = new User();
         user2.setUsername("mary111")
@@ -56,7 +53,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setPhoneNumber("(277)-505-2351")
                 .addRole(userRole);
 
-        myUserDetailsService.addUser(user2);
+        userService.registerNewUser(user2);
 
         User user3 = new User();
         user3.setUsername("ChrisL")
@@ -67,7 +64,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setLastName("Lewis")
                 .setPhoneNumber("(893)-121-7525")
                 .addRole(userRole);
-        myUserDetailsService.addUser(user3);
+        userService.registerNewUser(user3);
 
         User user4 = new User();
         user4.setUsername("Morenorator")
@@ -78,7 +75,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setLastName("Moreno")
                 .setPhoneNumber("(247)-425-7475")
                 .addRole(userRole);
-        myUserDetailsService.addUser(user4);
+        userService.registerNewUser(user4);
 
         User user5 = new User();
         user5.setUsername("Cindirella")
@@ -89,7 +86,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setLastName("Stephens")
                 .setPhoneNumber("(272)-121-1765")
                 .addRole(userRole);
-        myUserDetailsService.addUser(user5);
+        userService.registerNewUser(user5);
 
     }
 }
