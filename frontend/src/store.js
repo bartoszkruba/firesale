@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import AuctionService from '@/services/auctionsService'
+
 
 Vue.use(Vuex);
 
+
 export default new Vuex.Store({
     state: {
+        auctions: [],
         filterParams: {
             searchText: null,
             selectedCategory: 'All',
@@ -16,7 +20,16 @@ export default new Vuex.Store({
     mutations: {
         setFilterParams(state, params){
             state.filterParams = params;
+        },
+        setAuctions(state, params){
+            state.auctions = params;
         }
     },
-    actions: {}
+    actions: {
+        async setAuctions(context, params) {
+            await AuctionService().getFilteredAuctions(params)
+                .then(response => context.commit('setAuctions', response.data));
+            console.log(this.state.auctions);
+        },
+    }
 })

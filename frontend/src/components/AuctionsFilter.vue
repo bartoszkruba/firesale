@@ -13,7 +13,8 @@
                         </v-flex>
                     </v-container>
                     <transition name="fade">
-                        <v-container id="filters-container" xs12 pa-0 v-show="this.$store.state.filterParams.showFilters">
+                        <v-container id="filters-container" xs12 pa-0
+                                     v-show="this.$store.state.filterParams.showFilters">
                             <v-layout row wrap>
                                 <v-container id="filter-slider" xs12 pa-0>
                                     <v-flex xs8 sm10 md11>
@@ -92,30 +93,29 @@
         methods: {
             clickSearch() {
                 this.$store.commit('setFilterParams', this.filterParams);
+                this.$store.dispatch('setAuctions', this.generateFilterUrl());
                 this.$router.push(this.generateFilterUrl());
-                // console.log(this.$store.state.filterParams);
-                // Now fetch auctionItems from backend
             },
             toggleFilters() {
                 this.$store.state.filterParams.showFilters = !this.$store.state.filterParams.showFilters;
-                console.log(this.$store.state.filterParams.showFilters);
             },
             generateFilterUrl() {
                 let url = ['auctions?'];
+                let urlParams = [];
                 if (this.filterParams.searchText != null) {
-                    url.push('title=' + this.filterParams.searchText);
+                    urlParams.push('title=' + this.filterParams.searchText);
                 }
-                if (this.filterParams.maxPrice > 0 ) {
-                    url.push('price=' + this.filterParams.maxPrice);
+                if (this.filterParams.maxPrice > 0) {
+                    urlParams.push('price=' + this.filterParams.maxPrice);
                 }
                 if (this.filterParams.selectedCategory !== 'All') {
-                    url.push('category=' + this.filterParams.selectedCategory);
+                    urlParams.push('category=' + this.filterParams.selectedCategory);
                 }
                 if (this.filterParams.showAllAuctions === true) {
-                    url.push('showAll=' + this.filterParams.showAllAuctions);
+                    urlParams.push('showAll=' + this.filterParams.showAllAuctions);
                 }
-                url = url.join('&');
-                return url;
+                urlParams = urlParams.join('&');
+                return url + urlParams;
             }
         }
     }
