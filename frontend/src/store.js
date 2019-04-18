@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         loggedIn: false,
+        showFiltersOnHome: false,
         auctions: [],
         filterParams: {
             searchText: null,
@@ -19,10 +20,13 @@ export default new Vuex.Store({
         setLoggedIn(state, value) {
             this.state.loggedIn = value;
         },
-        setFilterParams(state, params){
+        setFilterParams(state, params) {
             state.filterParams = params;
         },
-        setAuctions(state, params){
+        toggleShowFiltersOnHome(state) {
+            state.showFiltersOnHome = !state.showFiltersOnHome;
+        },
+        setAuctions(state, params) {
             state.auctions = params;
         }
     },

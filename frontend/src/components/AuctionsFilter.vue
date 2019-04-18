@@ -14,7 +14,7 @@
                     </v-container>
                     <transition name="fade">
                         <v-container id="filters-container" xs12 pa-0
-                                     v-show="this.$store.state.filterParams.showFilters">
+                                     v-show="this.$store.state.showFiltersOnHome">
                             <v-layout row wrap>
                                 <v-container id="filter-slider" xs12 pa-0>
                                     <v-flex xs8 sm10 md11>
@@ -87,7 +87,7 @@
                     v => v != null && v.length >= 3 || 'Enter at least 3 characters'
                 ],
                 items: ['All', 'Electronics', 'Cars'], //Fetch from database
-                showFilters: this.$store.state.filterParams.showFilters,
+                showFilters: this.$store.state.showFiltersOnHome,
             };
         },
         methods: {
@@ -97,7 +97,7 @@
                 this.$router.push(this.generateFilterUrl());
             },
             toggleFilters() {
-                this.$store.state.filterParams.showFilters = !this.$store.state.filterParams.showFilters;
+                this.$store.commit('toggleShowFiltersOnHome');
             },
             generateFilterUrl() {
                 let url = ['auctions?'];

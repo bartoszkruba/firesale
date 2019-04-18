@@ -12,7 +12,7 @@ import java.util.Map;
 public class AuctionFilterController {
 
     @GetMapping()
-    public Map getFilteredAuctions(@RequestParam Map<String,String> allParams){
+    public Map getFilteredAuctions(@RequestParam Map<String, String> allParams) {
         return allParams;
     }
 
