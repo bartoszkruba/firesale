@@ -77,6 +77,7 @@
 </template>
 
 <script>
+
     export default {
         name: "AuctionsFilter",
         data() {
@@ -86,7 +87,7 @@
                 searchTextRules: [
                     v => v != null && v.length >= 3 || 'Enter at least 3 characters'
                 ],
-                items: ['All', 'Electronics', 'Cars'], //Fetch from database
+                items: this.$store.state.categories,
                 showFilters: this.$store.state.showFiltersOnHome,
             };
         },
@@ -97,6 +98,7 @@
                 this.$router.push(this.generateFilterUrl());
             },
             toggleFilters() {
+                console.log(this.$store.state.categories);
                 this.$store.commit('toggleShowFiltersOnHome');
             },
             generateFilterUrl() {
@@ -117,6 +119,11 @@
                 urlParams = urlParams.join('&');
                 return url + urlParams;
             }
+        },
+        created() {
+            // console.log(auth.login("john69", "password1234"));
+            this.$store.dispatch('getCategories', 'categories');
+            console.log(this.$store.state.categories);
         }
     }
 </script>

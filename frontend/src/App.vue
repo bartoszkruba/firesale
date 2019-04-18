@@ -21,7 +21,7 @@ import auth from './services/authentication';
                 //
             }
         },
-        async created() {
+        created() {
             console.log(auth.login("john69", "password1234"));
         }
     }

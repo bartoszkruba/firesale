@@ -1,8 +1,10 @@
 package com.company.firesale.startup_scripts;
 
 
+import com.company.firesale.data.entity.Category;
 import com.company.firesale.data.entity.Role;
 import com.company.firesale.data.entity.User;
+import com.company.firesale.data.repository.CategoryRepository;
 import com.company.firesale.data.repository.RoleRepository;
 import com.company.firesale.data.repository.UserRepository;
 import com.company.firesale.service.MyUserDetailsService;
@@ -10,29 +12,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.xml.catalog.Catalog;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class InsertDatabaseData implements CommandLineRunner {
 
     private UserRepository userRepository;
     private MyUserDetailsService myUserDetailsService;
     private RoleRepository roleRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    public InsertDatabaseData(UserRepository userRepository, MyUserDetailsService userDetailsService, RoleRepository roleRepository) {
+    public InsertDatabaseData(UserRepository userRepository, MyUserDetailsService userDetailsService, RoleRepository roleRepository, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.myUserDetailsService = userDetailsService;
         this.roleRepository = roleRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
+        //Roles
         Role adminRole = new Role("ADMIN");
         Role userRole = new Role("USER");
 
         roleRepository.save(adminRole);
         roleRepository.save(userRole);
 
+        //Categories
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category("All"));
+        categories.add(new Category("Cars"));
+        categories.add(new Category("Electronics"));
+        categories.add(new Category("Furniture"));
+
+        categories.forEach(category -> categoryRepository.save(category));
+
+
+        //Users
         User user1 = new User();
         user1.setUsername("john69")
                 .setPassword("password1234")

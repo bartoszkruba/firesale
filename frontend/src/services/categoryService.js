@@ -2,7 +2,7 @@ import Api from '@/services/Api';
 
 export default () => {
     return {
-        getFilteredAuctions(params) {
+        getCategories(params) {
             return Api().get(params);
         }
     }
