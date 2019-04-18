@@ -9,6 +9,8 @@
 
 <script>
     import Toolbar from "./components/Toolbar";
+    import test from './services/test'
+
     export default {
         name: 'App',
         components: {
@@ -19,6 +21,10 @@
             return {
                 //
             }
+        },
+        async created() {
+            console.log(await test.test());
+
         }
     }
 </script>
@@ -27,7 +33,8 @@
     * {
         font-family: "Segoe UI", arial, sans-serif;
     }
-    .v-content{
+
+    .v-content {
         background-color: #BDBDBD;
     }
 </style>
