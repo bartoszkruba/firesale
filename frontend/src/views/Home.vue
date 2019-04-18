@@ -1,21 +1,18 @@
 <template>
     <div>
         <HelloWorld/>
-        <AuctionListItem/>
-        <AuctionListItem/>
-        <AuctionListItem/>
-        <AuctionListItem/>
+        <AuctionList/>
     </div>
 </template>
 
 <script>
     import HelloWorld from '../components/HelloWorld'
-    import AuctionListItem from '../components/AuctionListItem'
+    import AuctionList from '../components/AuctionList'
 
     export default {
         components: {
             HelloWorld,
-            AuctionListItem
+            AuctionList
         }
     }
 </script>
