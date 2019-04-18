@@ -1,5 +1,6 @@
 package com.company.firesale.service;
 
+import com.company.firesale.data.entity.Role;
 import com.company.firesale.data.entity.User;
 import com.company.firesale.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,11 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails toUserDetails(User user) {
+        String[] userRoles = user.getRoles().stream().map(Role::getDescription).toArray(String[]::new);
+
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .roles("USER").build();
+                .roles(userRoles).build();
     }
 }

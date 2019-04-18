@@ -8,17 +8,21 @@
 </template>
 
 <script>
-    import Toolbar from "./components/Toolbar";
+import Toolbar from "./components/Toolbar";
+import auth from './services/authentication';
+
     export default {
         name: 'App',
         components: {
-            Toolbar
-
+            Toolbar,
         },
         data() {
             return {
                 //
             }
+        },
+        async created() {
+            console.log(auth.login("john69", "password1234"));
         }
     }
 </script>
