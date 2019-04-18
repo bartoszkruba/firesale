@@ -1,4 +1,4 @@
-package com.company.firesale.entity;
+package com.company.firesale.data.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -56,31 +56,38 @@ public class Auction {
         return status;
     }
 
-    public void setTitle(String title) {
+    public Auction setTitle(String title) {
         this.title = title;
+        return this;
     }
 
-    public void setDescription(String description) {
+    public Auction setDescription(String description) {
         this.description = description;
+        return this;
     }
 
-    public void setOpenedAt(Date openedAt) {
+    public Auction setOpenedAt(Date openedAt) {
         this.openedAt = openedAt;
+        return this;
     }
 
-    public void setClosingTime(Date closingTime) {
+    public Auction setClosingTime(Date closingTime) {
         this.closingTime = closingTime;
+        return this;
     }
 
-    public void setStartUpPrice(double startUpPrice) {
+    public Auction setStartUpPrice(double startUpPrice) {
         this.startUpPrice = startUpPrice;
+        return this;
     }
 
-    public void setBuyOutPrice(double buyOutPrice) {
+    public Auction setBuyOutPrice(double buyOutPrice) {
         this.buyOutPrice = buyOutPrice;
+        return this;
     }
 
-    public void setStatus(AuctionStatus status) {
+    public Auction setStatus(AuctionStatus status) {
         this.status = status;
+        return this;
     }
 }

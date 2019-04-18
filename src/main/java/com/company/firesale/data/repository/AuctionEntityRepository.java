@@ -1,6 +1,6 @@
-package com.company.firesale.repository;
+package com.company.firesale.data.repository;
 
-import com.company.firesale.entity.Auction;
+import com.company.firesale.data.entity.Auction;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

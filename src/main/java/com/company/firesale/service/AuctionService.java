@@ -1,7 +1,7 @@
 package com.company.firesale.service;
 
-import com.company.firesale.entity.Auction;
-import com.company.firesale.repository.AuctionEntityRepository;
+import com.company.firesale.data.entity.Auction;
+import com.company.firesale.data.repository.AuctionEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +28,15 @@ public class AuctionService {
         Pageable PageWithTen = PageRequest.of(page, 10);
         return actionEntityRepository.findAll(PageWithTen);
     }
+
+    public void addAuction(Auction auction) {
+        try {
+            actionEntityRepository.save(auction);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     public Auction createActionEntity() {
         Auction actionEntity = new Auction();

@@ -1,6 +1,6 @@
 package com.company.firesale.controller;
 
-import com.company.firesale.entity.Auction;
+import com.company.firesale.data.entity.Auction;
 import com.company.firesale.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
