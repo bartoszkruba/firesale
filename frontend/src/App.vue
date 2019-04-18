@@ -3,7 +3,9 @@
         <v-content>
             <router-view/>
             <Toolbar></Toolbar>
+            <div id="bottomspacer"></div>
         </v-content>
+
     </v-app>
 </template>
 
@@ -32,6 +34,10 @@ import auth from './services/authentication';
         font-family: "Segoe UI", arial, sans-serif;
     }
     .v-content{
+        background-color: #BDBDBD;
+    }
+    #bottomspacer {
+        height: 10vh;
         background-color: #BDBDBD;
     }
 </style>
