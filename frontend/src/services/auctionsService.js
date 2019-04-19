@@ -2,8 +2,12 @@ import Api from '@/services/Api';
 
 export default () => {
     return {
-        getFilteredAuctions(params) {
-            return Api().get(params);
+        getFilteredAuctions(query) {
+            return Api().get(
+                '/auctions',
+                {
+                    params: query
+                });
         }
     }
 }

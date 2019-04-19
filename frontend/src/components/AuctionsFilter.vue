@@ -94,30 +94,28 @@
         methods: {
             clickSearch() {
                 this.$store.commit('setFilterParams', this.filterParams);
-                this.$store.dispatch('setAuctions', this.generateFilterUrl());
-                this.$router.push(this.generateFilterUrl());
+                let generatedQuery = this.generateFilterQuery();
+                this.$store.dispatch('getAuctions', generatedQuery);
+                this.$router.push({path: 'auctions', query: generatedQuery});
             },
             toggleFilters() {
-                console.log(this.$store.state.categories);
                 this.$store.commit('toggleShowFiltersOnHome');
             },
-            generateFilterUrl() {
-                let url = ['auctions?'];
-                let urlParams = [];
+            generateFilterQuery() {
+                let urlQuery = {};
                 if (this.filterParams.searchText != null) {
-                    urlParams.push('title=' + this.filterParams.searchText);
+                    urlQuery.title = this.filterParams.searchText;
                 }
                 if (this.filterParams.maxPrice > 0) {
-                    urlParams.push('price=' + this.filterParams.maxPrice);
+                    urlQuery.price = this.filterParams.maxPrice;
                 }
                 if (this.filterParams.selectedCategory !== 'All') {
-                    urlParams.push('category=' + this.filterParams.selectedCategory);
+                    urlQuery.category = this.filterParams.selectedCategory;
                 }
                 if (this.filterParams.showAllAuctions === true) {
-                    urlParams.push('showAll=' + this.filterParams.showAllAuctions);
+                    urlQuery.showAll = this.filterParams.showAllAuctions;
                 }
-                urlParams = urlParams.join('&');
-                return url + urlParams;
+                return urlQuery;
             }
         },
         created() {

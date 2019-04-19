@@ -1,7 +1,7 @@
 <template>
     <v-card id="listitempanel">
         <div id="auctionimgcontainer">
-            <img id="auctionimg" :src="auctionimgurl"></img>
+            <img id="auctionimg" :src="auctionimgurl"/>
         </div>
 
         <div id="auctiontextcontent">
