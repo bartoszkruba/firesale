@@ -3,7 +3,9 @@
         <v-content>
             <router-view/>
             <Toolbar></Toolbar>
+            <div id="bottomspacer"></div>
         </v-content>
+
     </v-app>
 </template>
 
@@ -13,8 +15,7 @@
     export default {
         name: 'App',
         components: {
-            Toolbar
-
+            Toolbar,
         },
         data() {
             return {
@@ -32,6 +33,11 @@
     }
 
     .v-content {
+        background-color: #BDBDBD;
+    }
+
+    #bottomspacer {
+        height: 10vh;
         background-color: #BDBDBD;
     }
 </style>

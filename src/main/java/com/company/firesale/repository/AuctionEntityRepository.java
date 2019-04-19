@@ -4,7 +4,7 @@ import com.company.firesale.entity.Auction;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.util.Optional;
 
 /*
 @Repository
@@ -12,9 +12,9 @@ public interface ActionEntityRepository extends CrudRepository<Auction, Long> {
 }
 */
 @Repository
-public interface AuctionEntityRepository extends PagingAndSortingRepository<Auction, Date> {
+public interface AuctionEntityRepository extends PagingAndSortingRepository<Auction, Long> {
 
-    //List<Auction> findTenByCloseAt(Date closeat, Pageable pageable);
+    Optional<Auction> findById(Long id);
 
 }
 
