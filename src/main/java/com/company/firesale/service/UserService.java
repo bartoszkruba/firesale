@@ -50,6 +50,11 @@ public class UserService {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    public void addUser(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
     public UserJsonClass getUserById(Long id) {
         Optional<User> u = userRepository.findById(id);
         if (u.isPresent()) {
