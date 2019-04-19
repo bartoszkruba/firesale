@@ -1,14 +1,14 @@
 <template>
     <v-card id="listitempanel">
         <div id="auctionimgcontainer">
-            <img id="auctionimg" :src="auctionimgurl"/>
+            <img id="auctionimg" :src="mainimage"></img>
         </div>
 
         <div id="auctiontextcontent">
             <h3 id="auctiontitle">{{title}}</h3>
             <span id="auctiondescription">{{description}}</span>
-            <h3 id="auctionprice">Current price: {{price}}</h3>
-            <h3 id="auctiontime">Time left: {{timeleft}}</h3>
+            <h3 id="auctionprice">Current price: {{startUpPrice}}</h3>
+            <h3 id="auctiontime">Ends at: {{closingTime}}</h3>
 
         </div>
         <v-btn id="buybutton"
@@ -28,14 +28,16 @@
 <script>
     export default {
         name: "AuctionListItem",
-        data() {
-            return {
-                title: "Angry cat",
-                description: "Hates hooomans. Also eats babies.",
-                auctionimgurl: "https://media.istockphoto.com/photos/angry-cat-picture-id936176546?k=6&m=936176546&s=612x612&w=0&h=OS1vU65NKXVXJEsbsru7x-DG47v42NtEehXsc-WaOQU=",
-                price: "$10",
-                timeleft: "7 hours",
-            }
+        props: {
+            id: Number,
+            title: String,
+            description: String,
+            openedAt: String,
+            closingTime: String,
+            startUpPrice: Number,
+            buyOutPrice: Number,
+            status: String,
+            mainimage: String,
         }
     }
 </script>

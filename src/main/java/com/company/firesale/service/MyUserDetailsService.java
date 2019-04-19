@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class MyUserDetailsService implements UserDetailsService {
 
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder encoder;
 
     public BCryptPasswordEncoder getEncoder() {
         return encoder;
@@ -22,7 +22,8 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserRepository repository;
 
     @Autowired
-    public MyUserDetailsService(UserRepository repository) {
+    public MyUserDetailsService(BCryptPasswordEncoder encoder, UserRepository repository) {
+        this.encoder = encoder;
         this.repository = repository;
     }
 
@@ -33,15 +34,6 @@ public class MyUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found by name: " + username);
         }
         return toUserDetails(user);
-    }
-
-    public void addUser(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        try {
-            repository.save(user);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     private UserDetails toUserDetails(User user) {

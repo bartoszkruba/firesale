@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/action")
@@ -31,5 +32,10 @@ public class AuctionController {
     @GetMapping("/date/{page}")
     List<Auction> getTenActionEntityOrderByDate(@PathVariable int page) {
         return actionEntityServis.findTenByDate(page).getContent();
+    }
+
+    @GetMapping("/id/{id}")
+    Optional<Auction> getAuctionById(@PathVariable long id) {
+        return actionEntityServis.findById(id);
     }
 }

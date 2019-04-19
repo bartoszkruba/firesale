@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuctionService {
 
@@ -17,6 +19,10 @@ public class AuctionService {
     @Autowired
     public AuctionService(AuctionEntityRepository actionEntityRepository) {
         this.actionEntityRepository = actionEntityRepository;
+    }
+
+    public Optional<Auction> findById(long id) {
+        return actionEntityRepository.findById(id);
     }
 
     public Page<Auction> findTenByDate(int page) {
@@ -34,4 +40,6 @@ public class AuctionService {
         actionEntityRepository.save(actionEntity);
         return actionEntity;
     }
+
+
 }
