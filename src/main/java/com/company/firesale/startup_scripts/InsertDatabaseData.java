@@ -23,7 +23,7 @@ public class InsertDatabaseData implements CommandLineRunner {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public InsertDatabaseData(UserService userService, RoleRepository roleRepository) {
+    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, CategoryRepository categoryRepository) {
         this.userService = userService;
         this.roleRepository = roleRepository;
         this.categoryRepository = categoryRepository;
@@ -61,7 +61,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .addRole(adminRole)
                 .addRole(userRole);
 
-        myUserDetailsService.addUser(user1);
+        userService.registerNewUser(user1);
 
         User user2 = new User();
         user2.setUsername("mary111")

@@ -15,7 +15,7 @@ export default new Vuex.Store({
         filterParams: {
             searchText: null,
             selectedCategory: 'All',
-            maxPrice: null,
+            maxPrice: 0,
         }
     },
     mutations: {

@@ -14,26 +14,19 @@
                     </v-container>
                     <transition name="fade">
                         <v-container id="filters-container" xs12 pa-0
-                                     v-show="this.$store.state.showFiltersOnHome">
+                                v-show="this.$store.state.showFiltersOnHome">
                             <v-layout row wrap>
                                 <v-container id="filter-slider" xs12 pa-0>
-                                    <v-flex xs8 sm10 md11>
+                                    <v-flex xs12 mt-2>
                                         <v-slider
                                                 v-model="filterParams.maxPrice"
                                                 :max="10000"
+                                                :min="0"
                                                 :step="100"
-
+                                                :value=this.$store.state.filterParams.maxPrice
+                                                thumb-label="always"
+                                                label="Max price: "
                                         ></v-slider>
-                                    </v-flex>
-                                    <v-flex xs4 sm2 md1 pl-2 pr-2>
-                                        <v-text-field
-                                                v-model="filterParams.maxPrice"
-                                                class="mt-0"
-                                                hide-details
-                                                single-line
-                                                type="number"
-                                                placeholder="Price"
-                                        ></v-text-field>
                                     </v-flex>
                                 </v-container>
                                 <v-container id="filter-categories" xs12 md5 pa-0>
@@ -119,9 +112,7 @@
             }
         },
         created() {
-            // console.log(auth.login("john69", "password1234"));
             this.$store.dispatch('getCategories', 'categories');
-            console.log(this.$store.state.categories);
         }
     }
 </script>
