@@ -4,11 +4,14 @@ import com.company.firesale.data.entity.Role;
 import com.company.firesale.data.entity.User;
 import com.company.firesale.data.repository.RoleRepository;
 import com.company.firesale.data.repository.UserRepository;
+import com.company.firesale.json_classes.UserJsonClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -45,6 +48,15 @@ public class UserService {
         userRepository.save(user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    public UserJsonClass getUserById(Long id) {
+        Optional<User> u = userRepository.findById(id);
+        if (u.isPresent()) {
+            return new UserJsonClass(u.get());
+        } else {
+            return null;
+        }
     }
 
 }

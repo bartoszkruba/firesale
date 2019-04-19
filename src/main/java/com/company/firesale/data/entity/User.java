@@ -1,5 +1,7 @@
 package com.company.firesale.data.entity;
 
+import com.company.firesale.entity.Auction;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,6 +27,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Auction> auctions;
+
     public User() {
     }
 
@@ -40,6 +45,14 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public User addAuction(Auction auction) {
+        if (this.auctions == null) {
+            this.auctions = new HashSet<>();
+        }
+        this.auctions.add(auction);
+        return this;
     }
 
     public User addRole(Role role) {
@@ -128,5 +141,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Auction> getAuctions() {
+        return auctions;
+    }
+
+    public void setAuctions(Set<Auction> auctions) {
+        this.auctions = auctions;
     }
 }

@@ -1,5 +1,7 @@
 package com.company.firesale.entity;
 
+import com.company.firesale.data.entity.User;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,6 +18,9 @@ public class Auction {
     private Date closingTime = null;
     private double startUpPrice = 0;
     private double buyOutPrice = 0;
+
+    @ManyToOne
+    private User user;
 
     @Enumerated(value = EnumType.STRING)
     private AuctionStatus status;
