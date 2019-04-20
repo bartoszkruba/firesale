@@ -28,13 +28,6 @@ public class UserService {
     }
 
     public ResponseEntity<String> registerNewUser(User user) {
-
-        if (user.getUsername() == null) {
-            return new ResponseEntity<>("Username is required", HttpStatus.BAD_REQUEST);
-        }
-        if (user.getPassword() == null) {
-            return new ResponseEntity<>("Password is required", HttpStatus.BAD_REQUEST);
-        }
         if (userRepository.findDistinctFirstByUsernameIgnoreCase(user.getUsername()) != null) {
             return new ResponseEntity<>("Username already exist", HttpStatus.CONFLICT);
         }
@@ -45,7 +38,7 @@ public class UserService {
         user.addRole(userRole);
         user.setPassword(encoder.encode(user.getPassword()));
 
-        userRepository.save(user);
+        addUser(user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
