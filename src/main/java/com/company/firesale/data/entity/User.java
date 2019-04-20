@@ -1,7 +1,6 @@
 package com.company.firesale.data.entity;
 
 import com.company.firesale.data.validation_group.UserRegistrationValidationGroup;
-import com.company.firesale.entity.Auction;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
