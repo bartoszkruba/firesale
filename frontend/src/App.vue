@@ -23,6 +23,7 @@
             }
         },
         async created() {
+            this.$store.dispatch("checkIfLoggedIn");
         }
     }
 </script>

@@ -5,11 +5,13 @@ import com.company.firesale.config.handlers.MySimpleUrlAuthenticationFailureHand
 import com.company.firesale.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -33,13 +35,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/api/test/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/admintest").hasRole("ADMIN")
-                .antMatchers("/api/usertest").hasAnyRole("USER", "ADMIN")
-                .and()
-                .csrf()
-                .disable()
+        http.csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
@@ -48,11 +44,19 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .failureHandler(myFailureHandler)
                 .loginProcessingUrl("/api/login")
                 .and()
-                .logout().logoutUrl("/api/logout")
-                .and()
-                .logout().permitAll().logoutSuccessUrl("/");
+                .logout().logoutUrl("/api/logout").permitAll()
+                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK));
+
+        declareSecuredRoutes(http);
     }
 
+
+    private void declareSecuredRoutes(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/api/admintest").hasAnyRole("ADMIN")
+                .antMatchers("/api/usertest").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/login/roles").hasAnyRole("USER", "ADMIN");
+    }
 
     // pictures should be in assets
     @Override

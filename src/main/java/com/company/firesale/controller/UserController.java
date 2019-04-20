@@ -5,6 +5,7 @@ import com.company.firesale.json_classes.UserJsonClass;
 import com.company.firesale.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +20,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> registerNewUser(@RequestBody User user) {
+    public ResponseEntity<String>
+    registerNewUser(@Validated @RequestBody User user) {
+        System.out.println(user.getUsername());
         return userService.registerNewUser(user);
     }
 

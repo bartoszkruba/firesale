@@ -1,8 +1,6 @@
 package com.company.firesale.data.entity;
 
 
-import org.hibernate.boot.jaxb.hbm.internal.CacheAccessTypeConverter;
-
 import javax.persistence.*;
 
 @Entity

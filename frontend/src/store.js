@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import AuctionService from '@/services/auctionsService'
+import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
-
 
 Vue.use(Vuex);
 
@@ -22,8 +22,8 @@ export default new Vuex.Store({
         setLoggedIn(state, value) {
             this.state.loggedIn = value;
         },
-        setCategories(state, value){
-            for(let category of value) {
+        setCategories(state, value) {
+            for (let category of value) {
                 this.state.categories.push(category.name);
             }
         },
@@ -44,11 +44,15 @@ export default new Vuex.Store({
                     context.commit('setAuctions', response.data);
                 });
         },
-        async getCategories(context, params){
+        async checkIfLoggedIn(context, params) {
+            let response = await auth.checkIfLoggedIn();
+            this.commit("setLoggedIn", response)
+        },
+        async getCategories(context, params) {
             await CategoryService().getCategories(params)
                 .then(response => {
                     context.commit('setCategories', response.data)
                 });
         }
     }
-})
+});

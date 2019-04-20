@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +60,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .addRole(adminRole)
                 .addRole(userRole);
 
-        userService.registerNewUser(user1);
+        userService.addUser(user1);
 
         User user2 = new User();
         user2.setUsername("mary111")
@@ -73,7 +72,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setPhoneNumber("(277)-505-2351")
                 .addRole(userRole);
 
-        userService.registerNewUser(user2);
+        userService.addUser(user2);
 
         User user3 = new User();
         user3.setUsername("ChrisL")
@@ -84,7 +83,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setLastName("Lewis")
                 .setPhoneNumber("(893)-121-7525")
                 .addRole(userRole);
-        userService.registerNewUser(user3);
+        userService.addUser(user3);
 
         User user4 = new User();
         user4.setUsername("Morenorator")
@@ -95,7 +94,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setLastName("Moreno")
                 .setPhoneNumber("(247)-425-7475")
                 .addRole(userRole);
-        userService.registerNewUser(user4);
+        userService.addUser(user4);
 
         User user5 = new User();
         user5.setUsername("Cindirella")
@@ -106,7 +105,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setLastName("Stephens")
                 .setPhoneNumber("(272)-121-1765")
                 .addRole(userRole);
-        userService.registerNewUser(user5);
+        userService.addUser(user5);
 
     }
 }
