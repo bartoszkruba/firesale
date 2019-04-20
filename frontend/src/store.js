@@ -41,8 +41,7 @@ export default new Vuex.Store({
         async getAuctions(context, params) {
             await AuctionService().getFilteredAuctions(params)
                 .then(response => {
-                    console.log("response ", response.data);
-                    context.commit('setAuctions', response.data)
+                    context.commit('setAuctions', response.data);
                 });
         },
         async getCategories(context, params){

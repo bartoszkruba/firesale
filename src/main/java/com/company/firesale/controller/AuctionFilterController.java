@@ -9,9 +9,9 @@ import java.util.Map;
 @RequestMapping("/api/auctions")
 public class AuctionFilterController {
 
-    @GetMapping()
-    public Map getFilteredAuctions(@RequestParam Map<String, String> allParams) {
-        return allParams;
-    }
+//    @GetMapping()
+//    public Map getFilteredAuctions(@RequestParam Map<String, String> allParams) {
+//        return allParams;
+//    }
 
 }

@@ -1,4 +1,4 @@
-package com.company.firesale.entity;
+package com.company.firesale.data.entity;
 
 public enum AuctionStatus {
     OPEN, CLOSED

@@ -1,7 +1,8 @@
 package com.company.firesale.json_classes;
 
+import com.company.firesale.data.entity.Auction;
 import com.company.firesale.data.entity.User;
-import com.company.firesale.entity.Auction;
+
 
 import java.util.Set;
 import java.util.stream.Collectors;
