@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import AuctionService from '@/services/auctionsService'
+import auth from '@/services/authentication'
 
 
 Vue.use(Vuex);
@@ -35,5 +36,9 @@ export default new Vuex.Store({
             await AuctionService().getFilteredAuctions(params)
                 .then(response => context.commit('setAuctions', response.data));
         },
+        async checkIfLoggedIn(context, params) {
+            let response = await auth.checkIfLoggedIn();
+            this.commit("setLoggedIn", response)
+        }
     }
 })

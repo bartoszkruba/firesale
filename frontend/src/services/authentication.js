@@ -39,5 +39,14 @@ export default {
         } catch (err) {
             return false;
         }
+    },
+
+    async checkIfLoggedIn() {
+        try {
+            let response = await Api().get("/login/roles");
+            return response.status === 200;
+        } catch (ex) {
+            return false;
+        }
     }
 }
