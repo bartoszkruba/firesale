@@ -21,6 +21,11 @@ export default new Router({
             component: Login
         },
         {
+            path: '/auctions',
+            name: 'filteredActions',
+            component: Home,
+        },
+        {
             path: '/register',
             name: 'register',
             component: Register

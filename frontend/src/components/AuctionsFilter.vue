@@ -14,26 +14,19 @@
                     </v-container>
                     <transition name="fade">
                         <v-container id="filters-container" xs12 pa-0
-                                     v-show="this.$store.state.showFiltersOnHome">
+                                v-show="this.$store.state.showFiltersOnHome">
                             <v-layout row wrap>
                                 <v-container id="filter-slider" xs12 pa-0>
-                                    <v-flex xs8 sm10 md11>
+                                    <v-flex xs12 mt-2>
                                         <v-slider
                                                 v-model="filterParams.maxPrice"
                                                 :max="10000"
+                                                :min="0"
                                                 :step="100"
-
+                                                :value=this.$store.state.filterParams.maxPrice
+                                                thumb-label="always"
+                                                label="Max price: "
                                         ></v-slider>
-                                    </v-flex>
-                                    <v-flex xs4 sm2 md1 pl-2 pr-2>
-                                        <v-text-field
-                                                v-model="filterParams.maxPrice"
-                                                class="mt-0"
-                                                hide-details
-                                                single-line
-                                                type="number"
-                                                placeholder="Price"
-                                        ></v-text-field>
                                     </v-flex>
                                 </v-container>
                                 <v-container id="filter-categories" xs12 md5 pa-0>
@@ -77,6 +70,7 @@
 </template>
 
 <script>
+
     export default {
         name: "AuctionsFilter",
         data() {
@@ -86,37 +80,39 @@
                 searchTextRules: [
                     v => v != null && v.length >= 3 || 'Enter at least 3 characters'
                 ],
-                items: ['All', 'Electronics', 'Cars'], //Fetch from database
+                items: this.$store.state.categories,
                 showFilters: this.$store.state.showFiltersOnHome,
             };
         },
         methods: {
             clickSearch() {
                 this.$store.commit('setFilterParams', this.filterParams);
-                this.$store.dispatch('setAuctions', this.generateFilterUrl());
-                this.$router.push(this.generateFilterUrl());
+                let generatedQuery = this.generateFilterQuery();
+                this.$store.dispatch('getAuctions', generatedQuery);
+                this.$router.push({path: 'auctions', query: generatedQuery});
             },
             toggleFilters() {
                 this.$store.commit('toggleShowFiltersOnHome');
             },
-            generateFilterUrl() {
-                let url = ['auctions?'];
-                let urlParams = [];
+            generateFilterQuery() {
+                let urlQuery = {};
                 if (this.filterParams.searchText != null) {
-                    urlParams.push('title=' + this.filterParams.searchText);
+                    urlQuery.title = this.filterParams.searchText;
                 }
                 if (this.filterParams.maxPrice > 0) {
-                    urlParams.push('price=' + this.filterParams.maxPrice);
+                    urlQuery.price = this.filterParams.maxPrice;
                 }
                 if (this.filterParams.selectedCategory !== 'All') {
-                    urlParams.push('category=' + this.filterParams.selectedCategory);
+                    urlQuery.category = this.filterParams.selectedCategory;
                 }
                 if (this.filterParams.showAllAuctions === true) {
-                    urlParams.push('showAll=' + this.filterParams.showAllAuctions);
+                    urlQuery.showAll = this.filterParams.showAllAuctions;
                 }
-                urlParams = urlParams.join('&');
-                return url + urlParams;
+                return urlQuery;
             }
+        },
+        created() {
+            this.$store.dispatch('getCategories', 'categories');
         }
     }
 </script>
