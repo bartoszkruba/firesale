@@ -5,6 +5,7 @@ import com.company.firesale.config.handlers.MySimpleUrlAuthenticationFailureHand
 import com.company.firesale.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -55,6 +56,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/admintest").hasAnyRole("ADMIN")
                 .antMatchers("/api/usertest").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "api/action").hasAnyRole("USER")
                 .antMatchers("/api/login/roles").hasAnyRole("USER", "ADMIN");
     }
 
