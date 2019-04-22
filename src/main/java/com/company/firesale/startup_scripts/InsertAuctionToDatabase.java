@@ -33,6 +33,7 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
                 .setBuyOutPrice(80000)
                 .setStartUpPrice(10000)
                 .setClosingTime(Timestamp.valueOf(ldt1))
+                .setLastUppdate(Timestamp.from(Instant.now()))
                 .setOpenedAt(Timestamp.from(Instant.now()))
                 .setCategory("Cars")
                 .setStatus(AuctionStatus.OPEN);
@@ -45,6 +46,7 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
                 .setBuyOutPrice(85000)
                 .setStartUpPrice(15000)
                 .setClosingTime(Timestamp.valueOf(ldt2))
+                .setLastUppdate(Timestamp.from(Instant.now()))
                 .setOpenedAt(Timestamp.from(Instant.now()))
                 .setCategory("Cars")
                 .setStatus(AuctionStatus.CLOSED);
@@ -57,6 +59,7 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
                 .setBuyOutPrice(20)
                 .setStartUpPrice(5)
                 .setClosingTime(Timestamp.valueOf(ldt3))
+                .setLastUppdate(Timestamp.from(Instant.now()))
                 .setOpenedAt(Timestamp.from(Instant.now()))
                 .setCategory("Electronics")
                 .setStatus(AuctionStatus.OPEN);
@@ -69,6 +72,7 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
                 .setBuyOutPrice(400)
                 .setStartUpPrice(25)
                 .setClosingTime(Timestamp.valueOf(ldt4))
+                .setLastUppdate(Timestamp.from(Instant.now()))
                 .setOpenedAt(Timestamp.from(Instant.now()))
                 .setCategory("Furniture")
                 .setStatus(AuctionStatus.OPEN);
