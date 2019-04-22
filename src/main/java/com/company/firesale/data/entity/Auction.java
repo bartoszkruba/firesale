@@ -1,7 +1,4 @@
-package com.company.firesale.entity;
-
-import com.company.firesale.data.entity.Image;
-import com.company.firesale.data.entity.User;
+package com.company.firesale.data.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,6 +18,7 @@ public class Auction {
     private Date closingTime;
     private double startUpPrice;
     private double buyOutPrice;
+    private String category;
 
     @ManyToOne
     private User user;
@@ -39,7 +37,7 @@ public class Auction {
         image.setAuction(this);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -51,56 +49,56 @@ public class Auction {
         return title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public Date getOpenedAt() {
-        return openedAt;
-    }
-
-    public Date getClosingTime() {
-        return closingTime;
-    }
-
-    public double getStartUpPrice() {
-        return startUpPrice;
-    }
-
-    public double getBuyOutPrice() {
-        return buyOutPrice;
-    }
-
-    public AuctionStatus getStatus() {
-        return status;
-    }
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public Date getOpenedAt() {
+        return openedAt;
+    }
+
     public void setOpenedAt(Date openedAt) {
         this.openedAt = openedAt;
+    }
+
+    public Date getClosingTime() {
+        return closingTime;
     }
 
     public void setClosingTime(Date closingTime) {
         this.closingTime = closingTime;
     }
 
+    public double getStartUpPrice() {
+        return startUpPrice;
+    }
+
     public void setStartUpPrice(double startUpPrice) {
         this.startUpPrice = startUpPrice;
+    }
+
+    public double getBuyOutPrice() {
+        return buyOutPrice;
     }
 
     public void setBuyOutPrice(double buyOutPrice) {
         this.buyOutPrice = buyOutPrice;
     }
 
-    public void setStatus(AuctionStatus status) {
-        this.status = status;
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public User getUser() {
@@ -117,5 +115,13 @@ public class Auction {
 
     public void setImages(Set<Image> images) {
         this.images = images;
+    }
+
+    public AuctionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AuctionStatus status) {
+        this.status = status;
     }
 }
