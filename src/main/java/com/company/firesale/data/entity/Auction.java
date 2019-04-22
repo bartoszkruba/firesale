@@ -41,87 +41,98 @@ public class Auction {
         return id;
     }
 
-    public void setId(Long id) {
+    public Auction setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Auction setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Auction setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public Date getOpenedAt() {
         return openedAt;
     }
 
-    public void setOpenedAt(Date openedAt) {
+    public Auction setOpenedAt(Date openedAt) {
         this.openedAt = openedAt;
+        return this;
     }
 
     public Date getClosingTime() {
         return closingTime;
     }
 
-    public void setClosingTime(Date closingTime) {
+    public Auction setClosingTime(Date closingTime) {
         this.closingTime = closingTime;
+        return this;
     }
 
     public double getStartUpPrice() {
         return startUpPrice;
     }
 
-    public void setStartUpPrice(double startUpPrice) {
+    public Auction setStartUpPrice(double startUpPrice) {
         this.startUpPrice = startUpPrice;
+        return this;
     }
 
     public double getBuyOutPrice() {
         return buyOutPrice;
     }
 
-    public void setBuyOutPrice(double buyOutPrice) {
+    public Auction setBuyOutPrice(double buyOutPrice) {
         this.buyOutPrice = buyOutPrice;
+        return this;
     }
 
     public String getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public Auction setCategory(String category) {
         this.category = category;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public Auction setUser(User user) {
         this.user = user;
+        return this;
     }
 
     public Set<Image> getImages() {
         return images;
     }
 
-    public void setImages(Set<Image> images) {
+    public Auction setImages(Set<Image> images) {
         this.images = images;
+        return this;
     }
 
     public AuctionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(AuctionStatus status) {
+    public Auction setStatus(AuctionStatus status) {
         this.status = status;
+        return this;
     }
 }

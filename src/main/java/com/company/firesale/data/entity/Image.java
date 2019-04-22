@@ -1,6 +1,5 @@
 package com.company.firesale.data.entity;
 
-import com.company.firesale.entity.Auction;
 
 import javax.persistence.*;
 
