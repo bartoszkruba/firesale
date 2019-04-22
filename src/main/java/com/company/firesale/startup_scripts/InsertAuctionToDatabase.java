@@ -32,39 +32,43 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
                 .setBuyOutPrice(80000)
                 .setStartUpPrice(10000)
                 .setClosingTime(Timestamp.valueOf(ldt1))
+                .setLastUppdate(Timestamp.from(Instant.now()))
                 .setOpenedAt(Timestamp.from(Instant.now()))
                 .setStatus(AuctionStatus.OPEN);
         auctionService.addAuction(auction1);
 
         LocalDateTime ldt2 = LocalDateTime.of(2019, 4, 5, 11, 00);
         Auction auction2 = new Auction();
-        auction1.setTitle("A Blue CAR")
+        auction2.setTitle("A Blue CAR")
                 .setDescription("BRUM BRUM")
                 .setBuyOutPrice(85000)
                 .setStartUpPrice(15000)
                 .setClosingTime(Timestamp.valueOf(ldt2))
+                .setLastUppdate(Timestamp.from(Instant.now()))
                 .setOpenedAt(Timestamp.from(Instant.now()))
                 .setStatus(AuctionStatus.OPEN);
         auctionService.addAuction(auction2);
 
         LocalDateTime ldt3 = LocalDateTime.of(2019, 4, 5, 11, 00);
         Auction auction3 = new Auction();
-        auction1.setTitle("A DVD")
+        auction3.setTitle("A DVD")
                 .setDescription("A DVD Don`t know whats on it becus has no DVD player")
                 .setBuyOutPrice(20)
                 .setStartUpPrice(5)
                 .setClosingTime(Timestamp.valueOf(ldt3))
+                .setLastUppdate(Timestamp.from(Instant.now()))
                 .setOpenedAt(Timestamp.from(Instant.now()))
                 .setStatus(AuctionStatus.OPEN);
         auctionService.addAuction(auction3);
 
         LocalDateTime ldt4 = LocalDateTime.of(2019, 4, 5, 11, 30);
         Auction auction4 = new Auction();
-        auction1.setTitle("Meat")
+        auction4.setTitle("Meat")
                 .setDescription(" 5.5Kg Meat of a ... animal")
                 .setBuyOutPrice(400)
                 .setStartUpPrice(25)
                 .setClosingTime(Timestamp.valueOf(ldt4))
+                .setLastUppdate(Timestamp.from(Instant.now()))
                 .setOpenedAt(Timestamp.from(Instant.now()))
                 .setStatus(AuctionStatus.OPEN);
         auctionService.addAuction(auction4);

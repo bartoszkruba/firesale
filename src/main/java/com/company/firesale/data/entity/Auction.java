@@ -13,6 +13,7 @@ public class Auction {
     @Column(columnDefinition = "TEXT")
     private String description = null;
     private Date openedAt = null;
+    private Date lastUppdate = null;
     private Date closingTime = null;
     private double startUpPrice = 0;
     private double buyOutPrice = 0;
@@ -38,6 +39,10 @@ public class Auction {
 
     public Date getOpenedAt() {
         return openedAt;
+    }
+
+    public Date getLastUppdate() {
+        return lastUppdate;
     }
 
     public Date getClosingTime() {
@@ -68,6 +73,11 @@ public class Auction {
 
     public Auction setOpenedAt(Date openedAt) {
         this.openedAt = openedAt;
+        return this;
+    }
+
+    public Auction setLastUppdate(Date lastUppdate) {
+        this.lastUppdate = lastUppdate;
         return this;
     }
 
