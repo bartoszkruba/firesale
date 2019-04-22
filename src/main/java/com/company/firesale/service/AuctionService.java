@@ -5,7 +5,7 @@ import com.company.firesale.data.entity.AuctionStatus;
 import com.company.firesale.data.entity.Image;
 import com.company.firesale.data.entity.User;
 import com.company.firesale.data.repository.AuctionEntityRepository;
-import com.company.firesale.json_classes.TestAuctionJsonClass;
+import com.company.firesale.json_classes.AuctionFormJsonClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -78,7 +78,7 @@ public class AuctionService {
     }
 
     // TODO: 2019-04-22 should return JsonAuction
-    public Auction createNewAuction(TestAuctionJsonClass auction, String username) {
+    public Auction createNewAuction(AuctionFormJsonClass auction, String username) {
         Auction DBAuction = new Auction();
 
         // TODO: 2019-04-22 Check if user isn't null

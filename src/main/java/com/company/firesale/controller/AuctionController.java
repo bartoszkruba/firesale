@@ -2,7 +2,7 @@ package com.company.firesale.controller;
 
 import com.company.firesale.data.entity.Auction;
 import com.company.firesale.data.entity.AuctionStatus;
-import com.company.firesale.json_classes.TestAuctionJsonClass;
+import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +55,7 @@ public class AuctionController {
     }
 
     @PostMapping
-    Auction createActionEntity(@RequestBody TestAuctionJsonClass auction, Principal principal) {
+    Auction createActionEntity(@RequestBody AuctionFormJsonClass auction, Principal principal) {
         return actionEntityServis.createNewAuction(auction, principal.getName());
     }
 

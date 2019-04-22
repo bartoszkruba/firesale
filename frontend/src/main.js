@@ -5,9 +5,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import DateTimePicker from 'vuetify-datetime-picker';
+import 'vuetify-datetime-picker/src/stylus/main.styl'
 import 'vuetify/dist/vuetify.min.css'
 
 import colors from 'vuetify/es5/util/colors'
+
+Vue.use(DateTimePicker);
 
 Vue.use(Vuetify, {
     theme: {
