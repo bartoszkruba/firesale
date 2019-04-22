@@ -1,16 +1,15 @@
 <template>
-    <v-content>
         <v-card  id="auction" >
             <v-img id="auctionimages" :src="mainimage"></v-img>
             <v-container id="auctioncontent">
                 <v-layout>
                     <v-flex>
-                        <v-card-title id="auctiontitle"><h1>{{title}}</h1></v-card-title>
-                        <v-card-text id="auctiondates"><span>Auction time: {{openedAt}} - {{closingTime}}</span></v-card-text>
-                        <v-card-text><p>{{description}}</p></v-card-text>
+                        <v-card-title id="auctiontitle"><h1 class="headline, font-weight-bold">{{title}}</h1></v-card-title>
+                        <v-card-text id="auctiondates"><span class="caption">Auction time: {{openedAt}} - {{closingTime}}</span></v-card-text>
+                        <v-card-text><p class="body-2">{{description}}</p></v-card-text>
 
-                        <h2 id="currentprice" align="center">Current price: {{startupprice}}</h2>
-                        <h2 id="currentbid" align="center">Your bid: {{buyoutprice}}</h2>
+                        <h2 id="currentprice" align="center" class="subheading">Current price: {{startupprice}}</h2>
+                        <h2 id="currentbid" align="center" class="subheading, , font-weight-bold">Your bid: {{buyoutprice}}</h2>
 
                         <v-slider
                                 :min="startUpPrice"
@@ -26,9 +25,7 @@
                     </v-flex>
                 </v-layout>
             </v-container>
-
         </v-card>
-    </v-content>
 </template>
 
 <script>
@@ -90,6 +87,5 @@
         font-weight: 200;
     }
     #bidbutton {
-
     }
 </style>
