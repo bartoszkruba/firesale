@@ -49,7 +49,7 @@ export default new Vuex.Store({
             this.commit("setLoggedIn", response)
         },
         async getCategories(context, params) {
-            await CategoryService().getCategories(params)
+            await CategoryService().getCategories()
                 .then(response => {
                     context.commit('setCategories', response.data)
                 });

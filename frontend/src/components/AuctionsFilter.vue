@@ -112,7 +112,7 @@
             }
         },
         created() {
-            this.$store.dispatch('getCategories', 'categories');
+            this.$store.dispatch('getCategories');
         }
     }
 </script>
