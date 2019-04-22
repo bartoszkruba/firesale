@@ -38,14 +38,13 @@ public class UserService {
         user.addRole(userRole);
         user.setPassword(encoder.encode(user.getPassword()));
 
-        addUser(user);
+        saveUser(user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    public void addUser(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
     public UserJsonClass getUserById(Long id) {
@@ -55,5 +54,9 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findDistinctFirstByUsernameIgnoreCase(username);
     }
 }

@@ -1,10 +1,12 @@
 package com.company.firesale.controller;
 
 import com.company.firesale.entity.Auction;
+import com.company.firesale.json_classes.TestAuctionJsonClass;
 import com.company.firesale.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +22,8 @@ public class AuctionController {
     }
 
     @PostMapping
-    Auction createActionEntity() {
-        return actionEntityServis.createActionEntity();
+    Auction createActionEntity(@RequestBody TestAuctionJsonClass auction, Principal principal) {
+        return actionEntityServis.createNewAuction(auction, principal.getName());
     }
 
     @GetMapping("/{page}")
@@ -38,4 +40,5 @@ public class AuctionController {
     Optional<Auction> getAuctionById(@PathVariable long id) {
         return actionEntityServis.findById(id);
     }
+
 }
