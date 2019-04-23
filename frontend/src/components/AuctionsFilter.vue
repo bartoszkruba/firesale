@@ -1,5 +1,5 @@
 <template>
-    <v-container id="filter-container" xs12 sm6 pa-0>
+    <v-container id="filter-container" xs12 sm6 pa-0 v-on:keyup.enter="clickSearch">
         <v-form v-model="valid">
             <v-layout column justify-center>
                 <v-container id="search-container" xs12 pt-0>
@@ -8,6 +8,7 @@
                             <v-text-field
                                     v-model="filterParams.searchText"
                                     :rules="searchTextRules"
+                                    :autofocus=true
                                     label="Search"
                             ></v-text-field>
                         </v-flex>
