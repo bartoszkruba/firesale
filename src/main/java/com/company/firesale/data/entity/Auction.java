@@ -1,6 +1,7 @@
 package com.company.firesale.data.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,10 +19,11 @@ public class Auction {
     private String description;
     @CreationTimestamp
     private LocalDateTime openedAt;
+    @UpdateTimestamp
+    private LocalDateTime setLastUppdate;
     private LocalDateTime closingTime;
-    private double startUpPrice;
-    private double buyOutPrice;
-    private String category;
+    private Double startUpPrice;
+    private Double buyOutPrice;
 
     @ManyToOne
     private User user;
@@ -32,7 +34,11 @@ public class Auction {
     @Enumerated(value = EnumType.STRING)
     private AuctionStatus status;
 
+    @ManyToOne
+    private Category category;
+
     public Auction() {
+
     }
 
     public void addImage(Image image) {
@@ -76,6 +82,15 @@ public class Auction {
         return this;
     }
 
+    public LocalDateTime getSetLastUppdate() {
+        return setLastUppdate;
+    }
+
+    public Auction setLastUppdate(LocalDateTime setLastUppdate) {
+        this.setLastUppdate = setLastUppdate;
+        return this;
+    }
+
     public LocalDateTime getClosingTime() {
         return closingTime;
     }
@@ -94,20 +109,16 @@ public class Auction {
         return this;
     }
 
-    public double getBuyOutPrice() {
-        return buyOutPrice;
-    }
-
     public Auction setBuyOutPrice(double buyOutPrice) {
         this.buyOutPrice = buyOutPrice;
         return this;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public Auction setCategory(String category) {
+    public Auction setCategory(Category category) {
         this.category = category;
         return this;
     }
@@ -125,17 +136,11 @@ public class Auction {
         return images;
     }
 
-    public Auction setImages(Set<Image> images) {
-        this.images = images;
-        return this;
-    }
-
     public AuctionStatus getStatus() {
         return status;
     }
 
-    public Auction setStatus(AuctionStatus status) {
+    public void setStatus(AuctionStatus status) {
         this.status = status;
-        return this;
     }
 }
