@@ -1,7 +1,9 @@
 package com.company.firesale.data.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +16,9 @@ public class Auction {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String description;
-    private Date openedAt;
-    private Date closingTime;
+    @CreationTimestamp
+    private LocalDateTime openedAt;
+    private LocalDateTime closingTime;
     private double startUpPrice;
     private double buyOutPrice;
     private String category;
@@ -64,20 +67,20 @@ public class Auction {
         return this;
     }
 
-    public Date getOpenedAt() {
+    public LocalDateTime getOpenedAt() {
         return openedAt;
     }
 
-    public Auction setOpenedAt(Date openedAt) {
+    public Auction setOpenedAt(LocalDateTime openedAt) {
         this.openedAt = openedAt;
         return this;
     }
 
-    public Date getClosingTime() {
+    public LocalDateTime getClosingTime() {
         return closingTime;
     }
 
-    public Auction setClosingTime(Date closingTime) {
+    public Auction setClosingTime(LocalDateTime closingTime) {
         this.closingTime = closingTime;
         return this;
     }

@@ -9,17 +9,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Component
 public class InsertAuctionToDatabase implements CommandLineRunner {
 
-    private AuctionEntityRepository auctionEntityRepository;
-    private AuctionService auctionService;
+    private final AuctionEntityRepository auctionEntityRepository;
+    private final AuctionService auctionService;
 
     @Autowired
-    public InsertAuctionToDatabase(AuctionService auctionService) {
+    public InsertAuctionToDatabase(AuctionEntityRepository auctionEntityRepository, AuctionService auctionService) {
         this.auctionEntityRepository = auctionEntityRepository;
         this.auctionService = auctionService;
     }
@@ -32,9 +31,8 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
                 .setDescription("BRUM BRUM")
                 .setBuyOutPrice(80000)
                 .setStartUpPrice(10000)
-                .setClosingTime(Timestamp.valueOf(ldt1))
-                .setOpenedAt(Timestamp.from(Instant.now()))
-                .setCategory("Cars")
+                .setClosingTime(Timestamp.valueOf(ldt1).toLocalDateTime())
+//                .setCategory("Cars")
                 .setStatus(AuctionStatus.OPEN);
         auctionService.addAuction(auction1);
 
@@ -44,9 +42,7 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
                 .setDescription("BRUM BRUM")
                 .setBuyOutPrice(85000)
                 .setStartUpPrice(15000)
-                .setClosingTime(Timestamp.valueOf(ldt2))
-                .setOpenedAt(Timestamp.from(Instant.now()))
-                .setCategory("Cars")
+                .setClosingTime(Timestamp.valueOf(ldt2).toLocalDateTime())
                 .setStatus(AuctionStatus.CLOSED);
         auctionService.addAuction(auction2);
 
@@ -56,9 +52,8 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
                 .setDescription("A DVD Don`t know whats on it becus has no DVD player")
                 .setBuyOutPrice(20)
                 .setStartUpPrice(5)
-                .setClosingTime(Timestamp.valueOf(ldt3))
-                .setOpenedAt(Timestamp.from(Instant.now()))
-                .setCategory("Electronics")
+                .setClosingTime(Timestamp.valueOf(ldt3).toLocalDateTime())
+//                .setCategory("Electronics")
                 .setStatus(AuctionStatus.OPEN);
         auctionService.addAuction(auction3);
 
@@ -68,9 +63,8 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
                 .setDescription(" 5.5Kg Meat of a ... animal")
                 .setBuyOutPrice(400)
                 .setStartUpPrice(25)
-                .setClosingTime(Timestamp.valueOf(ldt4))
-                .setOpenedAt(Timestamp.from(Instant.now()))
-                .setCategory("Furniture")
+                .setClosingTime(Timestamp.valueOf(ldt4).toLocalDateTime())
+//                .setCategory("Furniture")
                 .setStatus(AuctionStatus.OPEN);
         auctionService.addAuction(auction4);
     }

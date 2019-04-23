@@ -32,6 +32,8 @@
 </template>
 
 <script>
+    import auctionService from '../services/auctionsService'
+
     export default {
         name: "NewAuction",
         mounted() {
@@ -66,7 +68,7 @@
             pickFile() {
                 this.$refs.image.click()
             },
-            postNewAuction() {
+            async postNewAuction() {
                 console.log(this.title);
                 console.log(this.description);
                 console.log(this.startUpPrice);
@@ -74,6 +76,18 @@
                 console.log(this.category);
                 console.log(this.closingTime);
                 console.log(this.pickedImages);
+
+                let response = await auctionService().postNewAuction({
+                    title: this.title,
+                    description: this.description,
+                    closingTime: this.closingTime,
+                    startUpPrice: parseFloat(this.startUpPrice),
+                    buyOutPrice: parseFloat(this.buyOutPrice),
+                    category: this.category,
+                    images: this.pickedImages
+                });
+
+                console.log(response.data);
             },
             updateDateTime(e) {
                 this.closingTime = e;

@@ -5,6 +5,7 @@ import com.company.firesale.data.entity.AuctionStatus;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -55,7 +56,8 @@ public class AuctionController {
     }
 
     @PostMapping
-    Auction createActionEntity(@RequestBody AuctionFormJsonClass auction, Principal principal) {
+    Auction createActionEntity(@Validated @RequestBody AuctionFormJsonClass auction, Principal principal) {
+        System.out.println(auction);
         return actionEntityServis.createNewAuction(auction, principal.getName());
     }
 

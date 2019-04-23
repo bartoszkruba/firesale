@@ -11,15 +11,19 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository){
+    public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
-    public Iterable findAll(){
+    public Iterable findAll() {
         return categoryRepository.findAll();
     }
 
-    public void addCategory(Category category){
+    public void addCategory(Category category) {
         categoryRepository.save(category);
+    }
+
+    public Category findCategoryByName(String name) {
+        return categoryRepository.findByName(name);
     }
 }

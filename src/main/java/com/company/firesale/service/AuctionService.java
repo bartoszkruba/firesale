@@ -1,9 +1,6 @@
 package com.company.firesale.service;
 
-import com.company.firesale.data.entity.Auction;
-import com.company.firesale.data.entity.AuctionStatus;
-import com.company.firesale.data.entity.Image;
-import com.company.firesale.data.entity.User;
+import com.company.firesale.data.entity.*;
 import com.company.firesale.data.repository.AuctionEntityRepository;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -25,11 +24,14 @@ public class AuctionService {
 
     private final ImageService imageService;
 
+    private final CategoryService categoryService;
+
     @Autowired
-    public AuctionService(AuctionEntityRepository actionEntityRepository, UserService userService, ImageService imageService) {
+    public AuctionService(AuctionEntityRepository actionEntityRepository, UserService userService, ImageService imageService, CategoryService categoryService) {
         this.actionEntityRepository = actionEntityRepository;
         this.userService = userService;
         this.imageService = imageService;
+        this.categoryService = categoryService;
     }
 
     public Optional<Auction> findById(long id) {
@@ -77,25 +79,44 @@ public class AuctionService {
         return actionEntity;
     }
 
+
     // TODO: 2019-04-22 should return JsonAuction
-    public Auction createNewAuction(AuctionFormJsonClass auction, String username) {
-        Auction DBAuction = new Auction();
-
-        // TODO: 2019-04-22 Check if user isn't null
+    public ResponseEntity<Auction> createNewAuction(AuctionFormJsonClass auction, String username) {
         User user = userService.getUserByUsername(username);
-        user.addAuction(DBAuction);
-        Arrays.stream(auction.getImages()).forEach(i -> {
-            try {
-                Image image = imageService.uploadImage(i);
-                DBAuction.addImage(image);
-            } catch (Exception e) {
-                System.out.println("Couldn't save image: " + e.getMessage());
-            }
-        });
-        userService.saveUser(user);
-        actionEntityRepository.save(DBAuction);
+        Category category = categoryService.findCategoryByName(auction.getCategory());
+        if (validateAuctionForm(auction) && user != null && category != null) {
+            Auction DBAuction = new Auction();
+            user.addAuction(DBAuction);
+            DBAuction.setTitle(auction.getTitle());
+            DBAuction.setDescription(auction.getDescription());
+            DBAuction.setBuyOutPrice(auction.getBuyOutPrice());
+            DBAuction.setStartUpPrice(auction.getStartUpPrice());
+            DBAuction.setClosingTime(auction.getClosingTime());
+            DBAuction.setStatus(AuctionStatus.OPEN);
 
-        return DBAuction;
+            // TODO: 2019-04-23 Add Category to auction
+//        DBAuction.setCategory(category);
+
+            Arrays.stream(auction.getImages()).forEach(i -> {
+                try {
+                    Image image = imageService.uploadImage(i);
+                    DBAuction.addImage(image);
+                } catch (Exception e) {
+                    System.out.println("Couldn't save image: " + e.getMessage());
+                }
+            });
+            userService.saveUser(user);
+            actionEntityRepository.save(DBAuction);
+
+            return new ResponseEntity<>(DBAuction, HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+
+    // TODO: 2019-04-23 Validate everything
+    private boolean validateAuctionForm(AuctionFormJsonClass auction) {
+        return true;
     }
 
 }

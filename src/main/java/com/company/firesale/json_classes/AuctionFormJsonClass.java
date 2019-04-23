@@ -1,14 +1,26 @@
 package com.company.firesale.json_classes;
 
-import java.util.Date;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class AuctionFormJsonClass {
 
+    @NotEmpty
+    @NotNull
     private String title;
+    @NotEmpty
+    @NotNull
     private String description;
-    private Date closingTime;
+    @NotNull
+    private LocalDateTime closingTime;
+    @NotNull
     private Double startUpPrice;
+    @NotNull
     private Double buyOutPrice;
+    @NotEmpty
+    @NotNull
     private String category;
 
     private String[] images;
@@ -32,11 +44,11 @@ public class AuctionFormJsonClass {
         this.description = description;
     }
 
-    public Date getClosingTime() {
+    public LocalDateTime getClosingTime() {
         return closingTime;
     }
 
-    public void setClosingTime(Date closingTime) {
+    public void setClosingTime(LocalDateTime closingTime) {
         this.closingTime = closingTime;
     }
 
@@ -70,5 +82,18 @@ public class AuctionFormJsonClass {
 
     public void setImages(String[] images) {
         this.images = images;
+    }
+
+    @Override
+    public String toString() {
+        return "AuctionFormJsonClass{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", closingTime=" + closingTime +
+                ", startUpPrice=" + startUpPrice +
+                ", buyOutPrice=" + buyOutPrice +
+                ", category='" + category + '\'' +
+                ", images=" + Arrays.toString(images) +
+                '}';
     }
 }

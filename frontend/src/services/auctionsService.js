@@ -8,6 +8,9 @@ export default () => {
                 {
                     params: query
                 });
+        },
+        postNewAuction(auction) {
+            return Api().post("/auctions", auction)
         }
     }
 }
