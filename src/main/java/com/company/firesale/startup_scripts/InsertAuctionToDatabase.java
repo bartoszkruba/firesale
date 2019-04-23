@@ -2,8 +2,10 @@ package com.company.firesale.startup_scripts;
 
 import com.company.firesale.data.entity.Auction;
 import com.company.firesale.data.entity.AuctionStatus;
+import com.company.firesale.data.entity.Bid;
 import com.company.firesale.data.entity.Category;
 import com.company.firesale.data.repository.AuctionEntityRepository;
+import com.company.firesale.data.repository.BidRepository;
 import com.company.firesale.data.repository.CategoryRepository;
 import com.company.firesale.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,14 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
     private AuctionEntityRepository auctionEntityRepository;
     private AuctionService auctionService;
     private CategoryRepository categoryRepository;
+    private BidRepository bidRepository;
 
     @Autowired
-    public InsertAuctionToDatabase(AuctionService auctionService, CategoryRepository categoryRepository) {
+    public InsertAuctionToDatabase(AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository) {
         this.auctionEntityRepository = auctionEntityRepository;
         this.auctionService = auctionService;
         this.categoryRepository = categoryRepository;
+        this.bidRepository = bidRepository;
     }
 
     @Override
@@ -44,8 +48,8 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
         Auction auction1 = new Auction();
         auction1.setTitle("A RED CAR")
                 .setDescription("BRUM BRUM")
-                .setBuyOutPrice(80000)
-                .setStartUpPrice(10000)
+                .setBuyOutPrice(Double.parseDouble("80000"))
+                .setStartUpPrice(Double.parseDouble("10000"))
                 .setClosingTime(Timestamp.valueOf(ldt1).toLocalDateTime())
                 .setCategory(categories.get(1))
                 .setStatus(AuctionStatus.OPEN);
@@ -55,8 +59,8 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
         Auction auction2 = new Auction();
         auction2.setTitle("A Blue CAR")
                 .setDescription("BRUM BRUM")
-                .setBuyOutPrice(85000)
-                .setStartUpPrice(15000)
+                .setBuyOutPrice(Double.parseDouble("85000"))
+                .setStartUpPrice(Double.parseDouble("15000"))
                 .setClosingTime(Timestamp.valueOf(ldt2).toLocalDateTime())
                 .setCategory(categories.get(1))
                 .setStatus(AuctionStatus.CLOSED);
@@ -65,8 +69,8 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
         Auction auction3 = new Auction();
         auction3.setTitle("A DVD")
                 .setDescription("A DVD Don`t know whats on it becus has no DVD player")
-                .setBuyOutPrice(20)
-                .setStartUpPrice(5)
+                .setBuyOutPrice(Double.parseDouble("20"))
+                .setStartUpPrice(Double.parseDouble("5"))
                 .setClosingTime(Timestamp.valueOf(ldt3).toLocalDateTime())
                 .setCategory(categories.get(2))
                 .setStatus(AuctionStatus.OPEN);
@@ -76,11 +80,27 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
         Auction auction4 = new Auction();
         auction4.setTitle("Tabel")
                 .setDescription("Oak tabel")
-                .setBuyOutPrice(400)
-                .setStartUpPrice(25)
+                .setBuyOutPrice(Double.parseDouble("400"))
+                .setStartUpPrice(Double.parseDouble("25"))
                 .setClosingTime(Timestamp.valueOf(ldt4).toLocalDateTime())
                 .setCategory(categories.get(3))
                 .setStatus(AuctionStatus.OPEN);
         auctionService.addAuction(auction4);
+
+        Bid bid1 = new Bid();
+        bid1.setYourBid(Double.parseDouble("20000"));
+        bidRepository.save(bid1);
+
+        Bid bid2 = new Bid();
+        bid2.setYourBid(Double.parseDouble("1500"));
+        bidRepository.save(bid2);
+
+        Bid bid3 = new Bid();
+        bid3.setYourBid(Double.parseDouble("30"));
+        bidRepository.save(bid3);
+
+        Bid bid4 = new Bid();
+        bid4.setYourBid(Double.parseDouble("250"));
+        bidRepository.save(bid4);
     }
 }
