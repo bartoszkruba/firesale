@@ -57,11 +57,15 @@ public class AuctionController {
 
     }
 
+    // TODO: 2019-04-23 Should return JsonClas
     @PostMapping
-        // TODO: 2019-04-23 Should return JsonClas
-    HttpEntity<Auction> createActionEntity(@Validated @RequestBody AuctionFormJsonClass auction,
-                                           Principal principal) {
-        return actionEntityServis.createNewAuction(auction, principal.getName());
+    public HttpEntity<Auction> createActionEntity(@Validated @RequestBody AuctionFormJsonClass auction,
+                                                  Principal principal) {
+        System.out.println("route accessed");
+        return actionEntityServis.
+                createNewAuction(
+                        auction,
+                        principal.getName());
     }
 
     @GetMapping("/{page}")

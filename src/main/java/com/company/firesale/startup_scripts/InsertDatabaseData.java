@@ -1,10 +1,8 @@
 package com.company.firesale.startup_scripts;
 
 
-import com.company.firesale.data.entity.Category;
 import com.company.firesale.data.entity.Role;
 import com.company.firesale.data.entity.User;
-import com.company.firesale.data.repository.CategoryRepository;
 import com.company.firesale.data.repository.RoleRepository;
 import com.company.firesale.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +10,18 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 public class InsertDatabaseData implements CommandLineRunner {
 
     private UserService userService;
     private RoleRepository roleRepository;
-    private CategoryRepository categoryRepository;
     private final BCryptPasswordEncoder encoder;
 
     @Autowired
-    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, CategoryRepository categoryRepository, BCryptPasswordEncoder encoder) {
+    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder) {
         this.userService = userService;
         this.roleRepository = roleRepository;
-        this.categoryRepository = categoryRepository;
+
         this.encoder = encoder;
     }
 
@@ -41,15 +35,6 @@ public class InsertDatabaseData implements CommandLineRunner {
         roleRepository.save(adminRole);
         roleRepository.save(userRole);
 
-        //Categories
-        List<Category> categories = new ArrayList<>();
-        categories.add(new Category("All"));
-        categories.add(new Category("Cars"));
-        categories.add(new Category("Electronics"));
-        categories.add(new Category("Furniture"));
-
-
-        categories.forEach(category -> categoryRepository.save(category));
 
 
         //Users

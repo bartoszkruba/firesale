@@ -10,6 +10,14 @@ module.exports = {
                 pathRewrite: {
                     '^/api': ''
                 }
+            },
+            '/images': {
+                target: 'http://localhost:8080/images',
+                ws: true,
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/images': ''
+                }
             }
         }
     }
