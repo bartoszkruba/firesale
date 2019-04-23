@@ -108,7 +108,7 @@ public class AuctionService {
             userService.saveUser(user);
             actionEntityRepository.save(DBAuction);
 
-            return new ResponseEntity<>(DBAuction, HttpStatus.CREATED);
+            return new ResponseEntity<>(null, HttpStatus.CREATED);
         }
 
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
