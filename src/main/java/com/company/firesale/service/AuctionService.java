@@ -93,9 +93,7 @@ public class AuctionService {
             DBAuction.setStartUpPrice(auction.getStartUpPrice());
             DBAuction.setClosingTime(auction.getClosingTime());
             DBAuction.setStatus(AuctionStatus.OPEN);
-
-            // TODO: 2019-04-23 Add Category to auction
-//        DBAuction.setCategory(category);
+            DBAuction.setCategory(category);
 
             Arrays.stream(auction.getImages()).forEach(i -> {
                 try {
