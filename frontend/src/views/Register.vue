@@ -16,28 +16,31 @@
                                                   type="text" color="primary" v-model="username"
                                                   :error-messages="usernameError"
                                                   @keydown.enter="register"
-                                                  @keydown="clearUsernameError"></v-text-field>
+                                                  @keydown="clearUsernameError"
+                                                  @keydown.space="(event) => event.preventDefault()"></v-text-field>
 
                                     <v-text-field prepend-icon="lock" name="password" label="Password*"
                                                   type="password" color="primary" v-model="password"
                                                   :error-messages="passwordError"
                                                   @keydown.enter="register"
-                                                  @keydown="clearPasswordError"></v-text-field>
+                                                  @keydown="clearPasswordError"
+                                                  @keydown.space="(event) => event.preventDefault()"></v-text-field>
 
                                     <v-text-field prepend-icon="lock" name="password" label="Repeat password*"
                                                   type="password" color="primary"
                                                   v-model="repeatedPassword"
                                                   :error-messages="repeatedPasswordError"
                                                   @keydown.enter="register"
-                                                  @keydown="clearRepeatedPasswordError"></v-text-field>
+                                                  @keydown="clearRepeatedPasswordError"
+                                                  @keydown.space="(event) => event.preventDefault()"></v-text-field>
 
-                                    <v-text-field prepend-icon="person" name="firstName" label="First Name*"
+                                    <v-text-field prepend-icon="face" name="firstName" label="First Name*"
                                                   type="text" color="primary" v-model="firstName"
                                                   :error-messages="firstNameError"
                                                   @keydown.enter="register"
                                                   @keydown="clearFirstNameError"></v-text-field>
 
-                                    <v-text-field prepend-icon="person" name="lastName" label="Last Name*"
+                                    <v-text-field prepend-icon="face" name="lastName" label="Last Name*"
                                                   type="text" color="primary" v-model="lastName"
                                                   :error-messages="lastNameError"
                                                   @keydown.enter="register"
@@ -47,13 +50,14 @@
                                                   type="email" color="primary" v-model="email"
                                                   :error-messages="emailError"
                                                   @keydown.enter="register"
-                                                  @keydown="clearEmailError"></v-text-field>
+                                                  @keydown="clearEmailError"
+                                                  @keydown.space="(event) => event.preventDefault()"></v-text-field>
 
-                                    <v-text-field prepend-icon="phone" name="phone" label="Phone Number*"
-                                                  type="number" color="primary" v-model="phone"
+                                    <v-text-field prepend-icon="phone" name="phone" label="Contact Number*"
+                                                  type="enter" color="primary" v-model="phone"
                                                   :error-messages="phoneError"
                                                   @keydown.enter="register"
-                                                  @keydown="clearPhoneError"></v-text-field>
+                                                  @keydown="preventUnwantedCharacters"></v-text-field>
                                 </v-form>
                             </v-card-text>
                             <v-card-actions>
@@ -140,10 +144,15 @@
                     this.repeatedPasswordError = "Password doesn't match";
                     validation = false;
                 }
+
+                // todo add regex to replace all double space with sinngle one
+                this.firstName = this.firstName.trim();
                 if (this.firstName === "") {
                     this.firstNameError = "Field cannot be empty";
                     validation = false;
                 }
+
+                this.lastName = this.lastName.trim();
                 if (this.lastName === "") {
                     this.lastNameError = "Field cannot be empty";
                     validation = false;
@@ -152,17 +161,26 @@
                     this.emailError = "Field cannot be empty";
                     validation = false;
                 } else {
+// eslint-disable-next-line
                     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     if (!re.test(String(this.email).toLowerCase())) {
                         this.emailError = "Invalid email";
                         validation = false;
                     }
                 }
+                this.phone.trim();
                 if (this.phone === "") {
                     this.phoneError = "Field cannot be empty";
                     validation = false;
                 }
                 return validation;
+            },
+            preventUnwantedCharacters(e) {
+                this.clearPhoneError(e);
+                let re = /[0-9 ()-]|Backspace/;
+                if (!e.key.toString().match(re)) {
+                    e.preventDefault()
+                }
             },
             clearUsernameError(e) {
                 if (e.key !== 'enter') {

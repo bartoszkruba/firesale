@@ -14,31 +14,41 @@
                            ref="image"
                            accept="image/*"
                            multiple="multiple">
-                    <v-alert
-                            :value="showAlert"
-                            type="error">
-                        Something went wrong on server
+                    <v-alert :value="showAlert"
+                             type="error">Something went wrong on server
                     </v-alert>
                     <br>
                     <v-text-field label="Title" id="title" v-model="title"
-                                  :error-messages="titleError"></v-text-field>
+                                  :error-messages="titleError"
+                                  @keydown="clearTitleError"
+                                  @keydown.enter="postNewAuction"></v-text-field>
                     <br>
                     <v-textarea label="Description" id="description" v-model="description"
                                 hint="Describe your product/products" outline
-                                :error-messages="descriptionError"></v-textarea>
+                                :error-messages="descriptionError"
+                                @keydown="clearDescriptionError"
+                                @keydown.enter="postNewAuction"></v-textarea>
                     <v-datetime-picker label="Closing At:" :datetime="closingTime"
                                        @input="updateDateTime"
                                        :error-messages="closingTimeError"></v-datetime-picker>
-                    <v-text-field type="number" label="Startup Price (SEK)" :error-messages="startupPriceError"
-                                  v-model="startUpPrice"></v-text-field>
-                    <v-text-field type="number" label="Buyout Price (SEK)" :error-messages="buyoutPriceError"
-                                  v-model="buyOutPrice"></v-text-field>
+                    <v-text-field type="number" label="Startup Price (SEK)"
+                                  :error-messages="startupPriceError"
+                                  v-model="startUpPrice"
+                                  @keydown="clearStartupPriceError"
+                                  @keydown.enter="postNewAuction"></v-text-field>
+                    <v-text-field type="number" label="Buyout Price (SEK)"
+                                  :error-messages="buyoutPriceError"
+                                  v-model="buyOutPrice"
+                                  @keydown="clearBuyoutPriceError"
+                                  @keydown.enter="postNewAuction"></v-text-field>
                     <v-select :items="categories" label="Category" v-model="category"></v-select>
                     <h2>Images: ({{imagesCount}} selected)</h2>
                     <v-text-field id="imagepicker" label="Select Images" @click="pickFile"
                                   prepend-icon='attach_file'></v-text-field>
                     <v-layout align-center justify-center>
-                        <v-btn color="primary" @click="postNewAuction">Create Auction</v-btn>
+                        <v-btn color="primary"
+                               @click="postNewAuction">Create Auction
+                        </v-btn>
                     </v-layout>
                 </v-container>
             </v-card>
@@ -87,7 +97,7 @@
                 this.$refs.image.click()
             },
             async postNewAuction() {
-                this.showAler = false;
+                this.showAlert = false;
                 if (this.validateFields()) {
                     let response = await auctionService().postNewAuction({
                         title: this.title,
@@ -180,6 +190,26 @@
                     return false;
                 }
                 return true;
+            },
+            clearTitleError(e) {
+                if (e.key !== "enter") {
+                    this.titleError = "";
+                }
+            },
+            clearDescriptionError(e) {
+                if (e.key !== "enter") {
+                    this.descriptionError = "";
+                }
+            },
+            clearStartupPriceError(e) {
+                if (e.key !== "enter") {
+                    this.startupPriceError = "";
+                }
+            },
+            clearBuyoutPriceError(e) {
+                if (e.key !== "enter") {
+                    this.buyoutPriceError = "";
+                }
             }
         }
     }
