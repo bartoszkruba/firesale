@@ -3,7 +3,6 @@ package com.company.firesale.controller;
 import com.company.firesale.data.entity.Auction;
 import com.company.firesale.data.entity.AuctionStatus;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
-import com.company.firesale.json_classes.AuctionJsonClass;
 import com.company.firesale.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auctions")
@@ -79,7 +77,7 @@ public class AuctionController {
     }
 
     @GetMapping("/id/{id}")
-    AuctionJsonClass getAuctionById(@PathVariable long id) {
+    Auction getAuctionById(@PathVariable long id) {
         return actionEntityServis.findById(id);
     }
 

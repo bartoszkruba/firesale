@@ -36,7 +36,7 @@ public class AuctionService {
         this.categoryService = categoryService;
     }
 
-    public AuctionJsonClass findById(long id) {
+    public Auction findById(long id) {
         return actionEntityRepository.findAuctionById(id);
     }
 
@@ -112,12 +112,12 @@ public class AuctionService {
 
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
-    public AuctionJsonClass getAuctionById(Long id){
+
+    public AuctionJsonClass getAuctionById(Long id) {
         Optional<Auction> a = actionEntityRepository.findById(id);
         if (a.isPresent()) {
             return new AuctionJsonClass(a.get());
-        }
-        else {
+        } else {
             return null;
         }
     }
