@@ -8,6 +8,13 @@
                        accept="image/*"
                        multiple="multiple">
                 <h1>Create New Auction</h1>
+                <br>
+                <v-alert
+                        :value="showAlert"
+                        type="error">
+                    Something went wrong on server
+                </v-alert>
+                <br>
                 <v-text-field label="Title" id="title" v-model="title" :error-messages="titleError"></v-text-field>
                 <br>
                 <v-textarea label="Description" id="description" v-model="description"
@@ -49,11 +56,13 @@
                 buyOutPrice: "",
                 category: "All",
 
-                titleError: "Field cannot be empty",
-                descriptionError: "Field cannot be empty",
-                closingTimeError: "Choose date",
-                startupPriceError: "Field cannot be empty",
-                buyoutPriceError: "Field cannot be empty"
+                titleError: "",
+                descriptionError: "",
+                closingTimeError: "",
+                startupPriceError: "",
+                buyoutPriceError: "",
+
+                showAlert: false
             }
         },
         computed: {
@@ -69,24 +78,32 @@
                 this.$refs.image.click()
             },
             async postNewAuction() {
-                let response = await auctionService().postNewAuction({
-                    title: this.title,
-                    description: this.description,
-                    closingTime: this.closingTime,
-                    startUpPrice: parseFloat(this.startUpPrice),
-                    buyOutPrice: parseFloat(this.buyOutPrice),
-                    category: this.category,
-                    images: this.pickedImages
-                });
+                this.showAler = false;
+                if (this.validateFields()) {
+                    let response = await auctionService().postNewAuction({
+                        title: this.title,
+                        description: this.description,
+                        closingTime: this.closingTime,
+                        startUpPrice: parseFloat(this.startUpPrice),
+                        buyOutPrice: parseFloat(this.buyOutPrice),
+                        category: this.category,
+                        images: this.pickedImages
+                    });
 
-                if (response.status === 201) {
-                    console.log(`auction created`);
-                } else {
-                    console.log(`something went wrong`);
+                    if (response.status === 201) {
+                        this.$router.push("/")
+                    } else if (response.status === 401) {
+                        this.$router.push("/login")
+                    } else {
+                        this.showAlert = true;
+                    }
                 }
             },
             updateDateTime(e) {
                 this.closingTime = e;
+                if (!this.validateClosingTime()) {
+                    this.closingTime = null;
+                }
             },
             loadImages(e) {
                 this.pickedImages = [];
@@ -98,6 +115,62 @@
                         this.pickedImages.push(e.target.result);
                     };
                 }
+            },
+            validateFields() {
+                return this.validateTitle() && this.validateDescription() &&
+                    this.validateClosingTime() && this.validateStartupPrice() &&
+                    this.validateBuytOutPrice();
+            },
+            validateTitle() {
+                this.title = this.title.trim();
+                this.titleError = this.title === "" ? "Title cannot be empty" : "";
+                return this.titleError === "";
+            },
+            validateDescription() {
+                this.description = this.description.trim();
+                this.descriptionError = this.description === "" ? "Description cannot be empty" : "";
+                return this.descriptionError === "";
+            },
+            validateClosingTime() {
+                this.closingTimeError = "";
+                let currentdatetime = new Date();
+                if (this.closingTime === null) {
+                    this.closingTimeError = "Pick closing time";
+                    return false;
+                } else if (this.closingTime < currentdatetime) {
+                    this.closingTimeError = "Pick future date";
+                    return false;
+                }
+                return true;
+            },
+            validateStartupPrice() {
+                this.startupPriceError = "";
+                if (this.startupPrice === null) {
+                    this.startupPriceError = "Choose Startup price";
+                    return false;
+                } else if (this.startUpPrice === "") {
+                    this.startupPriceError = "Choose Startup price";
+                    return false;
+                } else if (this.startUpPrice < 0) {
+                    this.startupPriceError = "Startup price needs to be bigger than 0";
+                    return false;
+                }
+                return true;
+            },
+            validateBuytOutPrice() {
+                this.buyoutPriceError = "";
+
+                if (this.buyoutPrice === null) {
+                    this.buyoutPriceError = "Choose buyout price";
+                    return false;
+                } else if (this.buyOutPrice === "") {
+                    this.buyoutPriceError = "Choose buyout price";
+                    return false;
+                } else if (this.buyOutPrice <= this.startUpPrice) {
+                    this.buyoutPriceError = "Buyout price need to be bigger than startup price"
+                    return false;
+                }
+                return true;
             }
         }
     }
