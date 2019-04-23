@@ -3,6 +3,7 @@ package com.company.firesale.service;
 import com.company.firesale.data.entity.*;
 import com.company.firesale.data.repository.AuctionEntityRepository;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
+import com.company.firesale.json_classes.AuctionJsonClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,8 +36,8 @@ public class AuctionService {
         this.categoryService = categoryService;
     }
 
-    public Optional<Auction> findById(long id) {
-        return actionEntityRepository.findById(id);
+    public AuctionJsonClass findById(long id) {
+        return actionEntityRepository.findAuctionById(id);
     }
 
     public Page<Auction> findTenByDate(int page) {
@@ -80,7 +81,6 @@ public class AuctionService {
         return actionEntity;
     }
 
-
     // TODO: 2019-04-22 should return JsonAuction
     public ResponseEntity<Auction> createNewAuction(AuctionFormJsonClass auction, String username) {
         User user = userService.getUserByUsername(username);
@@ -111,6 +111,15 @@ public class AuctionService {
         }
 
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+    public AuctionJsonClass getAuctionById(Long id){
+        Optional<Auction> a = actionEntityRepository.findById(id);
+        if (a.isPresent()) {
+            return new AuctionJsonClass(a.get());
+        }
+        else {
+            return null;
+        }
     }
 
     private boolean validateAuctionForm(AuctionFormJsonClass auction) {

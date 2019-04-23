@@ -2,6 +2,7 @@ package com.company.firesale.data.repository;
 
 import com.company.firesale.data.entity.Auction;
 import com.company.firesale.data.entity.AuctionStatus;
+import com.company.firesale.json_classes.AuctionJsonClass;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +18,7 @@ public interface ActionEntityRepository extends CrudRepository<Auction, Long> {
 @Repository
 public interface AuctionEntityRepository extends PagingAndSortingRepository<Auction, Long> {
 
-    Optional<Auction> findById(Long id);
+    AuctionJsonClass findAuctionById(Long id);
 
     //TODO: boy_out_price should be current highest bid
     @Query(value = "SELECT a FROM Auction a WHERE a.title LIKE CONCAT('%', :title, '%') AND a.buyOutPrice <= :price AND a.category LIKE :category AND a.status LIKE :status")

@@ -11,6 +11,9 @@ export default () => {
         },
         postNewAuction(auction) {
             return Api().post("/auctions", auction)
+        },
+        getAuctionById(id){
+            return Api().get("/auctions/id/", id)
         }
     }
 }
