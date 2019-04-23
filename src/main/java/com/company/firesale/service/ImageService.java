@@ -2,6 +2,7 @@ package com.company.firesale.service;
 
 import com.company.firesale.data.entity.Image;
 import com.company.firesale.data.repository.ImageRepository;
+import com.company.firesale.json_classes.ImageJsonClass;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,6 +61,15 @@ public class ImageService {
         if (!matcher.find())
             return "";
         return "." + matcher.group(1).split("/")[1].toLowerCase();
+    }
+
+    public ImageJsonClass getImageById(Long id) {
+        Optional<Image> optionalImage = imageRepository.findById(id);
+        if (optionalImage.isPresent()) {
+            return new ImageJsonClass(optionalImage.get());
+        } else {
+            return null;
+        }
     }
 
 }
