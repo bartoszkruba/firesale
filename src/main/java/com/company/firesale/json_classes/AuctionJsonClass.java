@@ -1,6 +1,7 @@
 package com.company.firesale.json_classes;
 
 import com.company.firesale.data.entity.Auction;
+import com.company.firesale.data.entity.Category;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ public class AuctionJsonClass {
     private LocalDateTime closingTime;
     private double startUpPrice;
     private double buyOutPrice;
-    private String category;
+    private Category category;
 
     public AuctionJsonClass(Auction auction){
         this.id = auction.getId();
@@ -81,11 +82,11 @@ public class AuctionJsonClass {
         this.buyOutPrice = buyOutPrice;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }
