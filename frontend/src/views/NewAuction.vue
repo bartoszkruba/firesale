@@ -69,14 +69,6 @@
                 this.$refs.image.click()
             },
             async postNewAuction() {
-                console.log(this.title);
-                console.log(this.description);
-                console.log(this.startUpPrice);
-                console.log(this.buyOutPrice);
-                console.log(this.category);
-                console.log(this.closingTime);
-                console.log(this.pickedImages);
-
                 let response = await auctionService().postNewAuction({
                     title: this.title,
                     description: this.description,
@@ -87,7 +79,11 @@
                     images: this.pickedImages
                 });
 
-                console.log(response.data);
+                if (response.status === 201) {
+                    console.log(`auction created`);
+                } else {
+                    console.log(`something went wrong`);
+                }
             },
             updateDateTime(e) {
                 this.closingTime = e;
