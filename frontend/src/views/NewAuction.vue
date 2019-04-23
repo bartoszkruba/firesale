@@ -1,39 +1,49 @@
 <template>
     <v-app class="mt-4">
         <v-content>
-            <v-container style="background-color: white; color:black">
-                <input type="file" @input="loadImages"
-                       style="display: none"
-                       ref="image"
-                       accept="image/*"
-                       multiple="multiple">
-                <h1>Create New Auction</h1>
-                <br>
-                <v-alert
-                        :value="showAlert"
-                        type="error">
-                    Something went wrong on server
-                </v-alert>
-                <br>
-                <v-text-field label="Title" id="title" v-model="title" :error-messages="titleError"></v-text-field>
-                <br>
-                <v-textarea label="Description" id="description" v-model="description"
-                            hint="Describe your product/products" outline
-                            :error-messages="descriptionError"></v-textarea>
-                <v-datetime-picker label="Closing At:" :datetime="closingTime"
-                                   @input="updateDateTime" :error-messages="closingTimeError"></v-datetime-picker>
-                <v-text-field type="number" label="Startup Price (SEK)" :error-messages="startupPriceError"
-                              v-model="startUpPrice"></v-text-field>
-                <v-text-field type="number" label="Buyout Price (SEK)" :error-messages="buyoutPriceError"
-                              v-model="buyOutPrice"></v-text-field>
-                <v-select :items="categories" label="Category" v-model="category"></v-select>
-                <h2>Images: ({{imagesCount}} selected)</h2>
-                <v-text-field id="imagepicker" label="Select Images" @click="pickFile"
-                              prepend-icon='attach_file'></v-text-field>
-                <v-layout align-center justify-center>
-                    <v-btn color="primary" @click="postNewAuction">Create Auction</v-btn>
-                </v-layout>
+            <v-container>
+                <v-card>
+                    <v-toolbar>
+                        <v-layout align-center justify-center>
+                            <v-toolbar-title>Create Your account</v-toolbar-title>
+                        </v-layout>
+                    </v-toolbar>
+                    <v-container>
+                        <input type="file" @input="loadImages"
+                               style="display: none"
+                               ref="image"
+                               accept="image/*"
+                               multiple="multiple">
+                        <v-alert
+                                :value="showAlert"
+                                type="error">
+                            Something went wrong on server
+                        </v-alert>
+                        <br>
+                        <v-text-field label="Title" id="title" v-model="title"
+                                      :error-messages="titleError"></v-text-field>
+                        <br>
+                        <v-textarea label="Description" id="description" v-model="description"
+                                    hint="Describe your product/products" outline
+                                    :error-messages="descriptionError"></v-textarea>
+                        <v-datetime-picker label="Closing At:" :datetime="closingTime"
+                                           @input="updateDateTime"
+                                           :error-messages="closingTimeError"></v-datetime-picker>
+                        <v-text-field type="number" label="Startup Price (SEK)" :error-messages="startupPriceError"
+                                      v-model="startUpPrice"></v-text-field>
+                        <v-text-field type="number" label="Buyout Price (SEK)" :error-messages="buyoutPriceError"
+                                      v-model="buyOutPrice"></v-text-field>
+                        <v-select :items="categories" label="Category" v-model="category"></v-select>
+                        <h2>Images: ({{imagesCount}} selected)</h2>
+                        <v-text-field id="imagepicker" label="Select Images" @click="pickFile"
+                                      prepend-icon='attach_file'></v-text-field>
+                        <v-layout align-center justify-center>
+                            <v-btn color="primary" @click="postNewAuction">Create Auction</v-btn>
+                        </v-layout>
+                    </v-container>
+                </v-card>
             </v-container>
+
         </v-content>
     </v-app>
 </template>
