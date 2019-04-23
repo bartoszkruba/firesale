@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -112,9 +113,18 @@ public class AuctionService {
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    // TODO: 2019-04-23 Validate everything
     private boolean validateAuctionForm(AuctionFormJsonClass auction) {
-        return true;
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        if (auction.getClosingTime().isBefore(currentTime)) {
+            return false;
+        } else if (auction.getStartUpPrice() < 0) {
+            return false;
+        } else if (auction.getBuyOutPrice() <= auction.getStartUpPrice()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
