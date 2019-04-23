@@ -35,8 +35,8 @@ public class AuctionService {
         this.categoryService = categoryService;
     }
 
-    public Optional<Auction> findById(long id) {
-        return actionEntityRepository.findById(id);
+    public AuctionJsonClass findById(long id) {
+        return actionEntityRepository.findAuctionById(id);
     }
 
     public Page<Auction> findTenByDate(int page) {
