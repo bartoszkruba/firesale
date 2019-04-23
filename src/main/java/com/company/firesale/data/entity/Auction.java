@@ -1,5 +1,7 @@
 package com.company.firesale.data.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -15,10 +17,12 @@ public class Auction {
     @Column(columnDefinition = "TEXT")
     private String description;
     private Date openedAt;
+    private Date setLastUppdate;
     private Date closingTime;
-    private double startUpPrice;
-    private double buyOutPrice;
-    private String category;
+    private Double startUpPrice;
+    private Double buyOutPrice;
+
+
 
     @ManyToOne
     private User user;
@@ -29,7 +33,12 @@ public class Auction {
     @Enumerated(value = EnumType.STRING)
     private AuctionStatus status;
 
-    public Auction() {
+    @ManyToOne
+    private Category category;
+
+
+    public Auction(){
+
     }
 
     public void addImage(Image image) {
@@ -73,6 +82,15 @@ public class Auction {
         return this;
     }
 
+    public Date getSetLastUppdate() {
+        return setLastUppdate;
+    }
+
+    public Auction setLastUppdate(Date setLastUppdate) {
+        this.setLastUppdate = setLastUppdate;
+        return this;
+    }
+
     public Date getClosingTime() {
         return closingTime;
     }
@@ -100,11 +118,11 @@ public class Auction {
         return this;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public Auction setCategory(String category) {
+    public Auction setCategory(Category category) {
         this.category = category;
         return this;
     }
@@ -135,4 +153,6 @@ public class Auction {
         this.status = status;
         return this;
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.company.firesale.data.entity;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Category {
@@ -18,6 +19,9 @@ public class Category {
 
     @Column(unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "category")
+    private Set<Auction> auctions;
 
     public Long getId() {
         return id;
