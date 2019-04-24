@@ -18,7 +18,11 @@ public class Bid {
 
     @ManyToOne
     private Auction auction;
-    
+
+
+    @ManyToOne
+    private User user;
+
     public Bid(){
     }
 
@@ -37,6 +41,16 @@ public class Bid {
 
     public Bid setAuction(Auction auction){
         this.auction = auction;
+        return this;
+    }
+
+
+    public User getUser(){
+        return user;
+    }
+
+    public Bid setUser(User user){
+        this.user = user;
         return this;
     }
 

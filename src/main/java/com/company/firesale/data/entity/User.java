@@ -54,6 +54,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Auction> auctions;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Bid> bid;
+
 
     public User() {
     }
