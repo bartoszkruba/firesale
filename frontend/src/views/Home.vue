@@ -18,6 +18,7 @@
             HelloWorld,
         },
         beforeMount() {
+            console.log('asd ', this.$route.query);
             this.$store.dispatch('getAuctions', this.$route.query);
         }
     }

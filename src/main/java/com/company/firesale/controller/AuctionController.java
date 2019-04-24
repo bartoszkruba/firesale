@@ -31,6 +31,11 @@ public class AuctionController {
             @RequestParam(required = false) boolean showAll) {
 
         AuctionStatus status = null;
+
+        if(title == null){
+            title = "";
+        }
+
         if (!showAll) {
             status = AuctionStatus.OPEN;
         }

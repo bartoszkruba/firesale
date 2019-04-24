@@ -9,6 +9,7 @@
                                     v-model="filterParams.searchText"
                                     :rules="searchTextRules"
                                     :autofocus=true
+                                    clearable
                                     label="Search"
                             ></v-text-field>
                         </v-flex>
@@ -79,7 +80,8 @@
                 valid: false,
                 filterParams: this.$store.state.filterParams,
                 searchTextRules: [
-                    v => v != null && v.length >= 3 || 'Enter at least 3 characters'
+                    // v => v != null && v.length >= 3 || 'Enter at least 3 characters',
+
                 ],
                 items: this.$store.state.categories,
                 showFilters: this.$store.state.showFiltersOnHome,
