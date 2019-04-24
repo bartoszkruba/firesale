@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +39,10 @@ public class AuctionService {
 
     public Auction findById(long id) {
         return actionEntityRepository.findAuctionById(id);
+    }
+    public List<Auction> findTenByTitle(String title){
+//        Pageable pageWithTen = PageRequest.of(page, 1, Sort.by("closingTime"));
+        return actionEntityRepository.findAuctionsByTitle(title);
     }
 
     public Page<Auction> findTenByDate(int page) {

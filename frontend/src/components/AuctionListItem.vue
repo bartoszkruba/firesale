@@ -1,14 +1,14 @@
 <template>
     <v-card id="listitempanel">
         <div id="auctionimgcontainer">
-            <img id="auctionimg" :src="mainimage"></img>
+            <img id="auctionimg" :src="auction.mainimage"/>
         </div>
 
         <div id="auctiontextcontent">
-            <h3 id="auctiontitle">{{title}}</h3>
-            <span id="auctiondescription">{{description}}</span>
-            <h3 id="auctionprice">Current price: {{startUpPrice}}</h3>
-            <h3 id="auctiontime">Ends at: {{closingTime}}</h3>
+            <h3 id="auctiontitle">{{auction.title}}</h3>
+            <span id="auctiondescription">{{auction.description}}</span>
+            <h3 id="auctionprice">Current price: {{auction.startUpPrice}}</h3>
+            <h3 id="auctiontime">Ends at: {{auction.closingTime}}</h3>
 
         </div>
         <v-btn id="buybutton"
@@ -29,11 +29,12 @@
     export default {
         name: "AuctionListItem",
         props: {
+            auction: {},
             id: Number,
             title: String,
             description: String,
             openedAt: String,
-            closingTime: String,
+            closingTime: Number,
             startUpPrice: Number,
             buyOutPrice: Number,
             status: String,

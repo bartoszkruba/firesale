@@ -16,7 +16,8 @@
                     </v-container>
                     <transition name="fade">
                         <v-container id="filters-container" xs12 pa-0
-                                v-show="this.$store.state.showFiltersOnHome">
+                                 v-show=false>
+<!--                                v-show="this.$store.state.showFiltersOnHome"-->
                             <v-layout row wrap>
                                 <v-container id="filter-slider" xs12 pa-0>
                                     <v-flex xs12 mt-2>
@@ -56,7 +57,7 @@
                     <v-container pa-0 id="container-buttons">
                         <v-flex>
                             <v-layout justify-center>
-                                <v-btn @click="toggleFilters" color="primary">
+                                <v-btn @click="toggleFilters" color="primary" v-show=false>
                                     <v-icon>filter_list</v-icon>
                                 </v-btn>
                                 <v-btn @click="clickSearch" color="primary">
@@ -111,6 +112,7 @@
                 if (this.filterParams.showAllAuctions === true) {
                     urlQuery.showAll = this.filterParams.showAllAuctions;
                 }
+                // urlQuery.page = 0;
                 return urlQuery;
             }
         },

@@ -35,6 +35,7 @@ export default new Vuex.Store({
         },
         setAuctions(state, params) {
             state.auctions = params;
+            console.log(this.state.auctions);
         }
     },
     actions: {
