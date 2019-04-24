@@ -1,14 +1,9 @@
 package com.company.firesale.controller;
 
 import com.company.firesale.data.entity.Auction;
-import com.company.firesale.data.entity.AuctionStatus;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

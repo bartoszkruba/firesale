@@ -37,6 +37,10 @@ public class Auction {
     @ManyToOne
     private Category category;
 
+    @OneToMany(mappedBy = "auction")
+    private Set<Bid> bid;
+
+
     public Auction() {
 
     }
@@ -100,16 +104,16 @@ public class Auction {
         return this;
     }
 
-    public double getStartUpPrice() {
+    public Double getStartUpPrice() {
         return startUpPrice;
     }
 
-    public Auction setStartUpPrice(double startUpPrice) {
+    public Auction setStartUpPrice(Double startUpPrice) {
         this.startUpPrice = startUpPrice;
         return this;
     }
 
-    public Auction setBuyOutPrice(double buyOutPrice) {
+    public Auction setBuyOutPrice(Double buyOutPrice) {
         this.buyOutPrice = buyOutPrice;
         return this;
     }
