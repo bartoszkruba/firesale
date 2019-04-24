@@ -42,7 +42,9 @@
                             <v-toolbar class="mt-3">
                                 <v-layout align-center justify-center>
                                     <v-toolbar-items name="signup">
-                                        <span>New to Firesale? <a href="">Register</a></span>
+                                        <span>New to Firesale?
+                                            <router-link to="/register">Register</router-link>
+                                        </span>
                                     </v-toolbar-items>
                                 </v-layout>
                             </v-toolbar>

@@ -63,6 +63,9 @@
     export default {
         name: "NewAuction",
         mounted() {
+            // if (!this.$store.state.loggedIn) {
+            //     this.$router.push("/login")
+            // }
             this.$store.dispatch("getCategories");
         },
         data() {
@@ -99,21 +102,23 @@
             async postNewAuction() {
                 this.showAlert = false;
                 if (this.validateFields()) {
-                    let response = await auctionService().postNewAuction({
-                        title: this.title,
-                        description: this.description,
-                        closingTime: this.closingTime,
-                        startUpPrice: parseFloat(this.startUpPrice),
-                        buyOutPrice: parseFloat(this.buyOutPrice),
-                        category: this.category,
-                        images: this.pickedImages
-                    });
+                    try {
+                        let response = await auctionService().postNewAuction({
+                            title: this.title,
+                            description: this.description,
+                            closingTime: this.closingTime,
+                            startUpPrice: parseFloat(this.startUpPrice),
+                            buyOutPrice: parseFloat(this.buyOutPrice),
+                            category: this.category,
+                            images: this.pickedImages
+                        });
 
-                    if (response.status === 201) {
-                        this.$router.push("/")
-                    } else if (response.status === 401) {
-                        this.$router.push("/login")
-                    } else {
+                        if (response.status === 201) {
+                            this.$router.push("/")
+                        } else if (response.status === 401) {
+                            this.$router.push("/login")
+                        }
+                    } catch (e) {
                         this.showAlert = true;
                     }
                 }
@@ -164,13 +169,13 @@
             },
             validateStartupPrice() {
                 this.startupPriceError = "";
-                if (this.startupPrice === null) {
+                if (this.startUpPrice === null) {
                     this.startupPriceError = "Choose Startup price";
                     return false;
                 } else if (this.startUpPrice === "") {
                     this.startupPriceError = "Choose Startup price";
                     return false;
-                } else if (this.startUpPrice < 0) {
+                } else if (parseFloat(this.startUpPrice) < 0) {
                     this.startupPriceError = "Startup price needs to be bigger than 0";
                     return false;
                 }
@@ -179,14 +184,14 @@
             validateBuytOutPrice() {
                 this.buyoutPriceError = "";
 
-                if (this.buyoutPrice === null) {
+                if (this.buyOutPrice === null) {
                     this.buyoutPriceError = "Choose buyout price";
                     return false;
                 } else if (this.buyOutPrice === "") {
                     this.buyoutPriceError = "Choose buyout price";
                     return false;
-                } else if (this.buyOutPrice <= this.startUpPrice) {
-                    this.buyoutPriceError = "Buyout price need to be bigger than startup price"
+                } else if (parseFloat(this.buyOutPrice) < parseFloat(this.startUpPrice)) {
+                    this.buyoutPriceError = "Buyout price need to be bigger than startup price";
                     return false;
                 }
                 return true;
