@@ -117,6 +117,9 @@ public class Auction {
         this.buyOutPrice = buyOutPrice;
         return this;
     }
+    public Double getBuyOutPrice() {
+        return this.buyOutPrice;
+    }
 
     public Category getCategory() {
         return category;

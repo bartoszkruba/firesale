@@ -35,6 +35,7 @@ export default new Vuex.Store({
         },
         setAuctions(state, params) {
             state.auctions = params;
+            console.log(this.state.auctions);
         }
     },
     actions: {
@@ -44,11 +45,11 @@ export default new Vuex.Store({
                     context.commit('setAuctions', response.data);
                 });
         },
-        async checkIfLoggedIn(context, params) {
+        async checkIfLoggedIn() {
             let response = await auth.checkIfLoggedIn();
             this.commit("setLoggedIn", response)
         },
-        async getCategories(context, params) {
+        async getCategories(context) {
             await CategoryService().getCategories()
                 .then(response => {
                     context.commit('setCategories', response.data)

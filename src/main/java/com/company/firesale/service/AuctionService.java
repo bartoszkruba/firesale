@@ -3,6 +3,7 @@ package com.company.firesale.service;
 import com.company.firesale.data.entity.*;
 import com.company.firesale.data.repository.AuctionEntityRepository;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
+import com.company.firesale.json_classes.AuctionJsonClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,12 +37,22 @@ public class AuctionService {
         this.categoryService = categoryService;
     }
 
-    public Optional<Auction> findById(long id) {
-        return actionEntityRepository.findById(id);
+    public Auction findById(long id) {
+        return actionEntityRepository.findAuctionById(id);
+    }
+
+    public List<Auction> findTenByTitle(String title, Integer page){
+        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
+        return actionEntityRepository.findByTitleContaining(title, pageWithTen);
+    }
+
+    public List<Auction> findTenByTitleAndBuyoutPrice(String title, Double price, Integer page){
+        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
+        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithTen);
     }
 
     public Page<Auction> findTenByDate(int page) {
-        Pageable PageWithTen = PageRequest.of(page, 10, Sort.by("closeAt"));
+        Pageable PageWithTen = PageRequest.of(page, 10, Sort.by("closingTime"));
         return actionEntityRepository.findAll(PageWithTen);
     }
 
@@ -79,11 +92,11 @@ public class AuctionService {
         return actionEntity;
     }
 
-
     // TODO: 2019-04-22 should return JsonAuction
     public ResponseEntity<Auction> createNewAuction(AuctionFormJsonClass auction, String username) {
         User user = userService.getUserByUsername(username);
         Category category = categoryService.findCategoryByName(auction.getCategory());
+
         if (validateAuctionForm(auction) && user != null && category != null) {
             Auction DBAuction = new Auction();
             user.addAuction(DBAuction);
@@ -93,9 +106,7 @@ public class AuctionService {
             DBAuction.setStartUpPrice(auction.getStartUpPrice());
             DBAuction.setClosingTime(auction.getClosingTime());
             DBAuction.setStatus(AuctionStatus.OPEN);
-
-            // TODO: 2019-04-23 Add Category to auction
-//        DBAuction.setCategory(category);
+            DBAuction.setCategory(category);
 
             Arrays.stream(auction.getImages()).forEach(i -> {
                 try {
@@ -114,9 +125,27 @@ public class AuctionService {
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    // TODO: 2019-04-23 Validate everything
+    public AuctionJsonClass getAuctionById(Long id) {
+        Optional<Auction> a = actionEntityRepository.findById(id);
+        if (a.isPresent()) {
+            return new AuctionJsonClass(a.get());
+        } else {
+            return null;
+        }
+    }
+
     private boolean validateAuctionForm(AuctionFormJsonClass auction) {
-        return true;
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        if (auction.getClosingTime().isBefore(currentTime)) {
+            return false;
+        } else if (auction.getStartUpPrice() < 0) {
+            return false;
+        } else if (auction.getBuyOutPrice() <= auction.getStartUpPrice()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

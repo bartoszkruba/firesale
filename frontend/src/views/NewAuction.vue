@@ -14,31 +14,41 @@
                            ref="image"
                            accept="image/*"
                            multiple="multiple">
-                    <v-alert
-                            :value="showAlert"
-                            type="error">
-                        Something went wrong on server
+                    <v-alert :value="showAlert"
+                             type="error">Something went wrong on server
                     </v-alert>
                     <br>
                     <v-text-field label="Title" id="title" v-model="title"
-                                  :error-messages="titleError"></v-text-field>
+                                  :error-messages="titleError"
+                                  @keydown="clearTitleError"
+                                  @keydown.enter="postNewAuction"></v-text-field>
                     <br>
                     <v-textarea label="Description" id="description" v-model="description"
                                 hint="Describe your product/products" outline
-                                :error-messages="descriptionError"></v-textarea>
+                                :error-messages="descriptionError"
+                                @keydown="clearDescriptionError"
+                                @keydown.enter="postNewAuction"></v-textarea>
                     <v-datetime-picker label="Closing At:" :datetime="closingTime"
                                        @input="updateDateTime"
                                        :error-messages="closingTimeError"></v-datetime-picker>
-                    <v-text-field type="number" label="Startup Price (SEK)" :error-messages="startupPriceError"
-                                  v-model="startUpPrice"></v-text-field>
-                    <v-text-field type="number" label="Buyout Price (SEK)" :error-messages="buyoutPriceError"
-                                  v-model="buyOutPrice"></v-text-field>
+                    <v-text-field type="number" label="Startup Price (SEK)"
+                                  :error-messages="startupPriceError"
+                                  v-model="startUpPrice"
+                                  @keydown="clearStartupPriceError"
+                                  @keydown.enter="postNewAuction"></v-text-field>
+                    <v-text-field type="number" label="Buyout Price (SEK)"
+                                  :error-messages="buyoutPriceError"
+                                  v-model="buyOutPrice"
+                                  @keydown="clearBuyoutPriceError"
+                                  @keydown.enter="postNewAuction"></v-text-field>
                     <v-select :items="categories" label="Category" v-model="category"></v-select>
                     <h2>Images: ({{imagesCount}} selected)</h2>
                     <v-text-field id="imagepicker" label="Select Images" @click="pickFile"
                                   prepend-icon='attach_file'></v-text-field>
                     <v-layout align-center justify-center>
-                        <v-btn color="primary" @click="postNewAuction">Create Auction</v-btn>
+                        <v-btn color="primary"
+                               @click="postNewAuction">Create Auction
+                        </v-btn>
                     </v-layout>
                 </v-container>
             </v-card>
@@ -53,6 +63,9 @@
     export default {
         name: "NewAuction",
         mounted() {
+            // if (!this.$store.state.loggedIn) {
+            //     this.$router.push("/login")
+            // }
             this.$store.dispatch("getCategories");
         },
         data() {
@@ -87,23 +100,25 @@
                 this.$refs.image.click()
             },
             async postNewAuction() {
-                this.showAler = false;
+                this.showAlert = false;
                 if (this.validateFields()) {
-                    let response = await auctionService().postNewAuction({
-                        title: this.title,
-                        description: this.description,
-                        closingTime: this.closingTime,
-                        startUpPrice: parseFloat(this.startUpPrice),
-                        buyOutPrice: parseFloat(this.buyOutPrice),
-                        category: this.category,
-                        images: this.pickedImages
-                    });
+                    try {
+                        let response = await auctionService().postNewAuction({
+                            title: this.title,
+                            description: this.description,
+                            closingTime: this.closingTime,
+                            startUpPrice: parseFloat(this.startUpPrice),
+                            buyOutPrice: parseFloat(this.buyOutPrice),
+                            category: this.category,
+                            images: this.pickedImages
+                        });
 
-                    if (response.status === 201) {
-                        this.$router.push("/")
-                    } else if (response.status === 401) {
-                        this.$router.push("/login")
-                    } else {
+                        if (response.status === 201) {
+                            this.$router.push("/")
+                        } else if (response.status === 401) {
+                            this.$router.push("/login")
+                        }
+                    } catch (e) {
                         this.showAlert = true;
                     }
                 }
@@ -154,13 +169,13 @@
             },
             validateStartupPrice() {
                 this.startupPriceError = "";
-                if (this.startupPrice === null) {
+                if (this.startUpPrice === null) {
                     this.startupPriceError = "Choose Startup price";
                     return false;
                 } else if (this.startUpPrice === "") {
                     this.startupPriceError = "Choose Startup price";
                     return false;
-                } else if (this.startUpPrice < 0) {
+                } else if (parseFloat(this.startUpPrice) < 0) {
                     this.startupPriceError = "Startup price needs to be bigger than 0";
                     return false;
                 }
@@ -169,17 +184,37 @@
             validateBuytOutPrice() {
                 this.buyoutPriceError = "";
 
-                if (this.buyoutPrice === null) {
+                if (this.buyOutPrice === null) {
                     this.buyoutPriceError = "Choose buyout price";
                     return false;
                 } else if (this.buyOutPrice === "") {
                     this.buyoutPriceError = "Choose buyout price";
                     return false;
-                } else if (this.buyOutPrice <= this.startUpPrice) {
-                    this.buyoutPriceError = "Buyout price need to be bigger than startup price"
+                } else if (parseFloat(this.buyOutPrice) < parseFloat(this.startUpPrice)) {
+                    this.buyoutPriceError = "Buyout price need to be bigger than startup price";
                     return false;
                 }
                 return true;
+            },
+            clearTitleError(e) {
+                if (e.key !== "enter") {
+                    this.titleError = "";
+                }
+            },
+            clearDescriptionError(e) {
+                if (e.key !== "enter") {
+                    this.descriptionError = "";
+                }
+            },
+            clearStartupPriceError(e) {
+                if (e.key !== "enter") {
+                    this.startupPriceError = "";
+                }
+            },
+            clearBuyoutPriceError(e) {
+                if (e.key !== "enter") {
+                    this.buyoutPriceError = "";
+                }
             }
         }
     }
