@@ -89,18 +89,22 @@ public class InsertAuctionToDatabase implements CommandLineRunner {
 
         Bid bid1 = new Bid();
         bid1.setYourBid(Double.parseDouble("20000"));
+        bid1.setAuction(auction1);
         bidRepository.save(bid1);
 
         Bid bid2 = new Bid();
-        bid2.setYourBid(Double.parseDouble("1500"));
+        bid2.setYourBid(Double.parseDouble("250"));
+        bid2.setAuction(auction4);
         bidRepository.save(bid2);
 
         Bid bid3 = new Bid();
-        bid3.setYourBid(Double.parseDouble("30"));
+        bid3.setYourBid(Double.parseDouble("300"));
+        bid3.setAuction(auction4);
         bidRepository.save(bid3);
 
         Bid bid4 = new Bid();
-        bid4.setYourBid(Double.parseDouble("250"));
+        bid4.setYourBid(Double.parseDouble("400"));
+        bid4.setAuction(auction4);
         bidRepository.save(bid4);
     }
 }

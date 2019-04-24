@@ -2,11 +2,9 @@ package com.company.firesale.data.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Bid {
@@ -18,7 +16,9 @@ public class Bid {
     @CreationTimestamp
     private LocalDateTime lastBid;
 
-
+    @ManyToOne
+    private Auction auction;
+    
     public Bid(){
     }
 
@@ -30,4 +30,14 @@ public class Bid {
         this.yourBid = yourBid;
         return this;
     }
+
+    public Auction getAuction(){
+        return auction;
+    }
+
+    public Bid setAuction(Auction auction){
+        this.auction = auction;
+        return this;
+    }
+
 }

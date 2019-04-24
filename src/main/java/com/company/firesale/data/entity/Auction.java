@@ -37,6 +37,10 @@ public class Auction {
     @ManyToOne
     private Category category;
 
+    @OneToMany(mappedBy = "auction")
+    private Set<Bid> bid;
+
+
     public Auction() {
 
     }
