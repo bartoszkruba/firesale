@@ -40,7 +40,8 @@ public class AuctionService {
     public Auction findById(long id) {
         return actionEntityRepository.findAuctionById(id);
     }
-    public List<Auction> findTenByTitle(String title){
+
+    public List<Auction> findTenByTitle(String title) {
 //        Pageable pageWithTen = PageRequest.of(page, 1, Sort.by("closingTime"));
         return actionEntityRepository.findAuctionsByTitle(title);
     }
@@ -110,7 +111,6 @@ public class AuctionService {
                     System.out.println("Couldn't save image: " + e.getMessage());
                 }
             });
-            userService.saveUser(user);
             actionEntityRepository.save(DBAuction);
 
             return new ResponseEntity<>(null, HttpStatus.CREATED);
