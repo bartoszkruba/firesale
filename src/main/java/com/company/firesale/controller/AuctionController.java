@@ -80,15 +80,18 @@ public class AuctionController {
     List<Auction> getFilteredAuctions(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Double price,
-            @RequestParam Integer page){
+            @RequestParam(required = false) Integer page){
 
         if (title == null) {
             title = "";
         }
-
         if(price == null) {
             price = Double.MAX_VALUE;
         }
+        if(page == null){
+            page = 0;
+        }
+
 
         return actionEntityServis.findTenByTitleAndBuyoutPrice(title, price, page);
 //        return actionEntityServis.findTenByTitle(title, page);
