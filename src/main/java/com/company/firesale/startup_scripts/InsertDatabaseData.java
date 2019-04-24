@@ -146,6 +146,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setCategory(categories.get(1))
                 .setStatus(AuctionStatus.CLOSED);
         auctionService.addAuction(auction2);
+
         LocalDateTime ldt3 = LocalDateTime.of(2019, 4, 5, 11, 00);
         Auction auction3 = new Auction();
         auction3.setTitle("A DVD")
@@ -168,6 +169,50 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .setStatus(AuctionStatus.OPEN);
         auctionService.addAuction(auction4);
 
+        LocalDateTime ldt5 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        Auction auction5 = new Auction();
+        auction5.setTitle("A Black CAR")
+                .setDescription("BRUM BRUM")
+                .setBuyOutPrice(Double.parseDouble("85000"))
+                .setStartUpPrice(Double.parseDouble("15000"))
+                .setClosingTime(Timestamp.valueOf(ldt5).toLocalDateTime())
+                .setCategory(categories.get(1))
+                .setStatus(AuctionStatus.OPEN);
+        auctionService.addAuction(auction5);
+
+        LocalDateTime ldt6 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        Auction auction6 = new Auction();
+        auction6.setTitle("A White CAR")
+                .setDescription("BRUM BRUM")
+                .setBuyOutPrice(Double.parseDouble("85000"))
+                .setStartUpPrice(Double.parseDouble("15000"))
+                .setClosingTime(Timestamp.valueOf(ldt6).toLocalDateTime())
+                .setCategory(categories.get(1))
+                .setStatus(AuctionStatus.OPEN);
+        auctionService.addAuction(auction6);
+
+        LocalDateTime ldt7 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        Auction auction7 = new Auction();
+        auction7.setTitle("A Gold CAR")
+                .setDescription("BRUM BRUM")
+                .setBuyOutPrice(Double.parseDouble("85000"))
+                .setStartUpPrice(Double.parseDouble("15000"))
+                .setClosingTime(Timestamp.valueOf(ldt7).toLocalDateTime())
+                .setCategory(categories.get(1))
+                .setStatus(AuctionStatus.OPEN);
+        auctionService.addAuction(auction7);
+
+        LocalDateTime ldt8 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        Auction auction8 = new Auction();
+        auction8.setTitle("A Striped CAR")
+                .setDescription("BRUM BRUM")
+                .setBuyOutPrice(Double.parseDouble("85000"))
+                .setStartUpPrice(Double.parseDouble("15000"))
+                .setClosingTime(Timestamp.valueOf(ldt8).toLocalDateTime())
+                .setCategory(categories.get(1))
+                .setStatus(AuctionStatus.OPEN);
+        auctionService.addAuction(auction8);
+        
         Bid bid1 = new Bid();
         bid1.setYourBid(Double.parseDouble("20000"))
                 .setAuction(auction1)
