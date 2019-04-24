@@ -17,6 +17,7 @@
                bottom
                right
                fab
+               @click="test"
 
         >
             <v-icon>attach_money</v-icon>
@@ -39,6 +40,14 @@
             buyOutPrice: Number,
             status: String,
             mainimage: String,
+        },
+        methods: {
+            test() {
+                let Tequery = this.$route.query;
+                Tequery.page++;
+                this.$router.push({path: 'auctions', query: Tequery});
+                console.log(this.$route.query);
+            }
         }
     }
 </script>

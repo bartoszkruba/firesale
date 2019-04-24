@@ -112,7 +112,7 @@
                 if (this.filterParams.showAllAuctions === true) {
                     urlQuery.showAll = this.filterParams.showAllAuctions;
                 }
-                // urlQuery.page = 0;
+                urlQuery.page = 0;
                 return urlQuery;
             }
         },

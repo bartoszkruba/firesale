@@ -6,6 +6,9 @@ import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -75,13 +78,20 @@ public class AuctionController {
 
     @GetMapping
     List<Auction> getFilteredAuctions(
-            @RequestParam(required = false) String title){
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Double price,
+            @RequestParam Integer page){
 
         if (title == null) {
             title = "";
         }
 
-        return actionEntityServis.findTenByTitle(title);
+        if(price == null) {
+            price = Double.MAX_VALUE;
+        }
+
+        return actionEntityServis.findTenByTitleAndBuyoutPrice(title, price, page);
+//        return actionEntityServis.findTenByTitle(title, page);
     }
 
     // TODO: 2019-04-23 Should return JsonClas

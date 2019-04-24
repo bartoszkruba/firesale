@@ -40,13 +40,19 @@ public class AuctionService {
     public Auction findById(long id) {
         return actionEntityRepository.findAuctionById(id);
     }
-    public List<Auction> findTenByTitle(String title){
-//        Pageable pageWithTen = PageRequest.of(page, 1, Sort.by("closingTime"));
-        return actionEntityRepository.findAuctionsByTitle(title);
+
+    public List<Auction> findTenByTitle(String title, Integer page){
+        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
+        return actionEntityRepository.findByTitleContaining(title, pageWithTen);
+    }
+
+    public List<Auction> findTenByTitleAndBuyoutPrice(String title, Double price, Integer page){
+        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
+        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithTen);
     }
 
     public Page<Auction> findTenByDate(int page) {
-        Pageable PageWithTen = PageRequest.of(page, 10, Sort.by("closeAt"));
+        Pageable PageWithTen = PageRequest.of(page, 10, Sort.by("closingTime"));
         return actionEntityRepository.findAll(PageWithTen);
     }
 

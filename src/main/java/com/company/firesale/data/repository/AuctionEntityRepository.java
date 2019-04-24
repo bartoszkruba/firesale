@@ -4,6 +4,7 @@ import com.company.firesale.data.entity.Auction;
 import com.company.firesale.data.entity.AuctionStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,13 +19,15 @@ public interface ActionEntityRepository extends CrudRepository<Auction, Long> {
 }
 */
 @Repository
-public interface AuctionEntityRepository extends PagingAndSortingRepository<Auction, Long> {
+public interface AuctionEntityRepository extends JpaRepository<Auction, Long> {
 
     Auction findAuctionById(Long id);
 
-    @Query(value = "SELECT a FROM Auction a WHERE a.title LIKE CONCAT('%', :title, '%')")
-    List<Auction> findAuctionsByTitle(String title);
-
+    //    @Query(value = "SELECT a FROM Auction a WHERE a.title LIKE CONCAT('%', :title, '%')")
+//    List<Auction> findAuctionsByTitle(String title);
+    List<Auction> findByTitleContaining(String title, Pageable pageable);
+    List<Auction> findByTitleContainingAndBuyOutPriceLessThanEqual(String title, Double buyOutPrice, Pageable pageable);
+    List<Auction> findByTitleContainingAndStartUpPriceIsLessThanEqual(String title, Double buyOutPrice, Pageable pageable);
 
 
 
