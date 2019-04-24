@@ -79,7 +79,8 @@
         data() {
             return {
                 valid: false,
-                filterParams: this.$store.state.filterParams,
+                // filterParams: this.$store.state.filterParams,
+                filterParams: {},
                 searchTextRules: [
                     // v => v != null && v.length >= 3 || 'Enter at least 3 characters',
 
