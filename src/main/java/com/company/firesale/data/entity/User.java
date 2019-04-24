@@ -1,6 +1,7 @@
 package com.company.firesale.data.entity;
 
 import com.company.firesale.data.validation_group.UserRegistrationValidationGroup;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +12,11 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"roles", "auctions"})
+@Builder
 @Entity
 public class User {
 
@@ -49,31 +55,13 @@ public class User {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Auction> auctions;
+    private Set<Auction> auctions = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Bid> bid;
-
-
-    public User() {
-    }
-
-    public User(String username, String password,
-                String email, String address,
-                String phoneNumber, String firstName,
-                String lastName) {
-
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    private Set<Bid> bid = new HashSet<>();
 
     public User addAuction(Auction auction) {
         if (this.auctions == null) {
@@ -84,114 +72,8 @@ public class User {
     }
 
     public User addRole(Role role) {
-        if (roles == null) {
-            roles = new HashSet<>();
-        }
         roles.add(role);
         return this;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public User setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public User setUsername(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public User setAddress(String address) {
-        this.address = address;
-        return this;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public User setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-        return this;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public User setFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public User setLastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Set<Auction> getAuctions() {
-        return auctions;
-    }
-
-    public void setAuctions(Set<Auction> auctions) {
-        this.auctions = auctions;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
-    }
 }

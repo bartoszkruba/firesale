@@ -1,8 +1,15 @@
 package com.company.firesale.data.entity;
 
 
+import lombok.*;
+
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = {"auction"})
+@Builder
 @Entity
 public class Image {
 
@@ -16,30 +23,4 @@ public class Image {
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
-    public Image() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
-    }
-
-    public Auction getAuction() {
-        return auction;
-    }
-
-    public void setAuction(Auction auction) {
-        this.auction = auction;
-    }
 }

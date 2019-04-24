@@ -41,12 +41,12 @@ public class AuctionService {
         return actionEntityRepository.findAuctionById(id);
     }
 
-    public List<Auction> findTenByTitle(String title, Integer page){
+    public List<Auction> findTenByTitle(String title, Integer page) {
         Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
         return actionEntityRepository.findByTitleContaining(title, pageWithTen);
     }
 
-    public List<Auction> findTenByTitleAndBuyoutPrice(String title, Double price, Integer page){
+    public List<Auction> findTenByTitleAndBuyoutPrice(String title, Double price, Integer page) {
         Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
         return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithTen);
     }
@@ -93,7 +93,7 @@ public class AuctionService {
     }
 
     // TODO: 2019-04-22 should return JsonAuction
-    public ResponseEntity<Auction> createNewAuction(AuctionFormJsonClass auction, String username) {
+    public ResponseEntity<AuctionJsonClass> createNewAuction(AuctionFormJsonClass auction, String username) {
         User user = userService.getUserByUsername(username);
         Category category = categoryService.findCategoryByName(auction.getCategory());
 
@@ -119,7 +119,7 @@ public class AuctionService {
             userService.saveUser(user);
             actionEntityRepository.save(DBAuction);
 
-            return new ResponseEntity<>(null, HttpStatus.CREATED);
+            return new ResponseEntity<>(new AuctionJsonClass(DBAuction), HttpStatus.CREATED);
         }
 
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

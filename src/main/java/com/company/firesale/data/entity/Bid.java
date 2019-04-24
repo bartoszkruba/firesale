@@ -1,11 +1,16 @@
 package com.company.firesale.data.entity;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = {"user", "auction"})
+@Builder
 @Entity
 public class Bid {
 
@@ -19,39 +24,7 @@ public class Bid {
     @ManyToOne
     private Auction auction;
 
-
     @ManyToOne
     private User user;
-
-    public Bid(){
-    }
-
-    public Double getYourBid() {
-        return yourBid;
-    }
-
-    public Bid setYourBid(Double yourBid) {
-        this.yourBid = yourBid;
-        return this;
-    }
-
-    public Auction getAuction(){
-        return auction;
-    }
-
-    public Bid setAuction(Auction auction){
-        this.auction = auction;
-        return this;
-    }
-
-
-    public User getUser(){
-        return user;
-    }
-
-    public Bid setUser(User user){
-        this.user = user;
-        return this;
-    }
 
 }

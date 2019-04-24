@@ -48,7 +48,7 @@
         methods: {
             bid () {
                 this.userbid = this.buyoutprice;
-                alert("You just made a bid on " + this.title)
+                alert("You just made a bids on " + this.title)
 
             },
         }

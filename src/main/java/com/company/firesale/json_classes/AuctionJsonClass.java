@@ -1,21 +1,35 @@
 package com.company.firesale.json_classes;
 
 import com.company.firesale.data.entity.Auction;
-import com.company.firesale.data.entity.Category;
+import com.company.firesale.data.entity.Image;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AuctionJsonClass {
     private Long id;
     private String title;
     private String description;
     private LocalDateTime openedAt;
     private LocalDateTime closingTime;
-    private double startUpPrice;
-    private double buyOutPrice;
-    private Category category;
+    private Double startUpPrice;
+    private Double buyOutPrice;
+    private String category;
+    private Long user;
 
-    public AuctionJsonClass(Auction auction){
+    private Set<Long> images = new HashSet<>();
+
+    public AuctionJsonClass(Auction auction) {
         this.id = auction.getId();
         this.title = auction.getTitle();
         this.description = auction.getDescription();
@@ -23,70 +37,15 @@ public class AuctionJsonClass {
         this.closingTime = auction.getClosingTime();
         this.startUpPrice = auction.getStartUpPrice();
         this.buyOutPrice = auction.getBuyOutPrice();
-        this.category = auction.getCategory();
+        this.category = auction.getCategory().getName();
+
+        if (auction.getUser() != null) {
+            this.user = auction.getUser().getId();
+        }
+
+        if (auction.getImages() != null) {
+            this.images = auction.getImages().stream().map(Image::getId).collect(Collectors.toSet());
+        }
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDateTime getOpenedAt() {
-        return openedAt;
-    }
-
-    public void setOpenedAt(LocalDateTime openedAt) {
-        this.openedAt = openedAt;
-    }
-
-    public LocalDateTime getClosingTime() {
-        return closingTime;
-    }
-
-    public void setClosingTime(LocalDateTime closingTime) {
-        this.closingTime = closingTime;
-    }
-
-    public double getStartUpPrice() {
-        return startUpPrice;
-    }
-
-    public void setStartUpPrice(double startUpPrice) {
-        this.startUpPrice = startUpPrice;
-    }
-
-    public double getBuyOutPrice() {
-        return buyOutPrice;
-    }
-
-    public void setBuyOutPrice(double buyOutPrice) {
-        this.buyOutPrice = buyOutPrice;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 }

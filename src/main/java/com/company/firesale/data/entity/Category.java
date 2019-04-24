@@ -1,17 +1,19 @@
 package com.company.firesale.data.entity;
 
 
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"auctions"})
+@Builder
 @Entity
 public class Category {
-
-    public Category(){}
-
-    public Category(String name) {
-        this.name = name;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,21 +23,6 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    private Set<Auction> auctions;
+    private Set<Auction> auctions = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

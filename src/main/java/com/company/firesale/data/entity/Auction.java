@@ -1,5 +1,6 @@
 package com.company.firesale.data.entity;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,6 +9,11 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"category", "bids", "user", "images"})
+@Builder
 @Entity
 public class Auction {
 
@@ -38,116 +44,11 @@ public class Auction {
     private Category category;
 
     @OneToMany(mappedBy = "auction")
-    private Set<Bid> bid;
-
-
-    public Auction() {
-
-    }
+    private Set<Bid> bids = new HashSet<>();
 
     public void addImage(Image image) {
         this.images.add(image);
         image.setAuction(this);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Auction setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Auction setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Auction setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public LocalDateTime getOpenedAt() {
-        return openedAt;
-    }
-
-    public Auction setOpenedAt(LocalDateTime openedAt) {
-        this.openedAt = openedAt;
-        return this;
-    }
-
-    public LocalDateTime getSetLastUppdate() {
-        return setLastUppdate;
-    }
-
-    public Auction setLastUppdate(LocalDateTime setLastUppdate) {
-        this.setLastUppdate = setLastUppdate;
-        return this;
-    }
-
-    public LocalDateTime getClosingTime() {
-        return closingTime;
-    }
-
-    public Auction setClosingTime(LocalDateTime closingTime) {
-        this.closingTime = closingTime;
-        return this;
-    }
-
-    public Double getStartUpPrice() {
-        return startUpPrice;
-    }
-
-    public Auction setStartUpPrice(Double startUpPrice) {
-        this.startUpPrice = startUpPrice;
-        return this;
-    }
-
-    public Auction setBuyOutPrice(Double buyOutPrice) {
-        this.buyOutPrice = buyOutPrice;
-        return this;
-    }
-    public Double getBuyOutPrice() {
-        return this.buyOutPrice;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public Auction setCategory(Category category) {
-        this.category = category;
-        return this;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Auction setUser(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public Set<Image> getImages() {
-        return images;
-    }
-
-    public AuctionStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(AuctionStatus status) {
-        this.status = status;
-    }
 }

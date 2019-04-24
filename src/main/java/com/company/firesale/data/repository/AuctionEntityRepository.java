@@ -28,7 +28,7 @@ public interface AuctionEntityRepository extends JpaRepository<Auction, Long> {
 
 
 
-    //TODO: boy_out_price should be current highest bid
+    //TODO: boy_out_price should be current highest bids
     @Query(value = "SELECT a FROM Auction a WHERE a.title LIKE CONCAT('%', :title, '%') AND a.buyOutPrice <= :price AND a.category LIKE :category AND a.status LIKE :status")
     Iterable<Auction> findFilteredAuctionsOpenWithCategory(
             @Param(value = "title") String title,
@@ -37,7 +37,7 @@ public interface AuctionEntityRepository extends JpaRepository<Auction, Long> {
             @Param(value = "status") AuctionStatus status);
 
 
-    //TODO: boy_out_price should be current highest bid
+    //TODO: boy_out_price should be current highest bids
     @Query(value = "SELECT a FROM Auction a WHERE a.title LIKE CONCAT('%', :title, '%') AND a.buyOutPrice <= :price AND a.status LIKE :status")
     Iterable<Auction> findFilteredAuctionsOpenAllCategories(
             @Param(value = "title") String title,
@@ -45,14 +45,14 @@ public interface AuctionEntityRepository extends JpaRepository<Auction, Long> {
             @Param(value = "status") AuctionStatus status);
 
 
-    //TODO: boy_out_price should be current highest bid
+    //TODO: boy_out_price should be current highest bids
     @Query(value = "SELECT a FROM Auction a WHERE a.title LIKE CONCAT('%', :title, '%') AND a.buyOutPrice <= :price AND a.category LIKE :category")
     Iterable<Auction> findFilteredAuctionsWithCategory(
             @Param(value = "title") String title,
             @Param(value = "price") Double price,
             @Param(value = "category") String category);
 
-    //TODO: boy_out_price should be current highest bid
+    //TODO: boy_out_price should be current highest bids
     @Query(value = "SELECT a FROM Auction a WHERE a.title LIKE CONCAT('%', :title, '%') AND a.buyOutPrice <= :price")
     Iterable<Auction> findFilteredAuctionsAllCategories(
             @Param(value = "title") String title,
