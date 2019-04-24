@@ -23,6 +23,9 @@
             return {
                 // auctions: this.$store.state.auctions
             }
+        },
+        mounted() {
+            // this.$store.dispatch('getAuctions', this.$route.query);
         }
     }
 
