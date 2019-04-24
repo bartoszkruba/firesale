@@ -90,6 +90,7 @@ public class AuctionService {
     public ResponseEntity<Auction> createNewAuction(AuctionFormJsonClass auction, String username) {
         User user = userService.getUserByUsername(username);
         Category category = categoryService.findCategoryByName(auction.getCategory());
+
         if (validateAuctionForm(auction) && user != null && category != null) {
             Auction DBAuction = new Auction();
             user.addAuction(DBAuction);

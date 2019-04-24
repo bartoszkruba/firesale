@@ -77,7 +77,7 @@ public class AuctionController {
     List<Auction> getFilteredAuctions(
             @RequestParam(required = false) String title){
 
-        if(title == null){
+        if (title == null) {
             title = "";
         }
 
@@ -88,11 +88,7 @@ public class AuctionController {
     @PostMapping
     public HttpEntity<Auction> createActionEntity(@Validated @RequestBody AuctionFormJsonClass auction,
                                                   Principal principal) {
-        System.out.println("route accessed");
-        return actionEntityServis.
-                createNewAuction(
-                        auction,
-                        principal.getName());
+        return actionEntityServis.createNewAuction(auction, principal.getName());
     }
 
     @GetMapping("/{page}")
