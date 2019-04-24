@@ -55,24 +55,24 @@ public class User {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @Builder.Default
     private Set<Auction> auctions = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Bid> bid = new HashSet<>();
+    @Builder.Default
+    private Set<Bid> bids = new HashSet<>();
 
     public User addAuction(Auction auction) {
-        if (this.auctions == null) {
-            this.auctions = new HashSet<>();
-        }
         this.auctions.add(auction);
         return this;
     }
 
     public User addRole(Role role) {
-        roles.add(role);
+        this.roles.add(role);
         return this;
     }
 

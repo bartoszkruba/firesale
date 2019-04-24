@@ -21,6 +21,7 @@ public class UserJsonClass {
     private String email;
     private String phoneNumber;
 
+    @Builder.Default
     private Set<Long> auctions = new HashSet<>();
 
     public UserJsonClass(User user) {

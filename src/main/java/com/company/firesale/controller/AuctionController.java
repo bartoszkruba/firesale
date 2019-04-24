@@ -2,6 +2,7 @@ package com.company.firesale.controller;
 
 import com.company.firesale.data.entity.Auction;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
+import com.company.firesale.json_classes.AuctionJsonClass;
 import com.company.firesale.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -94,8 +95,8 @@ public class AuctionController {
 
     // TODO: 2019-04-23 Should return JsonClas
     @PostMapping
-    public HttpEntity<Auction> createActionEntity(@Validated @RequestBody AuctionFormJsonClass auction,
-                                                  Principal principal) {
+    public HttpEntity<AuctionJsonClass> createActionEntity(@Validated @RequestBody AuctionFormJsonClass auction,
+                                                           Principal principal) {
         return actionEntityServis.createNewAuction(auction, principal.getName());
     }
 

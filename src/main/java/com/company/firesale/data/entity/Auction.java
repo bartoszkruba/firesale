@@ -44,6 +44,7 @@ public class Auction {
     private Category category;
 
     @OneToMany(mappedBy = "auction")
+    @Builder.Default
     private Set<Bid> bids = new HashSet<>();
 
     public void addImage(Image image) {

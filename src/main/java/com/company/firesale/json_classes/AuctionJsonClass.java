@@ -27,6 +27,7 @@ public class AuctionJsonClass {
     private String category;
     private Long user;
 
+    @Builder.Default
     private Set<Long> images = new HashSet<>();
 
     public AuctionJsonClass(Auction auction) {
