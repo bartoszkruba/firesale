@@ -17,21 +17,7 @@ export default new Vuex.Store({
             selectedCategory: 'All',
             maxPrice: 0,
         },
-        currentViewedAuction: {
-            "id": 1,
-            "title": "Testauction",
-            "description": "BRUM BRUM",
-            "openedAt": "2019-04-25T09:45:29",
-            "closingTime": "2019-04-18T10:30:00",
-            "startUpPrice": 10000,
-            "buyOutPrice": 80000,
-            "category": "Cars",
-            "user": null,
-            "images": [
-                {
-                filePath: 'https://i.imgur.com/e0u37lt.jpg'
-            }]
-        },
+        currentViewedAuction: {},
     },
     mutations: {
         setLoggedIn(state, value) {
