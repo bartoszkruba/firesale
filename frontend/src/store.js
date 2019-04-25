@@ -17,7 +17,7 @@ export default new Vuex.Store({
             selectedCategory: 'All',
             maxPrice: 0,
         },
-        currentViewedAuction: {},
+        currentViewedAuction: null,
     },
     mutations: {
         setLoggedIn(state, value) {
