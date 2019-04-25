@@ -19,7 +19,7 @@ public class Image {
 
     private String filepath;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
