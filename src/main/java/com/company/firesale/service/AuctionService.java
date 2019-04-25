@@ -37,8 +37,8 @@ public class AuctionService {
         this.categoryService = categoryService;
     }
 
-    public Auction findById(long id) {
-        return actionEntityRepository.findAuctionById(id);
+    public AuctionJsonClass findById(long id) {
+        return new AuctionJsonClass(actionEntityRepository.findAuctionById(id));
     }
 
     public List<Auction> findTenByTitle(String title, Integer page) {

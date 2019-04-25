@@ -111,7 +111,7 @@ public class AuctionController {
     }
 
     @GetMapping("/id/{id}")
-    Auction getAuctionById(@PathVariable long id) {
+    AuctionJsonClass getAuctionById(@PathVariable long id) {
         return actionEntityServis.findById(id);
     }
 
