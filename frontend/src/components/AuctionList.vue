@@ -41,7 +41,7 @@
             }
         },
         beforeMount() {
-            this.$store.dispatch('getAuctions', this.$route.query);
+            // this.$store.dispatch('getAuctions', this.$route.query);
         }
     }
 

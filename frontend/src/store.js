@@ -49,7 +49,6 @@ export default new Vuex.Store({
         loadMoreAuctionsOnScroll(state, params){
             state.auctions = state.auctions.concat(params);
             console.log(state.auctions);
-            console.log(this.state.auctions);
         },
         setCurrentViewedAuction(state, params) {
             state.currentViewedAuction = params;
