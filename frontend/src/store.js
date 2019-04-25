@@ -16,7 +16,8 @@ export default new Vuex.Store({
             searchText: null,
             selectedCategory: 'All',
             maxPrice: 0,
-        }
+        },
+        currentViewedAuction: {},
     },
     mutations: {
         setLoggedIn(state, value) {
@@ -36,6 +37,9 @@ export default new Vuex.Store({
         setAuctions(state, params) {
             state.auctions = params;
             console.log(this.state.auctions);
+        },
+        setCurrentViewedAuction(state, params) {
+            state.currentViewedAuction = params;
         }
     },
     actions: {
@@ -54,6 +58,10 @@ export default new Vuex.Store({
                 .then(response => {
                     context.commit('setCategories', response.data)
                 });
+        },
+        async getCurrentViewedAuction(context, id) {
+            let response = await AuctionService().getAuctionById(id);
+            this.commit('setCurrentViewedAuction', response.data)
         }
     }
 });

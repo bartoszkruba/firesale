@@ -1,6 +1,5 @@
 package com.company.firesale.controller;
 
-import com.company.firesale.data.entity.Auction;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.json_classes.AuctionJsonClass;
 import com.company.firesale.service.AuctionService;
@@ -73,24 +72,23 @@ public class AuctionController {
 //    }
 
     @GetMapping
-    List<Auction> getFilteredAuctions(
+    List<AuctionJsonClass> getFilteredAuctions(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Double price,
-            @RequestParam(required = false) Integer page){
+            @RequestParam(required = false) Integer page) {
 
         if (title == null) {
             title = "";
         }
-        if(price == null) {
+        if (price == null) {
             price = Double.MAX_VALUE;
         }
-        if(page == null){
+        if (page == null) {
             page = 0;
         }
 
 
-        return actionEntityServis.findTenByTitleAndBuyoutPrice(title, price, page);
-//        return actionEntityServis.findTenByTitle(title, page);
+        return actionEntityServis.findTenByTitle(title, page);
     }
 
     // TODO: 2019-04-23 Should return JsonClas
@@ -100,18 +98,18 @@ public class AuctionController {
         return actionEntityServis.createNewAuction(auction, principal.getName());
     }
 
-    @GetMapping("/{page}")
-    List<Auction> getTenActionEntityOrderById(@PathVariable int page) {
-        return actionEntityServis.findTenById(page).getContent();
-    }
-
-    @GetMapping("/date/{page}")
-    List<Auction> getTenActionEntityOrderByDate(@PathVariable int page) {
-        return actionEntityServis.findTenByDate(page).getContent();
-    }
+//    @GetMapping("/{page}")
+//    List<Auction> getTenActionEntityOrderById(@PathVariable int page) {
+//        return actionEntityServis.findTenById(page).getContent();
+//    }
+//
+//    @GetMapping("/date/{page}")
+//    List<Auction> getTenActionEntityOrderByDate(@PathVariable int page) {
+//        return actionEntityServis.findTenByDate(page).getContent();
+//    }
 
     @GetMapping("/id/{id}")
-    Auction getAuctionById(@PathVariable long id) {
+    AuctionJsonClass getAuctionById(@PathVariable long id) {
         return actionEntityServis.findById(id);
     }
 
