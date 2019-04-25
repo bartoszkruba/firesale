@@ -59,23 +59,6 @@ public class AuctionService {
         return actionEntityRepository.findAll(PageWithTen);
     }
 
-    public Iterable<Auction> findFilteredAuctionsOpenWithCategory(String title, Double price, String category, AuctionStatus status) {
-        return actionEntityRepository.findFilteredAuctionsOpenWithCategory(title, price, category, status);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsOpenAllCategories(String title, Double price, AuctionStatus status) {
-        return actionEntityRepository.findFilteredAuctionsOpenAllCategories(title, price, status);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsWithCategory(String title, Double price, String category) {
-        return actionEntityRepository.findFilteredAuctionsWithCategory(title, price, category);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsAllCategories(String title, Double price) {
-        return actionEntityRepository.findFilteredAuctionsAllCategories(title, price);
-    }
-
-
     public void addAuction(Auction auction) {
         try {
             actionEntityRepository.save(auction);
