@@ -10,6 +10,9 @@ export default () => {
         },
         getAuctionById(id){
             return Api().get("/auctions/id/", id)
+        },
+        countAuctionsBasedOnTitle(query) {
+            return Api().get('/auctions/count', { params: query });
         }
     }
 }

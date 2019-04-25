@@ -16,9 +16,14 @@ export default new Vuex.Store({
             searchText: null,
             selectedCategory: 'All',
             maxPrice: 0,
-        }
+        },
+        urlQuery: {},
+        numberOfAuctionsOnHome: 5
     },
     mutations: {
+        setUrlQuery(state, value){
+          this.state.urlQuery = value;
+        },
         setLoggedIn(state, value) {
             this.state.loggedIn = value;
         },
@@ -35,7 +40,11 @@ export default new Vuex.Store({
         },
         setAuctions(state, params) {
             state.auctions = params;
-            console.log(this.state.auctions);
+            console.log(state.auctions);
+        },
+        loadMoreAuctionsOnScroll(state, params){
+            state.auctions = state.auctions.concat(params);
+            console.log(state.auctions);
         }
     },
     actions: {
@@ -53,6 +62,17 @@ export default new Vuex.Store({
             await CategoryService().getCategories()
                 .then(response => {
                     context.commit('setCategories', response.data)
+                });
+        },
+        async getMoreAuctionsOnScroll(context, params){
+            if(params.page === undefined) {
+                params.page = 0;
+            } else {
+                params.page++;
+            }
+            await AuctionService().getFilteredAuctions(params)
+                .then(response => {
+                    context.commit('loadMoreAuctionsOnScroll', response.data);
                 });
         }
     }

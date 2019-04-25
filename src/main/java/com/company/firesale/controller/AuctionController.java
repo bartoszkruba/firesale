@@ -24,23 +24,28 @@ public class AuctionController {
     }
 
     @GetMapping
-    List<Auction> getFilteredAuctions(
+    List<AuctionJsonClass> getFilteredAuctions(
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) Double price,
             @RequestParam(required = false) Integer page){
 
         if (title == null) {
             title = "";
         }
-        if(price == null) {
-            price = Double.MAX_VALUE;
-        }
         if(page == null){
             page = 0;
         }
 
-        return actionEntityServis.findTenByTitle(title, page);
+        return actionEntityServis.findFiveByTitle(title, page);
     }
+
+    @GetMapping("/count")
+    Integer getAuctionCount(
+            @RequestParam(required = false, defaultValue = "") String title,
+            @RequestParam(required = false, defaultValue = "0") Integer page){
+
+        return actionEntityServis.countAuctionsByTitleContaining(title);
+    }
+
 
     // TODO: 2019-04-23 Should return JsonClas
     @PostMapping

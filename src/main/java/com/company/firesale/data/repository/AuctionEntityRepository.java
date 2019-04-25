@@ -11,19 +11,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-/*
-@Repository
-public interface ActionEntityRepository extends CrudRepository<Auction, Long> {
-}
-*/
 @Repository
 public interface AuctionEntityRepository extends JpaRepository<Auction, Long> {
 
     Auction findAuctionById(Long id);
-
-    List<Auction> findByTitleContaining(String title, Pageable pageable);
+    List<Auction> findByTitleContainingOrderByClosingTimeAsc(String title, Pageable pageable);
     List<Auction> findByTitleContainingAndStartUpPriceIsLessThanEqual(String title, Double buyOutPrice, Pageable pageable);
-
+    Integer countAuctionsByTitleIsContaining(String title);
 }
 
 

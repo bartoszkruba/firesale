@@ -17,8 +17,9 @@
             AuctionList,
             HelloWorld,
         },
-        beforeMount() {
-            this.$store.dispatch('getAuctions', this.$route.query);
+        data(){
+            return {
+            }
         }
     }
 </script>

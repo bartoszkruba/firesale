@@ -82,7 +82,6 @@
                 filterParams: this.$store.state.filterParams,
                 searchTextRules: [
                     // v => v != null && v.length >= 3 || 'Enter at least 3 characters',
-
                 ],
                 items: this.$store.state.categories,
                 showFilters: this.$store.state.showFiltersOnHome,

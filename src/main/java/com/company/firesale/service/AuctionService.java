@@ -42,10 +42,10 @@ public class AuctionService<a> {
         return actionEntityRepository.findAuctionById(id);
     }
 
-    public List<AuctionJsonClass> findTenByTitle(String title, Integer page) {
+    public List<AuctionJsonClass> findFiveByTitle(String title, Integer page) {
         Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
-        List<AuctionJsonClass> auctionsJson =  new ArrayList<>();
-        for(Auction a : actionEntityRepository.findByTitleContaining(title, pageWithFive)){
+        List<AuctionJsonClass> auctionsJson = new ArrayList<>();
+        for(Auction a : actionEntityRepository.findByTitleContainingOrderByClosingTimeAsc(title, pageWithFive)){
             if(a != null){
                 auctionsJson.add(new AuctionJsonClass(a));
             }
@@ -53,6 +53,9 @@ public class AuctionService<a> {
         return auctionsJson;
     }
 
+    public Integer countAuctionsByTitleContaining(String title){
+        return actionEntityRepository.countAuctionsByTitleIsContaining(title);
+    }
 
     public List<Auction> findByTitleContainingAndStartUpPriceIsLessThanEqual(String title, Double price, Integer page) {
         Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
