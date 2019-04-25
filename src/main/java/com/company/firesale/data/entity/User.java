@@ -1,6 +1,5 @@
 package com.company.firesale.data.entity;
 
-import com.company.firesale.data.validation_group.UserRegistrationValidationGroup;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,26 +23,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    @NotEmpty(groups = UserRegistrationValidationGroup.class)
+    @NotEmpty
     private String username;
 
-    @NotEmpty(groups = UserRegistrationValidationGroup.class)
+    @NotEmpty
     private String password;
 
-    @NotEmpty(groups = UserRegistrationValidationGroup.class)
-    @Email(groups = UserRegistrationValidationGroup.class)
+    @NotEmpty
+    @Email
     private String email;
 
-    @NotEmpty(groups = UserRegistrationValidationGroup.class)
+    @NotEmpty
     private String address;
 
-    @NotEmpty(groups = UserRegistrationValidationGroup.class)
+    @NotEmpty
     private String phoneNumber;
 
-    @NotEmpty(groups = UserRegistrationValidationGroup.class)
+    @NotEmpty
     private String firstName;
 
-    @NotEmpty(groups = UserRegistrationValidationGroup.class)
+    @NotEmpty
     private String lastName;
 
     @CreationTimestamp
@@ -51,7 +50,8 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updated;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
