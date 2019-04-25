@@ -6,7 +6,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -46,7 +48,7 @@ public class Auction {
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     @Builder.Default
-    private Set<Bid> bids = new HashSet<>();
+    private List<Bid> bids = new ArrayList<>();
 
     public Auction addImage(Image image) {
         this.images.add(image);

@@ -140,7 +140,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/1.jpeg").build())
                 .addBid(Bid.builder()
-                        .yourBid(20000D)
+                        .value(20000D)
                         .user(user2).build());
         user1.addAuction(auction1);
         auctionService.addAuction(auction1);
@@ -182,13 +182,13 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/4.jpg").build())
                 .addBid(Bid.builder()
-                        .yourBid(250D)
+                        .value(250D)
                         .user(user3).build())
                 .addBid(Bid.builder()
-                        .yourBid(300D)
+                        .value(300D)
                         .user(user5).build())
                 .addBid(Bid.builder()
-                        .yourBid(400D)
+                        .value(400D)
                         .user(user4).build());
         user2.addAuction(auction4);
         auctionService.addAuction(auction4);

@@ -24,6 +24,7 @@ public interface AuctionEntityRepository extends JpaRepository<Auction, Long> {
     List<Auction> findByTitleContaining(String title, Pageable pageable);
     List<Auction> findByTitleContainingAndStartUpPriceIsLessThanEqual(String title, Double buyOutPrice, Pageable pageable);
 
+
 }
 
 
