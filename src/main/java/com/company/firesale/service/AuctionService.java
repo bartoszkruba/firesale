@@ -22,7 +22,7 @@ import java.util.Optional;
 @Service
 public class AuctionService {
 
-    private final AuctionEntityRepository actionEntityRepository;
+    private final AuctionEntityRepository auctionEntityRepository;
 
     private final UserService userService;
 
@@ -31,63 +31,42 @@ public class AuctionService {
     private final CategoryService categoryService;
 
     @Autowired
-    public AuctionService(AuctionEntityRepository actionEntityRepository, UserService userService, ImageService imageService, CategoryService categoryService) {
-        this.actionEntityRepository = actionEntityRepository;
+    public AuctionService(AuctionEntityRepository auctionEntityRepository, UserService userService, ImageService imageService, CategoryService categoryService) {
+        this.auctionEntityRepository = auctionEntityRepository;
         this.userService = userService;
         this.imageService = imageService;
         this.categoryService = categoryService;
     }
 
     public AuctionJsonClass findById(long id) {
-        return new AuctionJsonClass(actionEntityRepository.findAuctionById(id));
+        return new AuctionJsonClass(auctionEntityRepository.findAuctionById(id));
     }
 
     public List<AuctionJsonClass> findTenByTitle(String title, Integer page) {
         Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
         List<AuctionJsonClass> auctions = new ArrayList<>();
-        actionEntityRepository.findByTitleContaining(title, pageWithTen).forEach(a -> auctions.add(new AuctionJsonClass(a)));
+        auctionEntityRepository.findByTitleContaining(title, pageWithTen).forEach(a -> auctions.add(new AuctionJsonClass(a)));
         return auctions;
     }
 
-//    public List<Auction> findTenByTitleAndBuyoutPrice(String title, Double price, Integer page) {
-//        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
-//        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithTen);
-//    }
-
     public Page<Auction> findTenByDate(int page) {
         Pageable PageWithTen = PageRequest.of(page, 10, Sort.by("closingTime"));
-        return actionEntityRepository.findAll(PageWithTen);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsOpenWithCategory(String title, Double price, String category, AuctionStatus status) {
-        return actionEntityRepository.findFilteredAuctionsOpenWithCategory(title, price, category, status);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsOpenAllCategories(String title, Double price, AuctionStatus status) {
-        return actionEntityRepository.findFilteredAuctionsOpenAllCategories(title, price, status);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsWithCategory(String title, Double price, String category) {
-        return actionEntityRepository.findFilteredAuctionsWithCategory(title, price, category);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsAllCategories(String title, Double price) {
-        return actionEntityRepository.findFilteredAuctionsAllCategories(title, price);
+        return auctionEntityRepository.findAll(PageWithTen);
     }
 
 
     public void addAuction(Auction auction) {
         try {
-            actionEntityRepository.save(auction);
+            auctionEntityRepository.save(auction);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public Auction createActionEntity() {
-        Auction actionEntity = new Auction();
-        actionEntityRepository.save(actionEntity);
-        return actionEntity;
+    public Auction createAuctionEntity() {
+        Auction auctionEntity = new Auction();
+        auctionEntityRepository.save(auctionEntity);
+        return auctionEntity;
     }
 
     public ResponseEntity<AuctionJsonClass> createNewAuction(AuctionFormJsonClass auction, String username) {
@@ -114,7 +93,7 @@ public class AuctionService {
                 }
             });
             userService.saveUser(user);
-            actionEntityRepository.save(DBAuction);
+            auctionEntityRepository.save(DBAuction);
 
             return new ResponseEntity<>(new AuctionJsonClass(DBAuction), HttpStatus.CREATED);
         }
@@ -123,7 +102,7 @@ public class AuctionService {
     }
 
     public AuctionJsonClass getAuctionById(Long id) {
-        Optional<Auction> a = actionEntityRepository.findById(id);
+        Optional<Auction> a = auctionEntityRepository.findById(id);
         if (a.isPresent()) {
             return new AuctionJsonClass(a.get());
         } else {
