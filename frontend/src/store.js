@@ -19,7 +19,7 @@ export default new Vuex.Store({
         },
         currentViewedAuction: {
             "id": 1,
-            "title": "A RED CAR",
+            "title": "Testauction",
             "description": "BRUM BRUM",
             "openedAt": "2019-04-25T09:45:29",
             "closingTime": "2019-04-18T10:30:00",

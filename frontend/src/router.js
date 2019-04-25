@@ -43,5 +43,6 @@ export default new Router({
             name: 'Auction',
             component: Auction
         },
+
     ]
 })

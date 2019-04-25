@@ -1,6 +1,6 @@
 <template>
         <v-card  id="auction" >
-            <v-img id="auctionimages" :src="getViewedAuction.images[0].filePath"></v-img>
+<!--            <v-img id="auctionimages" :src="getViewedAuction.images[0].filePath"></v-img>-->
             <v-container id="auctioncontent">
                 <v-layout>
                     <v-flex>
@@ -43,8 +43,9 @@
 
             },
         },
-        created: {
-        }
+        created () {
+            this.$store.dispatch('getCurrentViewedAuction', this.$route.query.id)
+        },
         /*props: {
             userbid: Number,
             id: Number,
