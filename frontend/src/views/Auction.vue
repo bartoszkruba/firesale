@@ -20,9 +20,19 @@
                         <v-toolbar-title>{{getViewedAuction.title}}</v-toolbar-title>
                         <v-spacer></v-spacer>
                     </v-toolbar>
-                    <v-img v-if="amountImages > 0" :src="getUrl + getViewedAuction.images[0].filepath"></v-img>
+
+                    <v-carousel v-if="amountImages > 0">
+                        <v-carousel-item :key="i" v-for="i in getViewedAuction.images">
+                            <v-img :src="i.filepath" alt=""></v-img>
+                        </v-carousel-item>
+                    </v-carousel>
+
                     <v-card-text>
-                        <h4>Created At: {{getViewedAuction.openedAt}}</h4>
+                        <h3>Posted By: <b>
+                            <router-link :to="getUserUrl">{{getViewedAuction.user.username}}</router-link>
+                        </b></h3>
+                        <br>
+                        <h4>Created At: {{closingTime}}</h4>
                         <h4>Closes At: {{getViewedAuction.closingTime}}</h4>
                     </v-card-text>
                     <v-card-text>
@@ -73,6 +83,7 @@
 </template>
 
 <script>
+    // let dateFormat = require('dateformat');
     export default {
         name: "Auction",
         computed: {
@@ -93,6 +104,16 @@
             },
             auctionExists() {
                 return !!this.$store.state.currentViewedAuction;
+            },
+            getUserUrl() {
+                return `/user?id=${this.$store.state.currentViewedAuction.user.id}`
+            },
+            closingTime() {
+                var options = {
+                    year: 'numeric', month: 'long', day: 'numeric', hour: "numeric"
+                };
+                let time = new Date(this.$store.state.currentViewedAuction.closingTime);
+                return time.toLocaleDateString('de-DE', options)
             }
         },
         methods: {

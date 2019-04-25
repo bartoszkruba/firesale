@@ -41,7 +41,9 @@ public class AuctionJsonClass {
         this.category = auction.getCategory().getName();
 
         if (auction.getUser() != null) {
-            this.user = new UserJsonClass(auction.getUser());
+            UserJsonClass u = new UserJsonClass(auction.getUser());
+            u.setAuctions(null);
+            this.user = u;
         }
 
         if (auction.getImages() != null) {
@@ -51,8 +53,7 @@ public class AuctionJsonClass {
                             .filepath(i.getFilepath()).build())
                     .collect(Collectors.toSet());
         }
-
-        if (auction.getBids() != null) {
+        if (auction.getBids() != null && auction.getBids().size() > 0) {
             this.higestbid = new BidJsonClass(auction.getBids().get(auction.getBids().size() - 1));
         }
     }

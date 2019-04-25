@@ -25,8 +25,6 @@ public class InsertDatabaseData implements CommandLineRunner {
     private UserService userService;
     private RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder;
-
-    ///nya
     private AuctionEntityRepository auctionEntityRepository;
     private AuctionService auctionService;
     private CategoryRepository categoryRepository;
@@ -139,6 +137,8 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/1.jpeg").build())
+                .addImage(Image.builder().filepath("/images/4.jpg").build())
+                .addImage(Image.builder().filepath("/images/5.jpeg").build())
                 .addBid(Bid.builder()
                         .value(20000D)
                         .user(user2).build());
