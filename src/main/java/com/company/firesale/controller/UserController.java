@@ -22,7 +22,6 @@ public class UserController {
     @PostMapping
     public ResponseEntity<String>
     registerNewUser(@Validated @RequestBody User user) {
-        System.out.println(user.getUsername());
         return userService.registerNewUser(user);
     }
 
