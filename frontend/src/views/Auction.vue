@@ -1,20 +1,20 @@
 <template>
         <v-card  id="auction" >
-            <v-img id="auctionimages" :src="mainimage"></v-img>
+            <v-img id="auctionimages" :src="getViewedAuction.images[0].filePath"></v-img>
             <v-container id="auctioncontent">
                 <v-layout>
                     <v-flex>
-                        <v-card-title id="auctiontitle"><h1 class="headline, font-weight-bold">{{title}}</h1></v-card-title>
-                        <v-card-text id="auctiondates"><span class="caption">Auction time: {{openedat}} - {{closingtime}}</span></v-card-text>
-                        <v-card-text><p class="body-2">{{description}}</p></v-card-text>
+                        <v-card-title id="auctiontitle"><h1 class="headline, font-weight-bold">{{getViewedAuction.title}}</h1></v-card-title>
+                        <v-card-text id="auctiondates"><span class="caption">Auction time: {{getViewedAuction.openedAt}} - {{getViewedAuction.closingtime}}</span></v-card-text>
+                        <v-card-text><p class="body-2">{{getViewedAuction.description}}</p></v-card-text>
 
-                        <h2 id="currentprice" align="center" class="subheading">Current price: {{startupprice}}</h2>
-                        <h2 id="currentbid" align="center" class="subheading, , font-weight-bold">Your bid: {{buyoutprice}}</h2>
+                        <h2 id="currentprice" align="center" class="subheading">Current price: {{getViewedAuction.startUpPrice}}</h2>
+                        <h2 id="currentbid" align="center" class="subheading, , font-weight-bold">Your bid: {{getViewedAuction.buyOutPrice}}</h2>
 
                         <v-slider
-                                :min="startupprice"
+                                :min="getViewedAuction.startUpPrice"
                                 id="priceslider"
-                                v-model="buyoutprice"
+                                v-model="getViewedAuction.buyOutPrice"
                         >
                         </v-slider>
 
@@ -31,26 +31,19 @@
 <script>
     export default {
         name: "Auction",
-        data() {
-            return {
-                userbid: 0,
-                id: 1,
-                title: 'Just another angry cat',
-                mainimage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbozarqhYwvS-OSbLzKxxN94AWICbxlYXK4W9io5Q6pS0G-3bjkw',
-                description: "Evil cat, killed it's owner. Probably cursed or a wizard in cats-form or something...",
-                openedat: '2019-03-01',
-                closingtime: '2019-04-30',
-                startupprice: 1,
-                buyoutprice: 20,
-                status: 'active',
+        computed: {
+            getViewedAuction(){
+                return this.$store.state.currentViewedAuction
             }
         },
         methods: {
             bid () {
-                this.userbid = this.buyoutprice;
+               // this.userbid = this.buyoutprice;
                 alert("You just made a bids on " + this.title)
 
             },
+        },
+        created: {
         }
         /*props: {
             userbid: Number,

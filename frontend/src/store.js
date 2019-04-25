@@ -16,7 +16,22 @@ export default new Vuex.Store({
             searchText: null,
             selectedCategory: 'All',
             maxPrice: 0,
-        }
+        },
+        currentViewedAuction: {
+            "id": 1,
+            "title": "A RED CAR",
+            "description": "BRUM BRUM",
+            "openedAt": "2019-04-25T09:45:29",
+            "closingTime": "2019-04-18T10:30:00",
+            "startUpPrice": 10000,
+            "buyOutPrice": 80000,
+            "category": "Cars",
+            "user": null,
+            "images": [
+                {
+                filePath: 'https://i.imgur.com/e0u37lt.jpg'
+            }]
+        },
     },
     mutations: {
         setLoggedIn(state, value) {
@@ -36,6 +51,9 @@ export default new Vuex.Store({
         setAuctions(state, params) {
             state.auctions = params;
             console.log(this.state.auctions);
+        },
+        setCurrentViewedAuction(state, params) {
+            state.currentViewedAuction = params;
         }
     },
     actions: {
@@ -54,6 +72,10 @@ export default new Vuex.Store({
                 .then(response => {
                     context.commit('setCategories', response.data)
                 });
+        },
+        async getCurrentViewedAuction(context, id) {
+            let response = await AuctionService().getAuctionById(id);
+            this.commit('setCurrentViewedAuction', response.data)
         }
     }
 });
