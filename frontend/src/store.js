@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         loggedIn: false,
-        showFiltersOnHome: false,
+        showFilters: false,
         auctions: [],
         categories: [],
         filterParams: {
@@ -18,8 +18,12 @@ export default new Vuex.Store({
             maxPrice: 0,
         },
         currentViewedAuction: {},
+
     },
     mutations: {
+        flipShowFilters(state){
+            this.state.showFilters = !this.state.showFilters;
+        },
         setLoggedIn(state, value) {
             this.state.loggedIn = value;
         },
@@ -43,6 +47,9 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        showFilters(context){
+            this.commit('showFilters')
+        },
         async getAuctions(context, params) {
             await AuctionService().getFilteredAuctions(params)
                 .then(response => {
