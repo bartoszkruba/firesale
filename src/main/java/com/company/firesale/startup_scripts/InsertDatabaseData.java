@@ -217,25 +217,25 @@ public class InsertDatabaseData implements CommandLineRunner {
         auctionService.addAuction(auction8);
 
         Bid bid1 = Bid.builder()
-                .yourBid(Double.parseDouble("20000"))
+                .value(Double.parseDouble("20000"))
                 .auction(auction1)
                 .user(user2).build();
         bidRepository.save(bid1);
 
         Bid bid2 = Bid.builder()
-                .yourBid(Double.parseDouble("250"))
+                .value(Double.parseDouble("250"))
                 .auction(auction4)
                 .user(user3).build();
         bidRepository.save(bid2);
 
         Bid bid3 = Bid.builder()
-                .yourBid(Double.parseDouble("300"))
+                .value(Double.parseDouble("300"))
                 .auction(auction4)
                 .user(user5).build();
         bidRepository.save(bid3);
 
         Bid bid4 = Bid.builder()
-                .yourBid(Double.parseDouble("400"))
+                .value(Double.parseDouble("400"))
                 .auction(auction4)
                 .user(user1).build();
         bidRepository.save(bid4);

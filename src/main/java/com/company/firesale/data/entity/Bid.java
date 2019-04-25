@@ -17,9 +17,10 @@ public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double yourBid;
+    private Double value;
+
     @CreationTimestamp
-    private LocalDateTime lastBid;
+    private LocalDateTime creationTime;
 
     @ManyToOne
     private Auction auction;
