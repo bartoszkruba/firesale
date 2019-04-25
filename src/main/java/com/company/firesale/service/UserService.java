@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 @Service
@@ -34,7 +35,7 @@ public class UserService {
 
         Role userRole = roleRepository.findDistinctByDescription("USER");
         user.setId(null);
-        user.setRoles(null);
+        user.setRoles(new HashSet<>());
         user.addRole(userRole);
         user.setPassword(encoder.encode(user.getPassword()));
 

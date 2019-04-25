@@ -102,14 +102,15 @@
         methods: {
             async register() {
                 if (this.validateFields()) {
+                    console.log(this.phone);
                     try {
                         let response = await userService.registerAccount({
                             username: this.username,
                             password: this.password,
-                            firstName: this.firstNamei,
+                            firstName: this.firstName,
                             lastName: this.lastName,
                             email: this.email,
-                            phoneNumber: this.phoneNumber
+                            phoneNumber: this.phone
                         });
                         if (response.status === 201) {
                             if (await auth.login(this.username, this.password)) {

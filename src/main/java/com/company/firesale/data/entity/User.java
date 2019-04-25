@@ -34,9 +34,6 @@ public class User {
     private String email;
 
     @NotEmpty
-    private String address;
-
-    @NotEmpty
     private String phoneNumber;
 
     @NotEmpty

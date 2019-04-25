@@ -58,13 +58,12 @@ public class InsertDatabaseData implements CommandLineRunner {
         roleRepository.save(adminRole);
         roleRepository.save(userRole);
 
-
         //Users
         User user1 = User.builder()
                 .username("john69")
                 .password(encoder.encode("password1234"))
                 .email("john.doe@gmail.com")
-                .address("4323 Oak Lawn Ave")
+//                .address("4323 Oak Lawn Ave")
                 .firstName("John")
                 .lastName("Doe")
                 .phoneNumber("(127)-963-1879")
@@ -78,7 +77,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("mary111")
                 .password(encoder.encode("mypassword"))
                 .email("mary323@gmail.com")
-                .address("4968 Railroad St")
+//                .address("4968 Railroad St")
                 .firstName("Mary")
                 .lastName("Poppins")
                 .phoneNumber("(277)-505-2351")
@@ -90,7 +89,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("ChrisL")
                 .password(encoder.encode("wyatt"))
                 .email("chris.lewis92@example.com")
-                .address("5860 Camden Ave")
+//                .address("5860 Camden Ave")
                 .firstName("Chris")
                 .lastName("Lewis")
                 .phoneNumber("(893)-121-7525")
@@ -102,7 +101,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("Morenorator")
                 .password(encoder.encode("reptile"))
                 .email("ruben.moreno87@example.com")
-                .address("5860 Camden Ave")
+//                .address("5860 Camden Ave")
                 .firstName("Ruben")
                 .lastName("Moreno")
                 .phoneNumber("(247)-425-7475")
@@ -114,7 +113,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("Cindirella")
                 .password(encoder.encode("poopoo"))
                 .email("ruben.moreno87@example.com")
-                .address("1164 Adelaide Ave")
+//                .address("1164 Adelaide Ave")
                 .firstName("Cindy")
                 .lastName("Stephens")
                 .phoneNumber("(272)-121-1765")
