@@ -14,7 +14,6 @@ import java.util.Set;
 @Builder
 @Entity
 public class Category {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,5 +23,4 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private Set<Auction> auctions = new HashSet<>();
-
 }
