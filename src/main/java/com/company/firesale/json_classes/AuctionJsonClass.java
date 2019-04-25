@@ -1,7 +1,6 @@
 package com.company.firesale.json_classes;
 
 import com.company.firesale.data.entity.Auction;
-import com.company.firesale.data.entity.Image;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,10 +24,10 @@ public class AuctionJsonClass {
     private Double startUpPrice;
     private Double buyOutPrice;
     private String category;
-    private Long user;
+    private UserJsonClass user;
 
     @Builder.Default
-    private Set<Long> images = new HashSet<>();
+    private Set<ImageJsonClass> images = new HashSet<>();
 
     public AuctionJsonClass(Auction auction) {
         this.id = auction.getId();
@@ -41,11 +40,15 @@ public class AuctionJsonClass {
         this.category = auction.getCategory().getName();
 
         if (auction.getUser() != null) {
-            this.user = auction.getUser().getId();
+            this.user = new UserJsonClass(auction.getUser());
         }
 
         if (auction.getImages() != null) {
-            this.images = auction.getImages().stream().map(Image::getId).collect(Collectors.toSet());
+            this.images = auction.getImages().stream().map(i ->
+                    ImageJsonClass.builder()
+                            .auctionId(i.getId())
+                            .filepath(i.getFilepath()).build())
+                    .collect(Collectors.toSet());
         }
     }
 
