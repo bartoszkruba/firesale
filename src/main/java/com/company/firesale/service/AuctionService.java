@@ -14,12 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AuctionService {
+public class AuctionService<a> {
 
     private final AuctionEntityRepository actionEntityRepository;
 
@@ -41,35 +42,26 @@ public class AuctionService {
         return actionEntityRepository.findAuctionById(id);
     }
 
-    public List<Auction> findTenByTitle(String title, Integer page) {
-        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
-        return actionEntityRepository.findByTitleContaining(title, pageWithTen);
+    public List<AuctionJsonClass> findTenByTitle(String title, Integer page) {
+        Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
+        List<AuctionJsonClass> auctionsJson =  new ArrayList<>();
+        for(Auction a : actionEntityRepository.findByTitleContaining(title, pageWithFive)){
+            if(a != null){
+                auctionsJson.add(new AuctionJsonClass(a));
+            }
+        }
+        return auctionsJson;
     }
 
-    public List<Auction> findTenByTitleAndBuyoutPrice(String title, Double price, Integer page) {
-        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
-        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithTen);
+
+    public List<Auction> findByTitleContainingAndStartUpPriceIsLessThanEqual(String title, Double price, Integer page) {
+        Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
+        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithFive);
     }
 
     public Page<Auction> findTenByDate(int page) {
         Pageable PageWithTen = PageRequest.of(page, 10, Sort.by("closingTime"));
         return actionEntityRepository.findAll(PageWithTen);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsOpenWithCategory(String title, Double price, String category, AuctionStatus status) {
-        return actionEntityRepository.findFilteredAuctionsOpenWithCategory(title, price, category, status);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsOpenAllCategories(String title, Double price, AuctionStatus status) {
-        return actionEntityRepository.findFilteredAuctionsOpenAllCategories(title, price, status);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsWithCategory(String title, Double price, String category) {
-        return actionEntityRepository.findFilteredAuctionsWithCategory(title, price, category);
-    }
-
-    public Iterable<Auction> findFilteredAuctionsAllCategories(String title, Double price) {
-        return actionEntityRepository.findFilteredAuctionsAllCategories(title, price);
     }
 
     public Page<Auction> findTenById(int page) {
