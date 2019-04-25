@@ -2,8 +2,12 @@ package com.company.firesale.service;
 
 import com.company.firesale.data.entity.Category;
 import com.company.firesale.data.repository.CategoryRepository;
+import com.company.firesale.json_classes.CategoryJsonClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class CategoryService {
@@ -15,8 +19,10 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Iterable findAll() {
-        return categoryRepository.findAll();
+    public Set<CategoryJsonClass> findAllTransferIntoJsonClass() {
+        Set<CategoryJsonClass> categories = new HashSet<>();
+        categoryRepository.findAll().forEach(c -> categories.add(new CategoryJsonClass(c)));
+        return categories;
     }
 
     public void addCategory(Category category) {

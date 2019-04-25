@@ -29,6 +29,7 @@
             }
         },
         async created() {
+            console.log(this.$route.query.id);
             this.$store.dispatch("checkIfLoggedIn");
         }
     }

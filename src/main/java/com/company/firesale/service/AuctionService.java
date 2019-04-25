@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AuctionService<a> {
+public class AuctionService {
 
     private final AuctionEntityRepository actionEntityRepository;
 
@@ -38,19 +38,15 @@ public class AuctionService<a> {
         this.categoryService = categoryService;
     }
 
-    public Auction findById(long id) {
-        return actionEntityRepository.findAuctionById(id);
+    public AuctionJsonClass findById(long id) {
+        return new AuctionJsonClass(actionEntityRepository.findAuctionById(id));
     }
 
     public List<AuctionJsonClass> findFiveByTitle(String title, Integer page) {
         Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
-        List<AuctionJsonClass> auctionsJson = new ArrayList<>();
-        for(Auction a : actionEntityRepository.findByTitleContainingOrderByClosingTimeAsc(title, pageWithFive)){
-            if(a != null){
-                auctionsJson.add(new AuctionJsonClass(a));
-            }
-        }
-        return auctionsJson;
+        List<AuctionJsonClass> auctions = new ArrayList<>();
+        actionEntityRepository.findByTitleContaining(title, pageWithFive).forEach(a -> auctions.add(new AuctionJsonClass(a)));
+        return auctions;
     }
 
     public Integer countAuctionsByTitleContaining(String title){
@@ -61,14 +57,13 @@ public class AuctionService<a> {
         Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
         return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithFive);
     }
+//    public List<Auction> findTenByTitleAndBuyoutPrice(String title, Double price, Integer page) {
+//        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
+//        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithTen);
+//    }
 
     public Page<Auction> findTenByDate(int page) {
         Pageable PageWithTen = PageRequest.of(page, 10, Sort.by("closingTime"));
-        return actionEntityRepository.findAll(PageWithTen);
-    }
-
-    public Page<Auction> findTenById(int page) {
-        Pageable PageWithTen = PageRequest.of(page, 10);
         return actionEntityRepository.findAll(PageWithTen);
     }
 
@@ -80,14 +75,12 @@ public class AuctionService<a> {
         }
     }
 
-
     public Auction createActionEntity() {
         Auction actionEntity = new Auction();
         actionEntityRepository.save(actionEntity);
         return actionEntity;
     }
 
-    // TODO: 2019-04-22 should return JsonAuction
     public ResponseEntity<AuctionJsonClass> createNewAuction(AuctionFormJsonClass auction, String username) {
         User user = userService.getUserByUsername(username);
         Category category = categoryService.findCategoryByName(auction.getCategory());

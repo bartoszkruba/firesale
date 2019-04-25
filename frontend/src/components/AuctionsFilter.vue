@@ -1,5 +1,5 @@
 <template>
-    <v-container id="filter-container" xs12 sm6 pa-0 v-on:keyup.enter="clickSearch">
+    <v-container id="filter-container" xs12 sm6 pa-0 v-on:keyup.enter="clickSearch" >
         <v-form v-model="valid">
             <v-layout column justify-center>
                 <v-container id="search-container" xs12 pt-0>
@@ -16,7 +16,7 @@
                     </v-container>
                     <transition name="fade">
                         <v-container id="filters-container" xs12 pa-0
-                                 v-show=false>
+                                 v-show=true>
 <!--                                v-show="this.$store.state.showFiltersOnHome"-->
                             <v-layout row wrap>
                                 <v-container id="filter-slider" xs12 pa-0>
@@ -46,7 +46,7 @@
                                             <v-switch
                                                     v-model="filterParams.showAllAuctions"
                                                     :label="`${filterParams.showAllAuctions ? 'Hide ended auctions' : 'Show all auctions'}`"
-                                                    color="primary"
+
                                             ></v-switch>
                                         </v-flex>
                                     </v-layout>
@@ -93,6 +93,7 @@
                 let generatedQuery = this.generateFilterQuery();
                 this.$store.dispatch('getAuctions', generatedQuery);
                 this.$router.push({path: 'auctions', query: generatedQuery});
+                this.$store.commit('flipShowFilters');
             },
             toggleFilters() {
                 this.$store.commit('toggleShowFiltersOnHome');
@@ -122,6 +123,12 @@
 </script>
 
 <style scoped>
+    #filter-container {
+        font-weight: 700;
+        color: white;
+        background-color: rgba(114, 114, 114, 1);
+        padding-top: 20px;
+    }
     #filter-slider {
         display: flex;
         flex-direction: row;

@@ -17,14 +17,15 @@ public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double yourBid;
-    @CreationTimestamp
-    private LocalDateTime lastBid;
+    private Double value;
 
-    @ManyToOne
+    @CreationTimestamp
+    private LocalDateTime creationTime;
+
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Auction auction;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private User user;
 
 }

@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         loggedIn: false,
-        showFiltersOnHome: false,
+        showFilters: false,
         auctions: [],
         categories: [],
         filterParams: {
@@ -18,11 +18,15 @@ export default new Vuex.Store({
             maxPrice: 0,
         },
         urlQuery: {},
-        numberOfAuctionsOnHome: 5
+        numberOfAuctionsOnHome: 5,
+        currentViewedAuction: null,
     },
     mutations: {
         setUrlQuery(state, value){
           this.state.urlQuery = value;
+        },
+        flipShowFilters(state){
+            this.state.showFilters = !this.state.showFilters;
         },
         setLoggedIn(state, value) {
             this.state.loggedIn = value;
@@ -45,9 +49,16 @@ export default new Vuex.Store({
         loadMoreAuctionsOnScroll(state, params){
             state.auctions = state.auctions.concat(params);
             console.log(state.auctions);
+            console.log(this.state.auctions);
+        },
+        setCurrentViewedAuction(state, params) {
+            state.currentViewedAuction = params;
         }
     },
     actions: {
+        showFilters(context){
+            this.commit('showFilters')
+        },
         async getAuctions(context, params) {
             await AuctionService().getFilteredAuctions(params)
                 .then(response => {
@@ -74,6 +85,10 @@ export default new Vuex.Store({
                 .then(response => {
                     context.commit('loadMoreAuctionsOnScroll', response.data);
                 });
+        },
+        async getCurrentViewedAuction(context, id) {
+            let response = await AuctionService().getAuctionById(id);
+            this.commit('setCurrentViewedAuction', response.data)
         }
     }
 });

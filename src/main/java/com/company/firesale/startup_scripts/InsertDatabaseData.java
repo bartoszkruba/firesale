@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -47,6 +48,7 @@ public class InsertDatabaseData implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
 
         //Roles
@@ -56,13 +58,12 @@ public class InsertDatabaseData implements CommandLineRunner {
         roleRepository.save(adminRole);
         roleRepository.save(userRole);
 
-
         //Users
         User user1 = User.builder()
                 .username("john69")
                 .password(encoder.encode("password1234"))
                 .email("john.doe@gmail.com")
-                .address("4323 Oak Lawn Ave")
+//                .address("4323 Oak Lawn Ave")
                 .firstName("John")
                 .lastName("Doe")
                 .phoneNumber("(127)-963-1879")
@@ -76,7 +77,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("mary111")
                 .password(encoder.encode("mypassword"))
                 .email("mary323@gmail.com")
-                .address("4968 Railroad St")
+//                .address("4968 Railroad St")
                 .firstName("Mary")
                 .lastName("Poppins")
                 .phoneNumber("(277)-505-2351")
@@ -88,7 +89,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("ChrisL")
                 .password(encoder.encode("wyatt"))
                 .email("chris.lewis92@example.com")
-                .address("5860 Camden Ave")
+//                .address("5860 Camden Ave")
                 .firstName("Chris")
                 .lastName("Lewis")
                 .phoneNumber("(893)-121-7525")
@@ -100,7 +101,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("Morenorator")
                 .password(encoder.encode("reptile"))
                 .email("ruben.moreno87@example.com")
-                .address("5860 Camden Ave")
+//                .address("5860 Camden Ave")
                 .firstName("Ruben")
                 .lastName("Moreno")
                 .phoneNumber("(247)-425-7475")
@@ -112,7 +113,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("Cindirella")
                 .password(encoder.encode("poopoo"))
                 .email("ruben.moreno87@example.com")
-                .address("1164 Adelaide Ave")
+//                .address("1164 Adelaide Ave")
                 .firstName("Cindy")
                 .lastName("Stephens")
                 .phoneNumber("(272)-121-1765")
@@ -132,11 +133,16 @@ public class InsertDatabaseData implements CommandLineRunner {
         Auction auction1 = Auction.builder()
                 .title("A RED CAR")
                 .description("BRUM BRUM")
-                .buyOutPrice(Double.parseDouble("80000"))
-                .startUpPrice(Double.parseDouble("10000"))
+                .buyOutPrice(80000D)
+                .startUpPrice(10000D)
                 .closingTime(Timestamp.valueOf(ldt1).toLocalDateTime())
                 .category(categories.get(1))
-                .status(AuctionStatus.OPEN).build();
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/1.jpeg").build())
+                .addBid(Bid.builder()
+                        .value(20000D)
+                        .user(user2).build());
+        user1.addAuction(auction1);
         auctionService.addAuction(auction1);
 
         LocalDateTime ldt2 = LocalDateTime.of(2019, 4, 5, 11, 00);
@@ -147,7 +153,9 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .startUpPrice(Double.parseDouble("15000"))
                 .closingTime(Timestamp.valueOf(ldt2).toLocalDateTime())
                 .category(categories.get(1))
-                .status(AuctionStatus.CLOSED).build();
+                .status(AuctionStatus.CLOSED).build()
+                .addImage(Image.builder().filepath("/images/2.jpg").build());
+        user1.addAuction(auction2);
         auctionService.addAuction(auction2);
 
         LocalDateTime ldt3 = LocalDateTime.of(2019, 4, 5, 11, 00);
@@ -158,7 +166,9 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .startUpPrice(Double.parseDouble("5"))
                 .closingTime(Timestamp.valueOf(ldt3).toLocalDateTime())
                 .category(categories.get(2))
-                .status(AuctionStatus.OPEN).build();
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
+        user5.addAuction(auction3);
         auctionService.addAuction(auction3);
 
         LocalDateTime ldt4 = LocalDateTime.of(2019, 4, 5, 11, 30);
@@ -169,7 +179,18 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .startUpPrice(Double.parseDouble("25"))
                 .closingTime(Timestamp.valueOf(ldt4).toLocalDateTime())
                 .category(categories.get(3))
-                .status(AuctionStatus.OPEN).build();
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/4.jpg").build())
+                .addBid(Bid.builder()
+                        .value(250D)
+                        .user(user3).build())
+                .addBid(Bid.builder()
+                        .value(300D)
+                        .user(user5).build())
+                .addBid(Bid.builder()
+                        .value(400D)
+                        .user(user4).build());
+        user2.addAuction(auction4);
         auctionService.addAuction(auction4);
 
         LocalDateTime ldt5 = LocalDateTime.of(2019, 4, 5, 11, 00);
@@ -180,7 +201,9 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .startUpPrice(Double.parseDouble("15000"))
                 .closingTime(Timestamp.valueOf(ldt5).toLocalDateTime())
                 .category(categories.get(1))
-                .status(AuctionStatus.OPEN).build();
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/5.jpeg").build());
+        user4.addAuction(auction5);
         auctionService.addAuction(auction5);
 
         LocalDateTime ldt6 = LocalDateTime.of(2019, 4, 5, 11, 00);
@@ -191,7 +214,9 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .startUpPrice(Double.parseDouble("15000"))
                 .closingTime(Timestamp.valueOf(ldt6).toLocalDateTime())
                 .category(categories.get(1))
-                .status(AuctionStatus.OPEN).build();
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/1.jpeg").build());
+        user3.addAuction(auction6);
         auctionService.addAuction(auction6);
 
         LocalDateTime ldt7 = LocalDateTime.of(2019, 4, 5, 11, 00);
@@ -202,7 +227,9 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .startUpPrice(Double.parseDouble("15000"))
                 .closingTime(Timestamp.valueOf(ldt7).toLocalDateTime())
                 .category(categories.get(1))
-                .status(AuctionStatus.OPEN).build();
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/2.jpg").build());
+        user2.addAuction(auction7);
         auctionService.addAuction(auction7);
 
         LocalDateTime ldt8 = LocalDateTime.of(2019, 4, 5, 11, 00);
@@ -213,33 +240,9 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .startUpPrice(Double.parseDouble("15000"))
                 .closingTime(Timestamp.valueOf(ldt8).toLocalDateTime())
                 .category(categories.get(1))
-                .status(AuctionStatus.OPEN).build();
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+        user4.addAuction(auction8);
         auctionService.addAuction(auction8);
-
-        Bid bid1 = Bid.builder()
-                .yourBid(Double.parseDouble("20000"))
-                .auction(auction1)
-                .user(user2).build();
-        bidRepository.save(bid1);
-
-        Bid bid2 = Bid.builder()
-                .yourBid(Double.parseDouble("250"))
-                .auction(auction4)
-                .user(user3).build();
-        bidRepository.save(bid2);
-
-        Bid bid3 = Bid.builder()
-                .yourBid(Double.parseDouble("300"))
-                .auction(auction4)
-                .user(user5).build();
-        bidRepository.save(bid3);
-
-        Bid bid4 = Bid.builder()
-                .yourBid(Double.parseDouble("400"))
-                .auction(auction4)
-                .user(user1).build();
-        bidRepository.save(bid4);
-
-
     }
 }

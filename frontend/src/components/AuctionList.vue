@@ -1,6 +1,6 @@
 <template>
     <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-        <div v-for="auction in this.$store.state.auctions" v-bind:key=auction.id>
+        <div v-for="auction in this.$store.state.auctions" v-bind:key=auction.id @click=toAuctionDetails(auction.id)>
             <AuctionListItem :auction=auction />
         </div>
     </div>
@@ -35,12 +35,13 @@
                     }
                     this.busy = false;
                 }, 1000);
+            },
+            toAuctionDetails(id) {
+                this.$router.push({path: 'auction', query: {id}});
             }
         },
         beforeMount() {
             this.$store.dispatch('getAuctions', this.$route.query);
-
-            // this.$store.dispatch('getAuctions', this.$route.query);
         }
     }
 
