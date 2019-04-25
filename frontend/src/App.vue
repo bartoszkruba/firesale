@@ -6,6 +6,7 @@
         <!--                    <v-flex xs12 sm8 md4>-->
         <router-view/>
         <Toolbar></Toolbar>
+        <About></About>
         <div id="bottomspacer"></div>
         <!--                    </v-flex>-->
         <!--                </v-layout>-->
@@ -17,11 +18,13 @@
 
 <script>
     import Toolbar from "./components/Toolbar";
+    import About from "./components/About";
 
     export default {
         name: 'App',
         components: {
             Toolbar,
+            About,
         },
         data() {
             return {
