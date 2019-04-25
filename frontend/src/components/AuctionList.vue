@@ -5,9 +5,7 @@
                 :auction=auction
 
             >
-
         </AuctionListItem>
-
     </div></div>
 </template>
 

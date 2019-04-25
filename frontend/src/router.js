@@ -39,7 +39,7 @@ export default new Router({
             component: NewAuction
         },
         {
-            path: '/test/auction',
+            path: '/auction',
             name: 'Auction',
             component: Auction
         },
