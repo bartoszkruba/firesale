@@ -18,6 +18,13 @@ export default new Vuex.Store({
             maxPrice: 0,
         },
         currentViewedAuction: null,
+        currentUser: {
+            "id": 4,
+            "username": "Morenorator",
+            "email": "ruben.moreno87@example.com",
+            "phoneNumber": "(247)-425-7475",
+            "auctions": []
+        }
     },
     mutations: {
         flipShowFilters(state){
