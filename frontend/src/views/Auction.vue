@@ -1,15 +1,4 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <!--        <v-card  id="auction" >-->
-    <!--             <v-img id="auctionimages" src="https://static.boredpanda.com/blog/wp-content/uploads/2016/02/japanese-grumpy-cat-angry-koyuki-moflicious-22.jpg"></v-img>-->
-    <!--            <v-container id="auctioncontent">-->
-    <!--                <v-layout>-->
-    <!--                    <v-flex>-->
-    <!--                        -->
-
-    <!--                    </v-flex>-->
-    <!--                </v-layout>-->
-    <!--            </v-container>-->
-    <!--        </v-card>-->
 
     <v-content v-if="getViewedAuction !== null">
         <!--        <v-layout align-center>-->
@@ -57,7 +46,8 @@
                             <h3>Your Bid (SEK): </h3>
                             <v-text-field type="text" @keydown="allowOnlyNumber"
                                           prepend-icon="money" name="Amount" label="Amount"
-                                          v-model="bidField"></v-text-field>
+                                          v-model="bidField" :error-messages="bidFieldError"
+                                          @keydown.enter="bid"></v-text-field>
                             <v-btn center color="primary" id="bidbutton" @click="bid">BID</v-btn>
                         </div>
                     </v-card-text>
@@ -103,12 +93,15 @@
 </template>
 
 <script>
-    // let dateFormat = require('dateformat');
+    import bidService from '../services/bid'
+
     export default {
         name: "Auction",
         data() {
             return {
                 bidField: "",
+                bidFieldError: "",
+
                 headers: [
                     {text: 'Value: (SEK)', value: 'value'},
                     {text: 'Placed By: ', value: 'placedBy'},
@@ -116,7 +109,7 @@
                 ],
                 paginationConfig: {
                     descending: true,
-                    rowsPerPage: -1, // -1 for All",
+                    rowsPerPage: -1,
                     sortBy: "value",
                 }
             }
@@ -136,9 +129,6 @@
             },
             getUrl() {
                 return `http://${window.location.host}`
-            },
-            auctionExists() {
-                return !!this.$store.state.currentViewedAuction;
             },
             getUserUrl() {
                 return `/user?id=${this.$store.state.currentViewedAuction.user.id}`
@@ -182,11 +172,30 @@
             }
         },
         methods: {
-            bid() {
-                // this.userbid = this.buyoutprice;
-                alert("You just made a bid on " + this.getViewedAuction.title)
+            async bid() {
+                this.bidFieldError = "";
+                let currPrice = this.$store.state.currentViewedAuction.highestBid ?
+                    this.$store.state.currentViewedAuction.highestBid.value :
+                    this.$store.state.currentViewedAuction.startUpPrice;
+
+                if (parseFloat(this.bidField) <= parseFloat(currPrice)) {
+                    this.bidFieldError = "Must be higher than current bid"
+                } else {
+                    let response = await bidService().placeBid(this.$store.state.currentViewedAuction.id,
+                        parseFloat(this.bidField));
+                    if (response.status === 201) {
+                        this.bidField = "";
+                        alert("Bid placed")
+                    }
+                }
+            },
+            clearBidFieldError(e) {
+                if (e.key.toString() !== "enter") {
+                    this.bidFieldError = "";
+                }
             },
             allowOnlyNumber(e) {
+                this.clearBidFieldError(e);
                 let re = /[0-9]|Backspace/;
                 if (!e.key.toString().match(re)) {
                     e.preventDefault()
