@@ -5,6 +5,7 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import NewAuction from './views/NewAuction.vue'
 import Auction from "./views/Auction";
+import About from "./views/About";
 
 
 Vue.use(Router);
@@ -42,6 +43,11 @@ export default new Router({
             path: '/auction',
             name: 'Auction',
             component: Auction
+        },
+        {
+            path: '/about',
+            name: 'About',
+            component: About
         },
 
     ]

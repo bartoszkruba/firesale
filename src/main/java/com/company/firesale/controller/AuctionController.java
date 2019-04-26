@@ -37,7 +37,6 @@ public class AuctionController {
     }
 
 
-    // TODO: 2019-04-23 Should return JsonClas
     @PostMapping
     public HttpEntity<AuctionJsonClass> createActionEntity(@Validated @RequestBody AuctionFormJsonClass auction,
                                                            Principal principal) {

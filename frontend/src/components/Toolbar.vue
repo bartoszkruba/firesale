@@ -53,6 +53,13 @@
                             </v-list-tile-title>
                         </router-link>
                     </v-list-tile>
+                    <v-list-tile>
+                        <router-link to="/about" style="color: black; text-decoration: none">
+                            <v-list-tile-title>
+                                About
+                            </v-list-tile-title>
+                        </router-link>
+                    </v-list-tile>
                 </v-list>
             </v-menu>
             <v-spacer></v-spacer>

@@ -17,11 +17,13 @@
 
 <script>
     import Toolbar from "./components/Toolbar";
+    import About from "./views/About";
 
     export default {
         name: 'App',
         components: {
             Toolbar,
+            About,
         },
         data() {
             return {
@@ -38,10 +40,6 @@
 <style>
     * {
         font-family: "Segoe UI", arial, sans-serif;
-    }
-
-    .v-content {
-        background-color: #BDBDBD;
     }
 
     #bottomspacer {
