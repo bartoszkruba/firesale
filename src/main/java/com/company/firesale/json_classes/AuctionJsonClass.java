@@ -54,7 +54,9 @@ public class AuctionJsonClass {
                     .collect(Collectors.toSet());
         }
         if (auction.getBids() != null && auction.getBids().size() > 0) {
-            this.highestBid = new BidJsonClass(auction.getBids().get(auction.getBids().size() - 1));
+            this.highestBid = new BidJsonClass(auction.getBids().stream()
+                    .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+                    .collect(Collectors.toList()).get(0));
         }
     }
 

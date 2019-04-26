@@ -75,7 +75,11 @@
                                 :pagination.sync="paginationConfig">
                             <template v-slot:items="bid">
                                 <td>{{bid.item.value}} SEK</td>
-                                <td>{{bid.item.username}}</td>
+                                <td>
+                                    <router-link :to="getLinkToProfile(bid.item.userId)" style="color: black">
+                                        {{bid.item.username}}
+                                    </router-link>
+                                </td>
                                 <td class="text-xs-right">{{formatDate(bid.item.creationTime)}}</td>
                             </template>
                         </v-data-table>
@@ -203,6 +207,9 @@
             },
             loadMoreBids() {
                 this.$store.dispatch("loadBidPage");
+            },
+            getLinkToProfile(id) {
+                return `/user?id=${id}`
             }
         },
         beforeMount() {
