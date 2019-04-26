@@ -51,6 +51,13 @@ export default new Vuex.Store({
             //     "username": "ChrisL"
             // }
         ]
+        currentUser: {
+            "id": 4,
+            "username": "Morenorator",
+            "email": "ruben.moreno87@example.com",
+            "phoneNumber": "(247)-425-7475",
+            "auctions": []
+        }
     },
     mutations: {
         setUrlQuery(state, value) {
@@ -109,7 +116,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        showFilters() {
+        showFilters(context){
             this.commit('showFilters')
         },
         async getAuctions(context, params) {
