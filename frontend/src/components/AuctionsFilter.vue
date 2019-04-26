@@ -89,10 +89,14 @@
         },
         methods: {
             clickSearch() {
+                this.$store.commit('setAuctions', []);
+                this.$store.commit('setPageNumber', 0);
                 this.$store.commit('setFilterParams', this.filterParams);
                 let generatedQuery = this.generateFilterQuery();
-                this.$store.dispatch('getAuctions', generatedQuery);
-                this.$router.push({path: 'auctions', query: generatedQuery});
+                this.$router.push({path: '/auctions', query: generatedQuery});
+
+                generatedQuery.page = this.$store.state.page;
+                this.$store.dispatch('getMoreAuctionsOnScroll', generatedQuery);
                 this.$store.commit('flipShowFilters');
             },
             toggleFilters() {
@@ -102,6 +106,8 @@
                 let urlQuery = {};
                 if (this.filterParams.searchText != null) {
                     urlQuery.title = this.filterParams.searchText;
+                } else {
+                    urlQuery.title = '';
                 }
                 if (this.filterParams.maxPrice > 0) {
                     urlQuery.price = this.filterParams.maxPrice;
@@ -112,7 +118,7 @@
                 if (this.filterParams.showAllAuctions === true) {
                     urlQuery.showAll = this.filterParams.showAllAuctions;
                 }
-                urlQuery.page = 0;
+                // urlQuery.page = 0;
                 return urlQuery;
             }
         },

@@ -20,12 +20,13 @@ export default new Vuex.Store({
         urlQuery: {},
         numberOfAuctionsOnHome: 5,
         currentViewedAuction: null,
+        page: 0
     },
     mutations: {
-        setUrlQuery(state, value){
-          this.state.urlQuery = value;
+        setUrlQuery(state, value) {
+            this.state.urlQuery = value;
         },
-        flipShowFilters(state){
+        flipShowFilters(state) {
             this.state.showFilters = !this.state.showFilters;
         },
         setLoggedIn(state, value) {
@@ -44,18 +45,19 @@ export default new Vuex.Store({
         },
         setAuctions(state, params) {
             state.auctions = params;
-            console.log(state.auctions);
         },
-        loadMoreAuctionsOnScroll(state, params){
+        loadMoreAuctionsOnScroll(state, params) {
             state.auctions = state.auctions.concat(params);
-            console.log(state.auctions);
         },
         setCurrentViewedAuction(state, params) {
             state.currentViewedAuction = params;
+        },
+        setPageNumber(state, value){
+            state.page = value;
         }
     },
     actions: {
-        showFilters(context){
+        showFilters(context) {
             this.commit('showFilters')
         },
         async getAuctions(context, params) {
@@ -74,16 +76,16 @@ export default new Vuex.Store({
                     context.commit('setCategories', response.data)
                 });
         },
-        async getMoreAuctionsOnScroll(context, params){
-            if(params.page === undefined) {
-                params.page = 0;
-            } else {
-                params.page++;
+        async getMoreAuctionsOnScroll(context, params) {
+            let numberOfTotalAuctions = await AuctionService().countAuctionsBasedOnTitle(params).then(response => response.data);
+            if (numberOfTotalAuctions > this.state.auctions.length) {
+                params.page = this.state.page;
+                await AuctionService().getFilteredAuctions(params)
+                    .then(response => {
+                        context.commit('loadMoreAuctionsOnScroll', response.data);
+                    });
+                this.state.page++;
             }
-            await AuctionService().getFilteredAuctions(params)
-                .then(response => {
-                    context.commit('loadMoreAuctionsOnScroll', response.data);
-                });
         },
         async getCurrentViewedAuction(context, id) {
             let response = await AuctionService().getAuctionById(id);

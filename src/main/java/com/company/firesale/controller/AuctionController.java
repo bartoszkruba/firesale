@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.security.Principal;
 import java.util.List;
 
@@ -25,16 +26,13 @@ public class AuctionController {
     @GetMapping
     List<AuctionJsonClass> getFilteredAuctions(
             @RequestParam(required = false, defaultValue = "") String title,
-            @RequestParam(required = false, defaultValue = "0") Integer page){
+            @RequestParam(required = false, defaultValue = "0") Double page){
 
-        return actionEntityServis.findFiveByTitle(title, page);
+        return actionEntityServis.findFiveByTitle(title, page.intValue());
     }
 
     @GetMapping("/count")
-    Integer getAuctionCount(
-            @RequestParam(required = false, defaultValue = "") String title,
-            @RequestParam(required = false, defaultValue = "0") Integer page){
-
+    Integer getAuctionCount(@RequestParam(required = false, defaultValue = "") String title){
         return actionEntityServis.countAuctionsByTitleContaining(title);
     }
 
