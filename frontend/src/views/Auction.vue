@@ -22,7 +22,7 @@
                     </v-toolbar>
 
                     <v-carousel v-if="amountImages > 0">
-                        <v-carousel-item :key="i" v-for="i in getViewedAuction.images">
+                        <v-carousel-item :key="i.filepath" v-for="i in getViewedAuction.images">
                             <v-img :src="i.filepath" alt=""></v-img>
                         </v-carousel-item>
                     </v-carousel>
@@ -32,38 +32,51 @@
                             <router-link :to="getUserUrl">{{getViewedAuction.user.username}}</router-link>
                         </b></h3>
                         <br>
-                        <h4>Created At: {{closingTime}}</h4>
-                        <h4>Closes At: {{getViewedAuction.closingTime}}</h4>
+                        <h4>Created At: {{createdTime}} </h4>
+                        <h4>Closes At: {{closingTime}}</h4>
                     </v-card-text>
                     <v-card-text>
                         <h3>Description:</h3>
                         <p class="body-2">{{getViewedAuction.description}}</p>
                     </v-card-text>
                     <v-card-text>
-                        <h3>Current highest bid: {{getViewedAuction.startUpPrice}} SEK</h3>
+                        <h3>Current Price: {{currentPrice}} SEK</h3>
                     </v-card-text>
+
                     <h2 id="currentbid"
                         v-show="loggedIn"
                         class="subheading,
-                            font-weight-bold">
-                        Your bid: {{getViewedAuction.buyOutPrice}}</h2>
+                            font-weight-bold"></h2>
 
-                    <v-btn id="loginMessage"
-                           v-show="!loggedIn"
-                           color="red"
-                           small
-                           class="subheading,font-weight-bold"
-                           @click="routeToLogin">
-                        Log in to place your bid
-                    </v-btn>
-                    <v-slider v-show="loggedIn" :min="getViewedAuction.startUpPrice" id="priceslider"
-                              v-model="getViewedAuction.buyOutPrice">
-                    </v-slider>
+                    <v-card-text>
+                        <h4 v-show="!loggedIn">
+                            <router-link to="/login">Log in</router-link>
+                            to place your bid
+                        </h4>
+                        <div v-show="loggedIn">
+                            <h3>Your Bid (SEK): </h3>
+                            <v-text-field type="text" @keydown="allowOnlyNumber"
+                                          prepend-icon="money" name="Amount" label="Amount"
+                                          v-model="bidField"></v-text-field>
+                            <v-btn center color="primary" id="bidbutton" @click="bid">BID</v-btn>
+                        </div>
+                    </v-card-text>
 
-                    <v-card-actions v-show="loggedIn"
-                                    id="auctionactions">
-                        <v-btn center color="primary" id="bidbutton" @click="bid">BID</v-btn>
-                    </v-card-actions>
+                    <!--                    <v-btn id="loginMessage"-->
+                    <!--                           v-show="!loggedIn"-->
+                    <!--                           color="red"-->
+                    <!--                           small-->
+                    <!--                           class="subheading,font-weight-bold"-->
+                    <!--                           @click="routeToLogin">-->
+                    <!--                        Log in to place your bid-->
+                    <!--                    </v-btn>-->
+                    <!--                    <v-slider v-show="loggedIn" :min="getViewedAuction.startUpPrice" id="priceslider"-->
+                    <!--                              v-model="getViewedAuction.buyOutPrice">-->
+                    <!--                    </v-slider>-->
+
+                    <!--                    <v-card-actions v-show="loggedIn"-->
+                    <!--                                    id="auctionactions">-->
+                    <!--                    </v-card-actions>-->
                 </v-card>
             </v-container>
         </div>
@@ -86,6 +99,11 @@
     // let dateFormat = require('dateformat');
     export default {
         name: "Auction",
+        data() {
+            return {
+                bidField: ""
+            }
+        },
         computed: {
             getViewedAuction() {
                 return this.$store.state.currentViewedAuction
@@ -110,10 +128,37 @@
             },
             closingTime() {
                 var options = {
-                    year: 'numeric', month: 'long', day: 'numeric', hour: "numeric"
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour12: false,
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric"
                 };
                 let time = new Date(this.$store.state.currentViewedAuction.closingTime);
-                return time.toLocaleDateString('de-DE', options)
+                return time.toLocaleDateString('en-EN', options)
+            },
+            createdTime() {
+                var options = {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour12: false,
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric"
+                };
+                let time = new Date(this.$store.state.currentViewedAuction.openedAt);
+                return time.toLocaleDateString('en-EN', options)
+            },
+            currentPrice() {
+                let highestBid = this.$store.state.currentViewedAuction.highestBid;
+                if (highestBid) {
+                    return highestBid.value;
+                } else {
+                    return this.$store.state.currentViewedAuction.startUpPrice;
+                }
             }
         },
         methods: {
@@ -123,6 +168,12 @@
             },
             routeToLogin() {
                 this.$router.push({path: 'login'});
+            },
+            allowOnlyNumber(e) {
+                let re = /[0-9]|Backspace/;
+                if (!e.key.toString().match(re)) {
+                    e.preventDefault()
+                }
             }
         },
         beforeMount() {

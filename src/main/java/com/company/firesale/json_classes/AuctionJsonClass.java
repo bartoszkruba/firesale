@@ -25,7 +25,7 @@ public class AuctionJsonClass {
     private Double buyOutPrice;
     private String category;
     private UserJsonClass user;
-    private BidJsonClass higestbid;
+    private BidJsonClass highestBid;
 
     @Builder.Default
     private Set<ImageJsonClass> images = new HashSet<>();
@@ -54,7 +54,7 @@ public class AuctionJsonClass {
                     .collect(Collectors.toSet());
         }
         if (auction.getBids() != null && auction.getBids().size() > 0) {
-            this.higestbid = new BidJsonClass(auction.getBids().get(auction.getBids().size() - 1));
+            this.highestBid = new BidJsonClass(auction.getBids().get(auction.getBids().size() - 1));
         }
     }
 
