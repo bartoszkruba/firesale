@@ -11,6 +11,8 @@
                                     :autofocus=true
                                     clearable
                                     label="Search"
+                                    color="primary"
+                                    dark
                             ></v-text-field>
                         </v-flex>
                     </v-container>
@@ -29,6 +31,8 @@
                                                 :value=this.$store.state.filterParams.maxPrice
                                                 thumb-label="always"
                                                 label="Max price: "
+                                                color="primary"
+                                                dark
                                         ></v-slider>
                                     </v-flex>
                                 </v-container>
@@ -39,6 +43,7 @@
                                                     v-model="filterParams.selectedCategory"
                                                     :items="items"
                                                     label="Category"
+                                                    dark
 
                                             ></v-select>
                                         </v-flex>
@@ -46,6 +51,8 @@
                                             <v-switch
                                                     v-model="filterParams.showAllAuctions"
                                                     :label="`${filterParams.showAllAuctions ? 'Hide ended auctions' : 'Show all auctions'}`"
+                                                    color="primary"
+                                                    dark
 
                                             ></v-switch>
                                         </v-flex>
@@ -133,6 +140,7 @@
     #filter-slider {
         display: flex;
         flex-direction: row;
+        color: white !important;
     }
 
     .fade-enter-active {
