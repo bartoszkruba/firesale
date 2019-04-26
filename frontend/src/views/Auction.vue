@@ -213,7 +213,7 @@
             }
         },
         beforeMount() {
-            this.$store.dispatch('getCurrentViewedAuction', this.$route.query.id)
+            this.$store.dispatch('getCurrentViewedAuction', this.$route.query.id);
         }
     }
 

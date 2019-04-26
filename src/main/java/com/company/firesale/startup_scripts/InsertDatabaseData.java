@@ -289,5 +289,44 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .addImage(Image.builder().filepath("/images/3.jpeg").build());
         user4.addAuction(auction8);
         auctionService.addAuction(auction8);
+
+        LocalDateTime ldt9 = LocalDateTime.of(2019, 3, 5, 12, 00);
+        Auction auction9 = Auction.builder()
+                .title("A chair")
+                .description("BRUM BRUM")
+                .buyOutPrice(Double.parseDouble("2000"))
+                .startUpPrice(Double.parseDouble("100"))
+                .closingTime(Timestamp.valueOf(ldt9).toLocalDateTime())
+                .category(categories.get(2))
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+        user4.addAuction(auction9);
+        auctionService.addAuction(auction9);
+
+        LocalDateTime ldt10 = LocalDateTime.of(2019, 3, 1, 12, 00);
+        Auction auction10 = Auction.builder()
+                .title("A flower")
+                .description("BRUM BRUM")
+                .buyOutPrice(Double.parseDouble("300"))
+                .startUpPrice(Double.parseDouble("10"))
+                .closingTime(Timestamp.valueOf(ldt10).toLocalDateTime())
+                .category(categories.get(2))
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+        user4.addAuction(auction10);
+        auctionService.addAuction(auction10);
+
+        LocalDateTime ldt11 = LocalDateTime.of(2019, 3, 28, 12, 00);
+        Auction auction11 = Auction.builder()
+                .title("A bench")
+                .description("BRUM BRUM")
+                .buyOutPrice(Double.parseDouble("500"))
+                .startUpPrice(Double.parseDouble("200"))
+                .closingTime(Timestamp.valueOf(ldt11).toLocalDateTime())
+                .category(categories.get(2))
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+        user2.addAuction(auction11);
+        auctionService.addAuction(auction11);
     }
 }

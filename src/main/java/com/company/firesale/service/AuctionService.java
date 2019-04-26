@@ -43,13 +43,21 @@ public class AuctionService {
         return new AuctionJsonClass(actionEntityRepository.findAuctionById(id));
     }
 
-    public List<AuctionJsonClass> findTenByTitle(String title, Integer page) {
-        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
+    public List<AuctionJsonClass> findFiveByTitle(String title, Integer page) {
+        Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
         List<AuctionJsonClass> auctions = new ArrayList<>();
-        actionEntityRepository.findByTitleContaining(title, pageWithTen).forEach(a -> auctions.add(new AuctionJsonClass(a)));
+        actionEntityRepository.findByTitleContaining(title, pageWithFive).forEach(a -> auctions.add(new AuctionJsonClass(a)));
         return auctions;
     }
 
+    public Integer countAuctionsByTitleContaining(String title){
+        return actionEntityRepository.countAuctionsByTitleIsContaining(title);
+    }
+
+    public List<Auction> findByTitleContainingAndStartUpPriceIsLessThanEqual(String title, Double price, Integer page) {
+        Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
+        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithFive);
+    }
 //    public List<Auction> findTenByTitleAndBuyoutPrice(String title, Double price, Integer page) {
 //        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
 //        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithTen);
