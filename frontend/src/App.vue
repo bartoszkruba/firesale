@@ -5,7 +5,6 @@
         <!--                <v-layout align-center justify-center>-->
         <!--                    <v-flex xs12 sm8 md4>-->
         <router-view/>
-        <About></About>
         <Toolbar></Toolbar>
         <div id="bottomspacer"></div>
         <!--                    </v-flex>-->
@@ -18,7 +17,7 @@
 
 <script>
     import Toolbar from "./components/Toolbar";
-    import About from "./components/About";
+    import About from "./views/About";
 
     export default {
         name: 'App',
