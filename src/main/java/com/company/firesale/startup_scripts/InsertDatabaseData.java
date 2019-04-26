@@ -25,8 +25,6 @@ public class InsertDatabaseData implements CommandLineRunner {
     private UserService userService;
     private RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder;
-
-    ///nya
     private AuctionEntityRepository auctionEntityRepository;
     private AuctionService auctionService;
     private CategoryRepository categoryRepository;
@@ -139,6 +137,8 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/1.jpeg").build())
+                .addImage(Image.builder().filepath("/images/4.jpg").build())
+                .addImage(Image.builder().filepath("/images/5.jpeg").build())
                 .addBid(Bid.builder()
                         .value(20000D)
                         .user(user2).build());
@@ -182,13 +182,58 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/4.jpg").build())
                 .addBid(Bid.builder()
-                        .value(250D)
+                        .value(55D)
                         .user(user3).build())
+                .addBid(Bid.builder()
+                        .value(60D)
+                        .user(user5).build())
+                .addBid(Bid.builder()
+                        .value(80D)
+                        .user(user4).build())
+                .addBid(Bid.builder()
+                        .value(100D)
+                        .user(user3).build())
+                .addBid(Bid.builder()
+                        .value(150D)
+                        .user(user3).build())
+                .addBid(Bid.builder()
+                        .value(155D)
+                        .user(user5).build())
+                .addBid(Bid.builder()
+                        .value(200D)
+                        .user(user4).build())
                 .addBid(Bid.builder()
                         .value(300D)
                         .user(user5).build())
                 .addBid(Bid.builder()
                         .value(400D)
+                        .user(user4).build())
+                .addBid(Bid.builder()
+                        .value(401D)
+                        .user(user3).build())
+                .addBid(Bid.builder()
+                        .value(405D)
+                        .user(user5).build())
+                .addBid(Bid.builder()
+                        .value(408D)
+                        .user(user4).build())
+                .addBid(Bid.builder()
+                        .value(500D)
+                        .user(user3).build())
+                .addBid(Bid.builder()
+                        .value(600D)
+                        .user(user5).build())
+                .addBid(Bid.builder()
+                        .value(700D)
+                        .user(user4).build())
+                .addBid(Bid.builder()
+                        .value(800D)
+                        .user(user3).build())
+                .addBid(Bid.builder()
+                        .value(850D)
+                        .user(user5).build())
+                .addBid(Bid.builder()
+                        .value(900D)
                         .user(user4).build());
         user2.addAuction(auction4);
         auctionService.addAuction(auction4);

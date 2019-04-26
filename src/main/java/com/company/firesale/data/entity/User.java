@@ -65,6 +65,7 @@ public class User {
 
     public User addAuction(Auction auction) {
         this.auctions.add(auction);
+        auction.setUser(this);
         return this;
     }
 
