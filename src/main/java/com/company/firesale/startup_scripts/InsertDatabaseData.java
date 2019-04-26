@@ -286,7 +286,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .closingTime(Timestamp.valueOf(ldt8).toLocalDateTime())
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
         user4.addAuction(auction8);
         auctionService.addAuction(auction8);
 
@@ -299,7 +299,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .closingTime(Timestamp.valueOf(ldt9).toLocalDateTime())
                 .category(categories.get(2))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
         user4.addAuction(auction9);
         auctionService.addAuction(auction9);
 
@@ -312,20 +312,20 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .closingTime(Timestamp.valueOf(ldt10).toLocalDateTime())
                 .category(categories.get(2))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
         user4.addAuction(auction10);
         auctionService.addAuction(auction10);
 
         LocalDateTime ldt11 = LocalDateTime.of(2019, 3, 28, 12, 00);
         Auction auction11 = Auction.builder()
                 .title("A bench")
-                .description("BRUM BRUM")
+                .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum")
                 .buyOutPrice(Double.parseDouble("500"))
                 .startUpPrice(Double.parseDouble("200"))
                 .closingTime(Timestamp.valueOf(ldt11).toLocalDateTime())
                 .category(categories.get(2))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+                .addImage(Image.builder().filepath("/images/10.jpg").build());
         user2.addAuction(auction11);
         auctionService.addAuction(auction11);
     }

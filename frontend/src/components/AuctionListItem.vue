@@ -1,26 +1,30 @@
 <template>
     <v-card id="listitempanel">
         <div id="auctionimgcontainer">
-            <img id="auctionimg" :src="auction.mainimage"/>
+            <span v-if="imagesExist">
+                <router-link :to="auctionLink">
+                    <v-img id="auctionimg" :src="auction.images[0].filepath" alt="no image"/>
+                </router-link>
+            </span>
+            <span v-else>no image</span>
         </div>
 
         <div id="auctiontextcontent">
-            <h3 id="auctiontitle">{{auction.title}}</h3>
-            <span id="auctiondescription">{{auction.description}}</span>
-            <h3 id="auctionprice">Current price: {{auction.startUpPrice}}</h3>
-            <h3 id="auctiontime">Ends at: {{auction.closingTime}}</h3>
+            <h1 id="auctiontitle">
+                <router-link :to="auctionLink" style="color: black">
+                    {{auction.title}}
+                </router-link>
+            </h1>
+            <span id="auctiondescription">{{description}}</span>
+            <h3 id="auctionprice">Current price: {{auction.startUpPrice}} SEK</h3>
+            <h3 id="auctiontime">Ends at: {{closingTime}}</h3>
 
         </div>
         <v-btn id="buybutton"
                color="primary"
-               absolute
-               bottom
-               right
-               fab
-        >
+               absolute bottom right fab>
             <v-icon>attach_money</v-icon>
         </v-btn>
-
     </v-card>
 </template>
 
@@ -29,18 +33,43 @@
         name: "AuctionListItem",
         props: {
             auction: {},
-            id: Number,
-            title: String,
-            description: String,
-            openedAt: String,
-            closingTime: Number,
-            startUpPrice: Number,
-            buyOutPrice: Number,
-            status: String,
-            mainimage: String,
         },
-        methods: {
-
+        methods: {},
+        computed: {
+            imagesExist() {
+                return this.auction.images.length > 0;
+            },
+            closingTime() {
+                var options = {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour12: false,
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric"
+                };
+                let time = new Date(this.auction.closingTime);
+                return time.toLocaleDateString('en-EN', options)
+            },
+            currentPrice() {
+                let highestBid = this.auction.highestBid;
+                if (highestBid) {
+                    return highestBid.value;
+                } else {
+                    return this.auction.startUpPrice;
+                }
+            },
+            auctionLink() {
+                return `/auction?id=${this.auction.id}`
+            },
+            description() {
+                let description = this.auction.description.substring(0, 250);
+                if (this.auction.description.length > 250) {
+                    description = description + "...";
+                }
+                return description
+            }
         }
     }
 </script>
@@ -63,7 +92,7 @@
 
     #auctionimgcontainer {
         height: 100%;
-        width: auto;
+        width: 100%;
         max-width: 25%;
     }
 
@@ -94,7 +123,7 @@
     }
 
     #auctionprice {
-        font-family: "Segoe UI";
+        font-family: "Segoe fUI";
         text-align: left;
         font-size: small;
         padding-bottom: 5px;
@@ -109,7 +138,7 @@
 
     #buybutton {
         color: black;
-        margin-bottom: 10px;
+        margin-bottom: 35px;
     }
 
 
