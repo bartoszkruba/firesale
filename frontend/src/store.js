@@ -18,7 +18,10 @@ export default new Vuex.Store({
             selectedCategory: 'All',
             maxPrice: 0,
         },
+        urlQuery: {},
+        numberOfAuctionsOnHome: 5,
         currentViewedAuction: null,
+        page: 0,
         viewedAuctionBids: [
             // {
             //     "id": 4,
@@ -47,6 +50,9 @@ export default new Vuex.Store({
         ]
     },
     mutations: {
+        setUrlQuery(state, value) {
+            this.state.urlQuery = value;
+        },
         flipShowFilters(state) {
             this.state.showFilters = !this.state.showFilters;
         },
@@ -67,8 +73,14 @@ export default new Vuex.Store({
         setAuctions(state, params) {
             state.auctions = params;
         },
+        loadMoreAuctionsOnScroll(state, params) {
+            state.auctions = state.auctions.concat(params);
+        },
         setCurrentViewedAuction(state, params) {
             state.currentViewedAuction = params;
+        },
+        setPageNumber(state, value){
+            state.page = value;
         },
         setViewedAuctionBids(state, value) {
             this.state.viewedAuctionBids = value;
@@ -93,6 +105,17 @@ export default new Vuex.Store({
                 .then(response => {
                     context.commit('setCategories', response.data)
                 });
+        },
+        async getMoreAuctionsOnScroll(context, params) {
+            let numberOfTotalAuctions = await AuctionService().countAuctionsBasedOnTitle(params).then(response => response.data);
+            if (numberOfTotalAuctions > this.state.auctions.length) {
+                params.page = this.state.page;
+                await AuctionService().getFilteredAuctions(params)
+                    .then(response => {
+                        context.commit('loadMoreAuctionsOnScroll', response.data);
+                    });
+                this.state.page++;
+            }
         },
         async getCurrentViewedAuction(context, id) {
             let response = await AuctionService().getAuctionById(id);
