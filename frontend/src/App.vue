@@ -5,8 +5,8 @@
         <!--                <v-layout align-center justify-center>-->
         <!--                    <v-flex xs12 sm8 md4>-->
         <router-view/>
-        <Toolbar></Toolbar>
         <About></About>
+        <Toolbar></Toolbar>
         <div id="bottomspacer"></div>
         <!--                    </v-flex>-->
         <!--                </v-layout>-->
@@ -41,10 +41,6 @@
 <style>
     * {
         font-family: "Segoe UI", arial, sans-serif;
-    }
-
-    .v-content {
-        background-color: #BDBDBD;
     }
 
     #bottomspacer {

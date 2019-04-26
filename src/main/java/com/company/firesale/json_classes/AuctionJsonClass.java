@@ -52,7 +52,7 @@ public class AuctionJsonClass {
                     .collect(Collectors.toSet());
         }
 
-        if (auction.getBids() != null) {
+        if (auction.getBids() != null && auction.getBids().size() > 0) {
             this.higestbid = new BidJsonClass(auction.getBids().get(auction.getBids().size() - 1));
         }
     }
