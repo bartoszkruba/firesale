@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <!--        <v-card  id="auction" >-->
     <!--             <v-img id="auctionimages" src="https://static.boredpanda.com/blog/wp-content/uploads/2016/02/japanese-grumpy-cat-angry-koyuki-moflicious-22.jpg"></v-img>-->
     <!--            <v-container id="auctioncontent">-->
@@ -61,26 +61,29 @@
                             <v-btn center color="primary" id="bidbutton" @click="bid">BID</v-btn>
                         </div>
                     </v-card-text>
-
-                    <!--                    <v-btn id="loginMessage"-->
-                    <!--                           v-show="!loggedIn"-->
-                    <!--                           color="red"-->
-                    <!--                           small-->
-                    <!--                           class="subheading,font-weight-bold"-->
-                    <!--                           @click="routeToLogin">-->
-                    <!--                        Log in to place your bid-->
-                    <!--                    </v-btn>-->
-                    <!--                    <v-slider v-show="loggedIn" :min="getViewedAuction.startUpPrice" id="priceslider"-->
-                    <!--                              v-model="getViewedAuction.buyOutPrice">-->
-                    <!--                    </v-slider>-->
-
-                    <!--                    <v-card-actions v-show="loggedIn"-->
-                    <!--                                    id="auctionactions">-->
-                    <!--                    </v-card-actions>-->
+                </v-card>
+                <v-card>
+                    <v-toolbar>
+                        <v-toolbar-title>Latest Bids:</v-toolbar-title>
+                        <v-spacer></v-spacer>
+                    </v-toolbar>
+                    <template>
+                        <v-data-table
+                                :headers="headers"
+                                :items="viewedAuctionBids"
+                                class="elevation-1"
+                                :pagination.sync="paginationConfig">
+                            <template v-slot:items="bid">
+                                <td>{{bid.item.value}} SEK</td>
+                                <td>{{bid.item.username}}</td>
+                                <td class="text-xs-right">{{formatDate(bid.item.creationTime)}}</td>
+                            </template>
+                        </v-data-table>
+                    </template>
+                    <v-btn color="primary" @click="loadMoreBids">Show More</v-btn>
                 </v-card>
             </v-container>
         </div>
-        <!--        </v-layout>-->
     </v-content>
     <v-content v-else>
         <v-container fluid fill-height>
@@ -101,7 +104,17 @@
         name: "Auction",
         data() {
             return {
-                bidField: ""
+                bidField: "",
+                headers: [
+                    {text: 'Value: (SEK)', value: 'value'},
+                    {text: 'Placed By: ', value: 'placedBy'},
+                    {text: 'Time: ', value: 'time', align: 'right'}
+                ],
+                paginationConfig: {
+                    descending: true,
+                    rowsPerPage: -1, // -1 for All",
+                    sortBy: "value",
+                }
             }
         },
         computed: {
@@ -159,6 +172,9 @@
                 } else {
                     return this.$store.state.currentViewedAuction.startUpPrice;
                 }
+            },
+            viewedAuctionBids() {
+                return this.$store.state.viewedAuctionBids;
             }
         },
         methods: {
@@ -166,14 +182,27 @@
                 // this.userbid = this.buyoutprice;
                 alert("You just made a bid on " + this.getViewedAuction.title)
             },
-            routeToLogin() {
-                this.$router.push({path: 'login'});
-            },
             allowOnlyNumber(e) {
                 let re = /[0-9]|Backspace/;
                 if (!e.key.toString().match(re)) {
                     e.preventDefault()
                 }
+            },
+            formatDate(date) {
+                let options = {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour12: false,
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric"
+                };
+                let time = new Date(date);
+                return time.toLocaleDateString('en-EN', options)
+            },
+            loadMoreBids() {
+                this.$store.dispatch("loadBidPage");
             }
         },
         beforeMount() {
