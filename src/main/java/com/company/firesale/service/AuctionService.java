@@ -4,6 +4,7 @@ import com.company.firesale.data.entity.*;
 import com.company.firesale.data.repository.AuctionEntityRepository;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.json_classes.AuctionJsonClass;
+import lombok.Lombok;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -77,7 +78,7 @@ public class AuctionService {
         User user = userService.getUserByUsername(username);
         Category category = categoryService.findCategoryByName(auction.getCategory());
 
-        if (validateAuctionForm(auction) && user != null && category != null) {
+        if (validateBidForm(auction) && user != null && category != null) {
             Auction DBAuction = new Auction();
             user.addAuction(DBAuction);
             DBAuction.setTitle(auction.getTitle());
@@ -105,7 +106,7 @@ public class AuctionService {
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    public AuctionJsonClass getAuctionById(Long id) {
+    public AuctionJsonClass getAuctionJsonClassById(Long id) {
         Optional<Auction> a = actionEntityRepository.findById(id);
         if (a.isPresent()) {
             return new AuctionJsonClass(a.get());
@@ -114,7 +115,11 @@ public class AuctionService {
         }
     }
 
-    private boolean validateAuctionForm(AuctionFormJsonClass auction) {
+    public Auction getAuctionById(Long id){
+        return actionEntityRepository.getOne(id);
+    }
+
+    private boolean validateBidForm(AuctionFormJsonClass auction) {
         LocalDateTime currentTime = LocalDateTime.now();
 
         if (auction.getClosingTime().isBefore(currentTime)) {
@@ -127,5 +132,6 @@ public class AuctionService {
             return true;
         }
     }
+
 
 }

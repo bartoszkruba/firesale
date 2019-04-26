@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"auction"})
+@EqualsAndHashCode(exclude = {"auctionId"})
 @Builder
 @Entity
 public class Image {

@@ -73,4 +73,9 @@ public class User {
         return this;
     }
 
+    public User addBid(Bid bid) {
+        this.bids.add(bid);
+        return this;
+    }
+
 }

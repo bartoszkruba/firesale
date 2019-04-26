@@ -16,7 +16,7 @@ public class TestController {
 
     @GetMapping("/usertest")
     public String userTest() {
-        return "This is user route";
+        return "This is username route";
     }
 
 }

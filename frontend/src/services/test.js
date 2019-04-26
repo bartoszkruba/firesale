@@ -7,7 +7,7 @@ export default {
         formData.append("username", "john69");
         formData.append("password", "password1234");
 
-        return Api().post("/user", {
+        return Api().post("/username", {
             "username": "john69",
             "password": "password1234",
             "email": "email@email.com",

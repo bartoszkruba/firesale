@@ -60,6 +60,8 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/usertest/").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/auctions/").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/api/auctions").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/bids/").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/bids").hasRole("USER")
                 .antMatchers("/api/login/roles").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/login/roles/").hasAnyRole("USER", "ADMIN");
     }
@@ -81,7 +83,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("user")
+                .withUser("username")
                 .password(myUserDetailsService.getEncoder().encode("password"))
                 .roles("USER");
 

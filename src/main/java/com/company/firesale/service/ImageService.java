@@ -20,7 +20,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
 
-    private static String uploadDir = System.getProperty("user.dir") + "/target/classes/static/images";
+    private static String uploadDir = System.getProperty("username.dir") + "/target/classes/static/images";
 
     @Autowired
     public ImageService(ImageRepository imageRepository) {
