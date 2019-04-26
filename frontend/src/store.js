@@ -21,7 +21,7 @@ export default new Vuex.Store({
         urlQuery: {},
         numberOfAuctionsOnHome: 5,
         currentViewedAuction: null,
-        page: 0
+        page: 0,
         viewedAuctionBids: [
             // {
             //     "id": 4,
