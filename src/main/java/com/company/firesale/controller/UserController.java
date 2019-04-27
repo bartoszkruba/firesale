@@ -30,4 +30,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<String>
+    updateUser(@Validated @RequestBody User user) {return userService.updateUser(user); }
 }

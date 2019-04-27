@@ -61,7 +61,8 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/auctions/").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/api/auctions").hasRole("USER")
                 .antMatchers("/api/login/roles").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/login/roles/").hasAnyRole("USER", "ADMIN");
+                .antMatchers("/api/login/roles/").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/login/account_details/").hasAnyRole("USER", "ADMIN");
     }
 
     // pictures should be in assets

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
+import authentication from "./services/authentication";
 
 Vue.use(Vuex);
 
@@ -18,13 +19,7 @@ export default new Vuex.Store({
             maxPrice: 0,
         },
         currentViewedAuction: null,
-        currentUser: {
-            "id": 4,
-            "username": "Morenorator",
-            "email": "ruben.moreno87@example.com",
-            "phoneNumber": "(247)-425-7475",
-            "auctions": []
-        }
+        currentUser: { }
     },
     mutations: {
         flipShowFilters(state){
@@ -50,7 +45,11 @@ export default new Vuex.Store({
         },
         setCurrentViewedAuction(state, params) {
             state.currentViewedAuction = params;
+        },
+        setCurrentUser(state, params) {
+            state.currentUser = params;
         }
+
     },
     actions: {
         showFilters(context){
@@ -75,6 +74,12 @@ export default new Vuex.Store({
         async getCurrentViewedAuction(context, id) {
             let response = await AuctionService().getAuctionById(id);
             this.commit('setCurrentViewedAuction', response.data)
+        },
+        async getCurrentUser() {
+            let response = await auth().getCurrentUser();
+            console.log(response.data);
+            this.commit('setCurrentUser', response.data)
         }
+
     }
 });
