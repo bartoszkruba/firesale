@@ -3,8 +3,6 @@ import Vuex from 'vuex'
 import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
-import bidService from '@/services/bid'
-import socketService from './services/socket'
 
 Vue.use(Vuex);
 
@@ -50,7 +48,7 @@ export default new Vuex.Store({
             //     "userId": 3,
             //     "username": "ChrisL"
             // }
-        ]
+        ],
         currentUser: {
             "id": 4,
             "username": "Morenorator",
@@ -113,6 +111,9 @@ export default new Vuex.Store({
         },
         setListItemBidFieldSwtich(state, value) {
             this.state.listItemBidFieldSwitch = value;
+        },
+        setCurrentUser(state, params) {
+            state.currentUser = params;
         }
     },
     actions: {
@@ -178,6 +179,12 @@ export default new Vuex.Store({
             console.log('loading auction with id: ' + id);
 
             let response = await AuctionService().getAuctionById(id);
+            this.commit('setCurrentViewedAuction', response.data)
+        },
+        async getCurrentUser() {
+            let response = await auth().getCurrentUser();
+            console.log(response.data);
+            this.commit('setCurrentUser', response.data)
             this.commit('setCurrentViewedAuction', response.data);
             this.commit("setViewedAuctionBids", []);
             this.dispatch("loadBidPage");

@@ -79,7 +79,7 @@
                 this.showError = false;
                 this.usernameError = "";
                 this.passwordError = "";
-
+                this.$store.getCurrentUser;
                 if (this.validateUsername() && this.validatePassword()) {
                     let status = await auth.login(this.username, this.password);
                     this.showError = !status;
