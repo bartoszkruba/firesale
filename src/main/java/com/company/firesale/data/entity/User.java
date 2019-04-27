@@ -65,11 +65,17 @@ public class User {
 
     public User addAuction(Auction auction) {
         this.auctions.add(auction);
+        auction.setUser(this);
         return this;
     }
 
     public User addRole(Role role) {
         this.roles.add(role);
+        return this;
+    }
+
+    public User addBid(Bid bid) {
+        this.bids.add(bid);
         return this;
     }
 

@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"category", "bids", "user", "images"})
+@EqualsAndHashCode(exclude = {"category", "bids", "username", "images"})
 @Builder
 @Entity
 public class Auction {

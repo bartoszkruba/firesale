@@ -25,7 +25,7 @@ public class AuctionJsonClass {
     private Double buyOutPrice;
     private String category;
     private UserJsonClass user;
-    private BidJsonClass higestbid;
+    private BidJsonClass highestBid;
 
     @Builder.Default
     private Set<ImageJsonClass> images = new HashSet<>();
@@ -41,7 +41,9 @@ public class AuctionJsonClass {
         this.category = auction.getCategory().getName();
 
         if (auction.getUser() != null) {
-            this.user = new UserJsonClass(auction.getUser());
+            UserJsonClass u = new UserJsonClass(auction.getUser());
+            u.setAuctions(null);
+            this.user = u;
         }
 
         if (auction.getImages() != null) {
@@ -51,9 +53,10 @@ public class AuctionJsonClass {
                             .filepath(i.getFilepath()).build())
                     .collect(Collectors.toSet());
         }
-
         if (auction.getBids() != null && auction.getBids().size() > 0) {
-            this.higestbid = new BidJsonClass(auction.getBids().get(auction.getBids().size() - 1));
+            this.highestBid = new BidJsonClass(auction.getBids().stream()
+                    .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+                    .collect(Collectors.toList()).get(0));
         }
     }
 

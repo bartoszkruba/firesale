@@ -1,5 +1,6 @@
 package com.company.firesale.data.entity;
 
+import com.company.firesale.json_classes.AuctionJsonClass;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

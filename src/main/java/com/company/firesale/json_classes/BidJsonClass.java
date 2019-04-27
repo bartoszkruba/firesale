@@ -1,14 +1,12 @@
 package com.company.firesale.json_classes;
 
 
-import com.company.firesale.data.entity.Auction;
 import com.company.firesale.data.entity.Bid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.swing.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,7 +18,8 @@ public class BidJsonClass {
     private Double value;
     private LocalDateTime creationTime;
     private Long auctionId;
-    private Long userid;
+    private Long userId;
+    private String username;
 
     public BidJsonClass(Bid bid) {
         this.id = bid.getId();
@@ -28,9 +27,10 @@ public class BidJsonClass {
         this.value = bid.getValue();
 
         if (bid.getUser() != null) {
-            this.userid = bid.getUser().getId();
+            this.userId = bid.getUser().getId();
+            this.username = bid.getUser().getUsername();
         }
-        if(bid.getAuction() != null){
+        if (bid.getAuction() != null) {
             this.auctionId = bid.getAuction().getId();
         }
     }
