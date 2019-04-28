@@ -23,34 +23,78 @@
             <v-btn id="buybutton"
                    color="primary"
                    absolute bottom right fab
-                   v-if="!closed"
+                   v-if="!closed && loggedIn"
                    @click="switchBidBar">
                 <v-icon>attach_money</v-icon>
             </v-btn>
         </v-card>
         <v-card id="bid_panel" v-if="showBidBar">
-            <v-text-field name="Amount (SEK)" label="Amount (SEK)"></v-text-field>
-            <v-btn color="primary">Bid</v-btn>
+            <v-text-field name="Amount (SEK)" label="Amount (SEK)" @keydown="allowOnlyNumbers"
+                          @keydown.enter="bid" :error-messages="bidFieldError" v-model="bidField"></v-text-field>
+            <v-btn color="primary" @click="bid">Bid</v-btn>
         </v-card>
     </div>
 </template>
 
 <script>
+    import bidService from '../services/bid'
+
     export default {
+        data() {
+            return {
+                bidField: "",
+                bidFieldError: ""
+            }
+        },
         name: "AuctionListItem",
         props: {
             auction: {},
         },
         methods: {
+            async bid() {
+                this.bidFieldError = "";
+                let currPrice = this.auction.highestBid ?
+                    this.auction.highestBid.value :
+                    this.auction.startUpPrice;
+
+                if (parseFloat(this.bidField) <= parseFloat(currPrice)) {
+                    this.bidFieldError = "Must be higher than current bid"
+                } else {
+                    let response = await bidService().placeBid(this.auction.id,
+                        parseFloat(this.bidField));
+                    if (response.status === 201) {
+                        this.bidField = "";
+                        alert("Bid placed")
+                    } else {
+                        alert("Something went wrong, please refresh site and try again")
+                    }
+                }
+            },
+            clearBidFieldError(e) {
+                if (e.key.toString() !== "enter") {
+                    this.bidFieldError = "";
+                }
+            },
             switchBidBar() {
                 if (this.$store.state.listItemBidFieldSwitch === this.auction.id) {
                     this.$store.commit("setListItemBidFieldSwtich", false);
                 } else {
                     this.$store.commit("setListItemBidFieldSwtich", this.auction.id)
                 }
+            },
+            allowOnlyNumbers(e) {
+                this.clearBidFieldError(e);
+                this.bidFieldError = "";
+                let re = /[0-9]|Backspace/;
+                if (!e.key.toString().match(re)) {
+                    e.preventDefault()
+                }
             }
         },
         computed: {
+            loggedIn() {
+                return this.$store.state.loggedIn;
+            },
             imagesExist() {
                 return this.auction.images.length > 0;
             },

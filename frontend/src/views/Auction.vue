@@ -196,6 +196,8 @@
                     if (response.status === 201) {
                         this.bidField = "";
                         alert("Bid placed")
+                    } else {
+                        alert("Something went wrong, please refresh site and try again")
                     }
                 }
             },
