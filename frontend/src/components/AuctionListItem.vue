@@ -12,7 +12,7 @@
         <div id="auctiontextcontent">
             <h1 id="auctiontitle">
                 <router-link :to="auctionLink" style="color: black">
-                    {{auction.title}}
+                    {{auction.title}} <span v-if="closed">(Closed)</span>
                 </router-link>
             </h1>
             <span id="auctiondescription">{{description}}</span>
@@ -40,6 +40,9 @@
                 return this.auction.images.length > 0;
             },
             closingTime() {
+
+                let time = new Date(this.auction.closingTime);
+
                 var options = {
                     year: 'numeric',
                     month: 'long',
@@ -49,7 +52,7 @@
                     minute: "numeric",
                     second: "numeric"
                 };
-                let time = new Date(this.auction.closingTime);
+
                 return time.toLocaleDateString('en-EN', options)
             },
             currentPrice() {
@@ -64,11 +67,16 @@
                 return `/auction?id=${this.auction.id}`
             },
             description() {
-                let description = this.auction.description.substring(0, 250);
-                if (this.auction.description.length > 250) {
+                let description = this.auction.description.substring(0, 200);
+                if (this.auction.description.length > 200) {
                     description = description + "...";
                 }
                 return description
+            },
+            closed() {
+                let time = new Date(this.auction.closingTime);
+
+                return time < new Date();
             }
         }
     }

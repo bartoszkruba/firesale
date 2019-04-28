@@ -134,6 +134,7 @@
                 return `/user?id=${this.$store.state.currentViewedAuction.user.id}`
             },
             closingTime() {
+
                 var options = {
                     year: 'numeric',
                     month: 'long',
@@ -144,6 +145,10 @@
                     second: "numeric"
                 };
                 let time = new Date(this.$store.state.currentViewedAuction.closingTime);
+
+                if (time < new Date()) {
+                    return "Closed"
+                }
                 return time.toLocaleDateString('en-EN', options)
             },
             createdTime() {

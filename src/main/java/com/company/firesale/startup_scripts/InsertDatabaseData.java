@@ -25,21 +25,21 @@ public class InsertDatabaseData implements CommandLineRunner {
     private UserService userService;
     private RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder;
-    private AuctionEntityRepository auctionEntityRepository;
+    private final AuctionEntityRepository auctionEntityRepository;
     private AuctionService auctionService;
     private CategoryRepository categoryRepository;
     private BidRepository bidRepository;
 
     @Autowired
-    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder, AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository) {
+    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder, AuctionEntityRepository auctionEntityRepository, AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository) {
         this.userService = userService;
         this.roleRepository = roleRepository;
 
         this.encoder = encoder;
+        this.auctionEntityRepository = auctionEntityRepository;
 
 
         ///nya
-        this.auctionEntityRepository = auctionEntityRepository;
         this.auctionService = auctionService;
         this.categoryRepository = categoryRepository;
         this.bidRepository = bidRepository;
@@ -303,7 +303,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         user4.addAuction(auction9);
         auctionService.addAuction(auction9);
 
-        LocalDateTime ldt10 = LocalDateTime.of(2019, 3, 1, 12, 00);
+        LocalDateTime ldt10 = LocalDateTime.of(2019, 7, 1, 12, 00);
         Auction auction10 = Auction.builder()
                 .title("A flower")
                 .description("BRUM BRUM")
