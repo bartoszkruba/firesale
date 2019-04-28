@@ -22,7 +22,8 @@
         </div>
         <v-btn id="buybutton"
                color="primary"
-               absolute bottom right fab>
+               absolute bottom right fab
+               v-if="!closed" >
             <v-icon>attach_money</v-icon>
         </v-btn>
     </v-card>
