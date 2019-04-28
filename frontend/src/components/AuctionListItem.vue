@@ -1,32 +1,38 @@
 <template>
-    <v-card id="listitempanel">
-        <div id="auctionimgcontainer">
+    <div>
+        <v-card class="listitempanel">
+            <div id="auctionimgcontainer">
             <span v-if="imagesExist">
                 <router-link :to="auctionLink">
                     <v-img id="auctionimg" :src="auction.images[0].filepath" alt="no image"/>
                 </router-link>
             </span>
-            <span v-else>no image</span>
-        </div>
+                <span v-else>no image</span>
+            </div>
 
-        <div id="auctiontextcontent">
-            <h1 id="auctiontitle">
-                <router-link :to="auctionLink" style="color: black">
-                    {{auction.title}} <span v-if="closed">(Closed)</span>
-                </router-link>
-            </h1>
-            <span id="auctiondescription">{{description}}</span>
-            <h3 id="auctionprice">Current price: {{auction.startUpPrice}} SEK</h3>
-            <h3 id="auctiontime">Ends at: {{closingTime}}</h3>
-
-        </div>
-        <v-btn id="buybutton"
-               color="primary"
-               absolute bottom right fab
-               v-if="!closed" >
-            <v-icon>attach_money</v-icon>
-        </v-btn>
-    </v-card>
+            <div id="auctiontextcontent">
+                <h1 id="auctiontitle">
+                    <router-link :to="auctionLink" style="color: black">
+                        {{auction.title}} <span v-if="closed">(Closed)</span>
+                    </router-link>
+                </h1>
+                <span id="auctiondescription">{{description}}</span>
+                <h3 id="auctionprice">Current price: {{auction.startUpPrice}} SEK</h3>
+                <h3 id="auctiontime">Ends at: {{closingTime}}</h3>
+            </div>
+            <v-btn id="buybutton"
+                   color="primary"
+                   absolute bottom right fab
+                   v-if="!closed"
+                   @click="switchBidBar">
+                <v-icon>attach_money</v-icon>
+            </v-btn>
+        </v-card>
+        <v-card id="bid_panel" v-if="showBidBar">
+            <v-text-field name="Amount (SEK)" label="Amount (SEK)"></v-text-field>
+            <v-btn color="primary">Bid</v-btn>
+        </v-card>
+    </div>
 </template>
 
 <script>
@@ -35,7 +41,15 @@
         props: {
             auction: {},
         },
-        methods: {},
+        methods: {
+            switchBidBar() {
+                if (this.$store.state.listItemBidFieldSwitch === this.auction.id) {
+                    this.$store.commit("setListItemBidFieldSwtich", false);
+                } else {
+                    this.$store.commit("setListItemBidFieldSwtich", this.auction.id)
+                }
+            }
+        },
         computed: {
             imagesExist() {
                 return this.auction.images.length > 0;
@@ -78,6 +92,9 @@
                 let time = new Date(this.auction.closingTime);
 
                 return time < new Date();
+            },
+            showBidBar() {
+                return this.$store.state.listItemBidFieldSwitch === this.auction.id;
             }
         }
     }
@@ -85,16 +102,22 @@
 
 <style scoped>
 
-    #listitempanel {
+    .listitempanel {
         box-sizing: border-box;
         display: flex;
         flex-direction: row;
         background-color: whitesmoke;
-        box-shadow: 5px 5px black;
+        /*box-shadow: 5px 5px black;*/
         height: 120px;
         width: 90%;
         margin-top: 20px;
-        margin-bottom: 20px;
+        /*margin-bottom: 20px;*/
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    #bid_panel {
+        width: 90%;
         margin-left: 5%;
         margin-right: 5%;
     }
