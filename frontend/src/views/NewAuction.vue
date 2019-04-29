@@ -216,6 +216,11 @@
                     this.buyoutPriceError = "";
                 }
             }
+        },
+        beforeMount() {
+            if (!this.$store.state.loggedIn) {
+                this.$router.push("/");
+            }
         }
     }
 </script>

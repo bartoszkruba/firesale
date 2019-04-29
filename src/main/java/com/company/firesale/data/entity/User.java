@@ -14,7 +14,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"roles", "auctions"})
+@EqualsAndHashCode(exclude = {"roles", "auctions", "conversations"})
+@ToString(exclude = {"conversations", "roles", "auctions"})
 @Builder
 @Entity
 public class User {
@@ -22,6 +23,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     @NotEmpty
     private String username;
@@ -62,6 +64,13 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @Builder.Default
     private Set<Bid> bids = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_conversation",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "conversation_id"))
+    @Builder.Default
+    private Set<Conversation> conversations = new HashSet<>();
 
     public User addAuction(Auction auction) {
         this.auctions.add(auction);

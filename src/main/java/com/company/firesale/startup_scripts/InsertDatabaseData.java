@@ -7,6 +7,7 @@ import com.company.firesale.data.repository.BidRepository;
 import com.company.firesale.data.repository.CategoryRepository;
 import com.company.firesale.data.repository.RoleRepository;
 import com.company.firesale.service.AuctionService;
+import com.company.firesale.service.ConversationService;
 import com.company.firesale.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -29,9 +30,10 @@ public class InsertDatabaseData implements CommandLineRunner {
     private AuctionService auctionService;
     private CategoryRepository categoryRepository;
     private BidRepository bidRepository;
+    private final ConversationService conversationService;
 
     @Autowired
-    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder, AuctionEntityRepository auctionEntityRepository, AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository) {
+    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder, AuctionEntityRepository auctionEntityRepository, AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository, ConversationService conversationService) {
         this.userService = userService;
         this.roleRepository = roleRepository;
 
@@ -43,6 +45,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         this.auctionService = auctionService;
         this.categoryRepository = categoryRepository;
         this.bidRepository = bidRepository;
+        this.conversationService = conversationService;
     }
 
     @Override
@@ -328,5 +331,41 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .addImage(Image.builder().filepath("/images/10.jpg").build());
         user2.addAuction(auction11);
         auctionService.addAuction(auction11);
+
+
+        Conversation between_john_and_mary = Conversation.builder().build()
+                .addMember(user1)
+                .addMember(user2)
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Sup?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user2).textContent("All Good").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user2).textContent("U?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Good too").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Wanna sell some stuff?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user2).textContent("Yeah sure").build());
+
+        Conversation between_john_and_cindy = Conversation.builder().build()
+                .addMember(user1)
+                .addMember(user5)
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Sup?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user5).textContent("All Good").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user5).textContent("U?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Good too").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Wanna sell some stuff?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user5).textContent("Yeah sure").build());
+
+        conversationService.saveConversation(between_john_and_mary);
+        conversationService.saveConversation(between_john_and_cindy);
     }
 }
