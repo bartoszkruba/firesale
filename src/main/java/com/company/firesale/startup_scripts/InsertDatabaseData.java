@@ -171,7 +171,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         user5.addAuction(auction3);
         auctionService.addAuction(auction3);
 
-        LocalDateTime ldt4 = LocalDateTime.of(2019, 4, 5, 11, 30);
+        LocalDateTime ldt4 = LocalDateTime.of(2019, 7, 5, 11, 30);
         Auction auction4 = Auction.builder()
                 .title("Table")
                 .description("Oak tabel")

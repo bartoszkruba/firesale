@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.Console;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +40,6 @@ public class BidService {
         return bids;
     }*/
 
-    public Bid curentHigestBid(Long id){
-        return bidRepository.findByAuction_IdOrderByValueDesc(id);
-    }
 
 
     public List<BidJsonClass> findFiveByValue(int page, Long id) {
@@ -63,12 +61,9 @@ public class BidService {
             DBBid.setValue(bid.getValue());
             DBBid.setAuction(auction);
             DBBid.setUser(user);
-
             bidRepository.save(DBBid);
-
             return new ResponseEntity<>(new BidJsonClass(DBBid), HttpStatus.CREATED);
         }
-
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
@@ -78,18 +73,27 @@ public class BidService {
 
         User user = userService.getUserByUsername(bid.getUsername());
 
-     /*   if (auction.getClosingTime().isBefore(currentTime)) {
+        if (auction.getClosingTime().isBefore(currentTime)) { // Ej utgången aucktion
             return false;
-        }else if (bid.getValue() <= curentHigestBid(id).getValue()) {
+        }
+        else if (user.getId() == auction.getUser().getId()) { // Ej buda på egen auction
             return false;
-        }else if (bid.getValue() > auction.getBuyOutPrice()) { //TODO if tru chanche auctionId to close
+        }
+        else if (bid.getValue() <= curentHigestBid(id).getValue()){ // Måste buba mer än nuvarande bud
             return false;
-        }else if (user.getId() == auction.getUser().getId()){
-                return false;
-        }else {
+        }
+        else {
             return true;
-        }*/
-        return true;
+        }
+    }
+
+    public Bid curentHigestBid(Long id){
+        List<BidJsonClass> bids = new ArrayList<>();
+        Pageable PageWithFive = PageRequest.of(0, 5);
+        bidRepository.findByAuction_IdOrderByValueDesc(id,PageWithFive).forEach(b -> bids.add(new BidJsonClass(b)));
+        Bid b = new Bid();
+        b.setValue(bids.get(0).getValue());
+        return b;
     }
 
 
