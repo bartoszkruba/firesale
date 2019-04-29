@@ -87,7 +87,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        showFilters(context) {
+        showFilters() {
             this.commit('showFilters')
         },
         async getAuctions(context, params) {
@@ -107,15 +107,14 @@ export default new Vuex.Store({
                 });
         },
         async getMoreAuctionsOnScroll(context, params) {
-            let numberOfTotalAuctions = await AuctionService().countAuctionsBasedOnTitle(params).then(response => response.data);
-            if (numberOfTotalAuctions > this.state.auctions.length) {
                 params.page = this.state.page;
                 await AuctionService().getFilteredAuctions(params)
                     .then(response => {
-                        context.commit('loadMoreAuctionsOnScroll', response.data);
-                    });
-                this.state.page++;
-            }
+                        if(response.data.currentPage < response.data.totalPages) {
+                            context.commit('loadMoreAuctionsOnScroll', response.data.list);
+                            this.state.page = response.data.currentPage + 1;
+                        }
+                    }).catch(error => console.log(error)) ;
         },
         async getCurrentViewedAuction(context, id) {
             let response = await AuctionService().getAuctionById(id);

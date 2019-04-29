@@ -4,7 +4,6 @@ import com.company.firesale.data.entity.*;
 import com.company.firesale.data.repository.AuctionEntityRepository;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.json_classes.AuctionJsonClass;
-import lombok.Lombok;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AuctionService {
@@ -43,15 +39,13 @@ public class AuctionService {
         return new AuctionJsonClass(actionEntityRepository.findAuctionById(id));
     }
 
-    public List<AuctionJsonClass> findFiveByTitle(String title, Integer page) {
+    public PageJSONAuctions findFiveByTitle(String title, Integer page) {
         Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
-        List<AuctionJsonClass> auctions = new ArrayList<>();
-        actionEntityRepository.findByTitleContaining(title, pageWithFive).forEach(a -> auctions.add(new AuctionJsonClass(a)));
-        return auctions;
-    }
+        Set<AuctionJsonClass> auctions = new HashSet<>();
+        Page pageWithAuctions = actionEntityRepository.findByTitleContaining(title, pageWithFive);
+        pageWithAuctions.forEach(a -> auctions.add(new AuctionJsonClass((Auction) a)));
+        return PageJSONAuctions.builder().currentPage(pageWithAuctions.getNumber()).totalPages(pageWithAuctions.getTotalPages()).list(auctions).build();
 
-    public Integer countAuctionsByTitleContaining(String title){
-        return actionEntityRepository.countAuctionsByTitleIsContaining(title);
     }
 
     public List<Auction> findByTitleContainingAndStartUpPriceIsLessThanEqual(String title, Double price, Integer page) {

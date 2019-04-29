@@ -10,13 +10,13 @@
     import AuctionListItem from '../components/AuctionListItem.vue'
 
     export default {
-        namne: "AuctionList",
+        name: "AuctionList",
         components: {
             AuctionListItem,
         },
         data() {
             return {
-                busy: false
+                busy: false,
                 // auctions: this.$store.state.auctions
             }
         },
@@ -36,7 +36,6 @@
         beforeMount() {
             this.$store.commit('setAuctions', []);
             this.$store.commit('setPageNumber', 0);
-            this.loadMore();
         }
     }
 

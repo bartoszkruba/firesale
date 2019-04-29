@@ -1,5 +1,8 @@
 package com.company.firesale.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,6 +20,7 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {"category", "bids", "username", "images"})
 @Builder
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class Auction {
 
     @Id
@@ -34,6 +38,7 @@ public class Auction {
     private Double buyOutPrice;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonManagedReference
     private User user;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)

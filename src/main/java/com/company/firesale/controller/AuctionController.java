@@ -1,5 +1,6 @@
 package com.company.firesale.controller;
 
+import com.company.firesale.data.entity.PageJSONAuctions;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.json_classes.AuctionJsonClass;
 import com.company.firesale.service.AuctionService;
@@ -8,9 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/auctions")
@@ -24,18 +23,12 @@ public class AuctionController {
     }
 
     @GetMapping
-    List<AuctionJsonClass> getFilteredAuctions(
+    PageJSONAuctions getFilteredAuctions(
             @RequestParam(required = false, defaultValue = "") String title,
             @RequestParam(required = false, defaultValue = "0") Double page){
 
         return actionEntityServis.findFiveByTitle(title, page.intValue());
     }
-
-    @GetMapping("/count")
-    Integer getAuctionCount(@RequestParam(required = false, defaultValue = "") String title){
-        return actionEntityServis.countAuctionsByTitleContaining(title);
-    }
-
 
     @PostMapping
     public HttpEntity<AuctionJsonClass> createActionEntity(@Validated @RequestBody AuctionFormJsonClass auction,

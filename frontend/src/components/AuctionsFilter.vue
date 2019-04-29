@@ -94,7 +94,6 @@
                 this.$store.commit('setFilterParams', this.filterParams);
                 let generatedQuery = this.generateFilterQuery();
                 this.$router.push({path: '/auctions', query: generatedQuery});
-
                 generatedQuery.page = this.$store.state.page;
                 this.$store.dispatch('getMoreAuctionsOnScroll', generatedQuery);
                 this.$store.commit('flipShowFilters');
