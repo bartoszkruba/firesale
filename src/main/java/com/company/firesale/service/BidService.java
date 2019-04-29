@@ -73,16 +73,20 @@ public class BidService {
 
         User user = userService.getUserByUsername(bid.getUsername());
 
+
         if (auction.getClosingTime().isBefore(currentTime)) { // Ej utgången aucktion
             return false;
-        }
-        else if (user.getId() == auction.getUser().getId()) { // Ej buda på egen auction
+        } else if (user.getId() == auction.getUser().getId()) { // Ej buda på egen auction
             return false;
-        }
-        else if (bid.getValue() <= curentHigestBid(id).getValue()){ // Måste buba mer än nuvarande bud
-            return false;
-        }
-        else {
+        } else if (bid == null) { // Måste buba mer än nuvarande bud)
+            if (bid.getValue() <= auction.getStartUpPrice()) {
+                return true;
+            } else if (bid.getValue() <= curentHigestBid(id).getValue()) {
+                return false;
+            }else {
+                return true;
+            }
+        } else {
             return true;
         }
     }
