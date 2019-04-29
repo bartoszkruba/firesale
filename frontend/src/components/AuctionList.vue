@@ -27,6 +27,7 @@
 
                 console.log(this.$route.query);
                 setTimeout(() => {
+
                     this.$store.dispatch('getMoreAuctionsOnScroll', this.$route.query);
                     this.busy = false;
                 }, 1000);
@@ -39,6 +40,8 @@
             this.$store.commit('setAuctions', []);
             this.$store.commit('setPageNumber', 0);
             this.loadMore();
+            console.log(this.$route.query);
+            console.log(this.$store.state.auctions);
         }
     }
 

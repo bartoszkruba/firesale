@@ -1,7 +1,7 @@
 <template>
     <div>
         <HelloWorld/>
-        <AuctionList/>
+        <AuctionList />
     </div>
 </template>
 

@@ -130,7 +130,7 @@ public class InsertDatabaseData implements CommandLineRunner {
 
 
 
-        LocalDateTime ldt1 = LocalDateTime.of(2019, 4, 18, 10, 30);
+        LocalDateTime ldt1 = LocalDateTime.of(2019, 5, 18, 10, 30);
         Auction auction1 = Auction.builder()
                 .title("A RED CAR")
                 .description("BRUM BRUM")
@@ -148,7 +148,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         user1.addAuction(auction1);
         auctionService.addAuction(auction1);
 
-        LocalDateTime ldt2 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        LocalDateTime ldt2 = LocalDateTime.of(2019, 5, 5, 11, 00);
         Auction auction2 = Auction.builder()
                 .title("A Blue CAR")
                 .description("BRUM BRUM")
@@ -161,7 +161,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         user1.addAuction(auction2);
         auctionService.addAuction(auction2);
 
-        LocalDateTime ldt3 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        LocalDateTime ldt3 = LocalDateTime.of(2019, 5, 5, 11, 00);
         Auction auction3 = Auction.builder()
                 .title("A DVD")
                 .description("A DVD Don`t know whats on it becus has no DVD player")
@@ -254,7 +254,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         user4.addAuction(auction5);
         auctionService.addAuction(auction5);
 
-        LocalDateTime ldt6 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        LocalDateTime ldt6 = LocalDateTime.of(2019, 5, 20, 11, 00);
         Auction auction6 = Auction.builder()
                 .title("A White CAR")
                 .description("BRUM BRUM")

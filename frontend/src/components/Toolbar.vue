@@ -93,6 +93,7 @@
                 if(this.$store.state.showFilters === true){
                     this.$store.commit('flipShowFilters');
                 }
+
             },
             searchClick() {
                     this.$store.commit('flipShowFilters');

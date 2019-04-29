@@ -56,7 +56,7 @@ export default new Vuex.Store({
         setUrlQuery(state, value) {
             this.state.urlQuery = value;
         },
-        flipShowFilters() {
+        flipShowFilters( ) {
             this.state.showFilters = !this.state.showFilters;
         },
         setLoggedIn(state, value) {
@@ -79,6 +79,20 @@ export default new Vuex.Store({
         },
         loadMoreAuctionsOnScroll(state, params) {
             state.auctions = state.auctions.concat(params);
+
+            // let messageHandler = payload => {
+            //     let bid = JSON.parse(payload.body);
+            //     let auctionId = bid.auctionId;
+            //     let auctions = this.state.auctions;
+            //     auctions.filter(a => a.id === auctionId).forEach(a => a.highestBid = bid);
+            //
+            //
+            // };
+            //
+            // socketService().unsubscribeAllAuctionBids();
+            // this.state.auctions.forEach(a => {
+            //     socketService().subscribeToAuctionBids(a.id, messageHandler)
+            // });
         },
         setCurrentViewedAuction(state, params) {
             state.currentViewedAuction = params;
@@ -123,19 +137,7 @@ export default new Vuex.Store({
                     }
                 }).catch(error => console.log(error)) ;
 
-                let messageHandler = payload => {
-                    let bid = JSON.parse(payload.body);
-                    let auctionId = bid.auctionId;
-                    let auctions = this.state.auctions;
-                    auctions.filter(a => a.id === auctionId).forEach(a => a.highestBid = bid);
 
-                    this.commit("setAuctions", auctions);
-                };
-
-                socketService().unsubscribeAllAuctionBids();
-                this.state.auctions.forEach(a => {
-                    socketService().subscribeToAuctionBids(a.id, messageHandler)
-                });
             }
         },
         async getCurrentViewedAuction(context, id) {
@@ -187,5 +189,5 @@ export default new Vuex.Store({
                 // this.commit("setViewedAuctionBids", bids);
             }
         }
-    }
+
 });
