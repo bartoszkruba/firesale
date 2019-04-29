@@ -176,7 +176,7 @@
                 return this.$store.state.viewedAuctionBids;
             },
             closed() {
-                let time = new Date(this.$store.state.currentViewedAuction.openedAt);
+                let time = new Date(this.$store.state.currentViewedAuction.closingTime);
 
                 return time < new Date();
             }

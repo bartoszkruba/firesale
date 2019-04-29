@@ -4,7 +4,6 @@ import com.company.firesale.data.entity.*;
 import com.company.firesale.data.repository.AuctionEntityRepository;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.json_classes.AuctionJsonClass;
-import lombok.Lombok;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -105,7 +104,6 @@ public class AuctionService {
                     System.out.println("Couldn't save image: " + e.getMessage());
                 }
             });
-            userService.saveUser(user);
             actionEntityRepository.save(DBAuction);
 
             return new ResponseEntity<>(new AuctionJsonClass(DBAuction), HttpStatus.CREATED);
