@@ -25,9 +25,11 @@ public class AuctionController {
     @GetMapping
     PageJSONAuctions getFilteredAuctions(
             @RequestParam(required = false, defaultValue = "") String title,
+            @RequestParam(required = false, defaultValue = "All") String category,
+            @RequestParam(required = false, defaultValue = "false") Boolean showAll,
             @RequestParam(required = false, defaultValue = "0") Double page){
 
-        return actionEntityServis.findFiveByTitle(title, page.intValue());
+        return actionEntityServis.findFiveByTitleAndStatus(title, category, showAll, page.intValue());
     }
 
     @PostMapping

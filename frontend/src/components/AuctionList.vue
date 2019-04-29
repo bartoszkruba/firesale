@@ -1,8 +1,8 @@
+
 <template>
-    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
-<!--        <div v-for="auction in this.$store.state.auctions" v-bind:key=auction.id @click=toAuctionDetails(auction.id)>-->
-            <AuctionListItem v-for="auction in this.$store.state.auctions" :auction=auction />
-<!--        </div>-->
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <div v-if="this.$store.state.auctions.length === 0"><h2 class="text-xs-center">No auctions found</h2></div>
+            <AuctionListItem v-for="auction in this.$store.state.auctions" v-bind:key=auction.id :auction=auction />
     </div>
 </template>
 
@@ -24,6 +24,8 @@
             //Runs at bottom
             async loadMore() {
                 this.busy = true;
+
+                console.log(this.$route.query);
                 setTimeout(() => {
                     this.$store.dispatch('getMoreAuctionsOnScroll', this.$route.query);
                     this.busy = false;
@@ -33,9 +35,12 @@
             //     this.$router.push({path: 'auction', query: {id}});
             // }
         },
+        created(){
+        },
         beforeMount() {
             this.$store.commit('setAuctions', []);
             this.$store.commit('setPageNumber', 0);
+            this.loadMore();
         }
     }
 

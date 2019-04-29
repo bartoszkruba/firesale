@@ -16,22 +16,8 @@
                     </v-container>
                     <transition name="fade">
                         <v-container id="filters-container" xs12 pa-0
-                                 v-show=true>
-<!--                                v-show="this.$store.state.showFiltersOnHome"-->
+                                v-show="this.$store.state.showExtendedFilters">
                             <v-layout row wrap>
-                                <v-container id="filter-slider" xs12 pa-0>
-                                    <v-flex xs12 mt-2>
-                                        <v-slider
-                                                v-model="filterParams.maxPrice"
-                                                :max="10000"
-                                                :min="0"
-                                                :step="100"
-                                                :value=this.$store.state.filterParams.maxPrice
-                                                thumb-label="always"
-                                                label="Max price: "
-                                        ></v-slider>
-                                    </v-flex>
-                                </v-container>
                                 <v-container id="filter-categories" xs12 md5 pa-0>
                                     <v-layout wrap justify-space-between>
                                         <v-flex xs12 sm6>
@@ -57,7 +43,7 @@
                     <v-container pa-0 id="container-buttons">
                         <v-flex>
                             <v-layout justify-center>
-                                <v-btn @click="toggleFilters" color="primary" v-show=false>
+                                <v-btn @click="toggleFilters" color="primary">
                                     <v-icon>filter_list</v-icon>
                                 </v-btn>
                                 <v-btn @click="clickSearch" color="primary">
@@ -99,17 +85,12 @@
                 this.$store.commit('flipShowFilters');
             },
             toggleFilters() {
-                this.$store.commit('toggleShowFiltersOnHome');
+                this.$store.commit('toggleExtendedFilters');
             },
             generateFilterQuery() {
                 let urlQuery = {};
                 if (this.filterParams.searchText != null) {
                     urlQuery.title = this.filterParams.searchText;
-                } else {
-                    urlQuery.title = '';
-                }
-                if (this.filterParams.maxPrice > 0) {
-                    urlQuery.price = this.filterParams.maxPrice;
                 }
                 if (this.filterParams.selectedCategory !== 'All') {
                     urlQuery.category = this.filterParams.selectedCategory;

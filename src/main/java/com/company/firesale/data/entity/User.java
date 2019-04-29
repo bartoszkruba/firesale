@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@ToString(exclude = {"roles", "auctions"})
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"roles", "auctions"})

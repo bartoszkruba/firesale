@@ -49,6 +49,15 @@ public class InsertDatabaseData implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
+        //Categories
+        List<Category> categories = new ArrayList<>();
+        categories.add(Category.builder().name("All").build());
+        categories.add(Category.builder().name("Cars").build());
+        categories.add(Category.builder().name("Electronics").build());
+        categories.add(Category.builder().name("Furniture").build());
+        categories.add(Category.builder().name("Misc").build());
+        categories.forEach(category -> categoryRepository.save(category));
+
         //Roles
         Role adminRole = new Role("ADMIN");
         Role userRole = new Role("USER");
@@ -119,13 +128,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .addRole(userRole);
         userService.saveUser(user5);
 
-        //Categories
-        List<Category> categories = new ArrayList<>();
-        categories.add(Category.builder().name("All").build());
-        categories.add(Category.builder().name("Cars").build());
-        categories.add(Category.builder().name("Electronics").build());
-        categories.add(Category.builder().name("Furniture").build());
-        categories.forEach(category -> categoryRepository.save(category));
+
 
         LocalDateTime ldt1 = LocalDateTime.of(2019, 4, 18, 10, 30);
         Auction auction1 = Auction.builder()

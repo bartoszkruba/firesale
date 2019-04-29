@@ -11,6 +11,7 @@ export default new Vuex.Store({
     state: {
         loggedIn: false,
         showFilters: false,
+        showExtendedFilters: false,
         auctions: [],
         categories: [],
         filterParams: {
@@ -68,8 +69,8 @@ export default new Vuex.Store({
         setFilterParams(state, params) {
             state.filterParams = params;
         },
-        toggleShowFiltersOnHome(state) {
-            state.showFiltersOnHome = !state.showFiltersOnHome;
+        toggleExtendedFilters(state) {
+            state.showExtendedFilters = !state.showExtendedFilters;
         },
         setAuctions(state, params) {
             state.auctions = params;
@@ -112,6 +113,7 @@ export default new Vuex.Store({
         },
         async getMoreAuctionsOnScroll(context, params) {
                 params.page = this.state.page;
+                console.log("loading", params);
                 await AuctionService().getFilteredAuctions(params)
                     .then(response => {
                         if(response.data.currentPage < response.data.totalPages) {

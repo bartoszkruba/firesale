@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 @Data
+@ToString(exclude = {"category", "bids", "user", "images"})
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"category", "bids", "username", "images"})
+@EqualsAndHashCode(exclude = {"category", "bids", "user", "images"})
 @Builder
 @Entity
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
@@ -38,7 +38,6 @@ public class Auction {
     private Double buyOutPrice;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JsonManagedReference
     private User user;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
