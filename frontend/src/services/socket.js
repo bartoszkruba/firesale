@@ -19,11 +19,14 @@ export default () => {
         subscribeToAuctionBids(auctionId, messageHandler) {
             if (!stompClient) {
                 let socket = new SockJS(url);
+
                 stompClient = Stomp.over(socket);
                 stompClient.connect({}, () => {
                     let subscription = stompClient.subscribe("/auctionBids/" + auctionId, messageHandler);
                     subscriptions.push(subscription);
                 });
+                //Removes debug log in console
+                stompClient.debug = null;
             } else {
                 let subscription = stompClient.subscribe("/auctionBids/" + auctionId, messageHandler);
                 subscriptions.push(subscription);
@@ -31,7 +34,7 @@ export default () => {
         },
         unsubscribeAllAuctionBids() {
             subscriptions.forEach(s => s.unsubscribe());
-        }
+        },
     }
 }
 

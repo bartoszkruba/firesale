@@ -4,9 +4,11 @@
         <v-toolbar color="primary">
 
             <v-spacer></v-spacer>
+            <router-link to="/">
             <v-btn icon @click="goToHome">
                 <v-icon>home</v-icon>
             </v-btn>
+            </router-link>
             <v-spacer></v-spacer>
             <v-btn icon @click="searchClick">
                 <v-icon>search</v-icon>
@@ -88,7 +90,10 @@
             goToHome() {
                 this.$store.commit('setAuctions', []);
                 this.$store.commit('setPageNumber', 0);
-                this.$router.push({path: '/auctions', query: {}});
+                if(this.$store.state.showFilters === true){
+                    this.$store.commit('flipShowFilters');
+                }
+
             },
             searchClick() {
                 this.$store.commit('flipShowFilters');

@@ -1,9 +1,10 @@
 package com.company.firesale.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -12,12 +13,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@ToString(exclude = {"roles", "auctions"})
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"roles", "auctions", "conversations"})
 @ToString(exclude = {"conversations", "roles", "auctions"})
 @Builder
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class User {
 
     @Id
