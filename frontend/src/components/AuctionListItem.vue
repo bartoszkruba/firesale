@@ -57,7 +57,9 @@
                     this.auction.highestBid.value :
                     this.auction.startUpPrice;
 
-                if (parseFloat(this.bidField) <= parseFloat(currPrice)) {
+                if (this.bidField === null || this.bidField === "") {
+                    this.bidFieldError = "Must be higher than current bid"
+                } else if (parseFloat(this.bidField) <= parseFloat(currPrice)) {
                     this.bidFieldError = "Must be higher than current bid"
                 } else {
                     let response = await bidService().placeBid(this.auction.id,
@@ -71,7 +73,7 @@
                 }
             },
             clearBidFieldError(e) {
-                if (e.key.toString() !== "enter") {
+                if (e.key !== "Enter") {
                     this.bidFieldError = "";
                 }
             },

@@ -1,17 +1,19 @@
 package com.company.firesale.service;
 
-import com.company.firesale.data.entity.*;
+import com.company.firesale.data.entity.Auction;
+import com.company.firesale.data.entity.Bid;
+import com.company.firesale.data.entity.User;
 import com.company.firesale.data.repository.BidRepository;
 import com.company.firesale.json_classes.AuctionJsonClass;
 import com.company.firesale.json_classes.BidJsonClass;
 import com.company.firesale.json_classes.BidNewJsonClass;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.Console;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,9 +81,9 @@ public class BidService {
         else if (user.getId() == auction.getUser().getId()) { // Ej buda på egen auction
             return false;
         }
-        else if (bid.getValue() <= curentHigestBid(id).getValue()){ // Måste buba mer än nuvarande bud
-            return false;
-        }
+//        else if (bid.getValue() <= curentHigestBid(id).getValue()){ // Måste buba mer än nuvarande bud
+//            return false;
+//        }
         else {
             return true;
         }
