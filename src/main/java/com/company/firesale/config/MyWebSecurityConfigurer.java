@@ -62,6 +62,8 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/auctions").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/api/bids/").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/api/bids").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/conversation/my_conversations/").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/conversation/my_conversations").hasRole("USER")
                 .antMatchers("/api/login/roles").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/login/roles/").hasAnyRole("USER", "ADMIN");
     }
