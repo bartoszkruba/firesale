@@ -17,7 +17,7 @@
                     </router-link>
                 </h1>
                 <span id="auctiondescription">{{description}}</span>
-                <h3 id="auctionprice">Current price: {{auction.startUpPrice}} SEK</h3>
+                <h3 id="auctionprice">Current price: {{currentPrice}} SEK</h3>
                 <h3 id="auctiontime">Ends at: {{closingTime}}</h3>
             </div>
             <v-btn id="buybutton"
