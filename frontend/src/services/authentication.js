@@ -35,8 +35,7 @@ export default {
         let axios = Api();
         try {
             let response = await axios.post("/logout");
-            this.$store.commit("setListItemBidFieldSwtich", null);
-            return response.status === 200;
+            return (response.status === 200);
         } catch (err) {
             return false;
         }
