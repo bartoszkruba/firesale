@@ -31,7 +31,7 @@ export default () => {
         },
         unsubscribeAllAuctionBids() {
             subscriptions.forEach(s => s.unsubscribe());
-        }
+        },
     }
 }
 

@@ -4,7 +4,7 @@
         <v-toolbar color="primary">
 
             <v-spacer></v-spacer>
-            <router-link to="/auctions">
+            <router-link to="/">
             <v-btn icon @click="goToHome">
                 <v-icon>home</v-icon>
             </v-btn>

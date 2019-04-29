@@ -10,6 +10,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        subscribedAuctions: [],
         loggedIn: false,
         showFilters: false,
         showExtendedFilters: false,
@@ -18,7 +19,6 @@ export default new Vuex.Store({
         filterParams: {
             searchText: null,
             selectedCategory: 'All',
-            maxPrice: 0,
         },
         listItemBidFieldSwitch: null,
         urlQuery: {},
@@ -89,9 +89,12 @@ export default new Vuex.Store({
                 this.commit("setAuctions", auctions);
             };
 
-            socketService().unsubscribeAllAuctionBids();
+            // socketService().unsubscribeAllAuctionBids();
             this.state.auctions.forEach(a => {
-                socketService().subscribeToAuctionBids(a.id, messageHandler)
+                if(!state.subscribedAuctions.includes(a.id)) {
+                    socketService().subscribeToAuctionBids(a.id, messageHandler);
+                    state.subscribedAuctions.push(a.id);
+                }
             });
 
         },
@@ -129,17 +132,28 @@ export default new Vuex.Store({
                 });
         },
         async getMoreAuctionsOnScroll(context, params) {
-            params.page = this.state.page;
-            await AuctionService().getFilteredAuctions(params)
-                .then(response => {
-                    if(response.data.currentPage < response.data.totalPages) {
-                        context.commit('loadMoreAuctionsOnScroll', response.data.list);
-                        this.state.page = response.data.currentPage + 1;
-                    }
-                }).catch(error => console.log(error)) ;
+                params.page = this.state.page;
+                console.log('params.page in store (getMore)', params);
+
+                await AuctionService().getFilteredAuctions(params)
+                    .then(response => {
+                        console.log('CURRETNPAGE', response.data);
+                        console.log('CURRETNPAGE');
+                        if (response.data.currentPage < response.data.totalPages) {
+                            context.commit('loadMoreAuctionsOnScroll', response.data.list);
+
+                            context.commit('setPageNumber', response.data.currentPage + 1);
+                        }
+                    }).catch(error => {
+                        // context.commit('setPageNumber', this.state.page + 1);
+                        this.commit('setAuctions', []);
+                        this.commit('setPageNumber', 0);
+                        console.log(error)
+                    });
 
 
             }
+
         },
         async getCurrentViewedAuction(context, id) {
             socketService().unsubscribeAllAuctionBids();

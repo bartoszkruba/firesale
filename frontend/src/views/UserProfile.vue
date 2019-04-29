@@ -16,7 +16,7 @@
 <script>
     import UserService from '@/services/user'
     import AuctionService from '@/services/auctionsService'
-    import AuctionListItem from '../components/AuctionListItem.vue'
+    // import AuctionListItem from '../components/AuctionListItem.vue'
     export default {
         name: "UserProfile",
         components: {
