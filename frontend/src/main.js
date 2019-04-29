@@ -6,11 +6,13 @@ import router from './router'
 import store from './store'
 
 import DateTimePicker from 'vuetify-datetime-picker';
+import infiniteScroll from 'vue-infinite-scroll'
 import 'vuetify-datetime-picker/src/stylus/main.styl'
 import 'vuetify/dist/vuetify.min.css'
 
 import colors from 'vuetify/es5/util/colors'
 
+Vue.use(infiniteScroll);
 Vue.use(DateTimePicker);
 
 Vue.use(Vuetify, {

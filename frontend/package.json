@@ -11,6 +11,7 @@
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.0.3",
     "vuetify": "^1.5.11",
     "vuetify-datetime-picker": "^1.0.13",

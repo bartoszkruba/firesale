@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.security.Principal;
 import java.util.List;
 
@@ -22,74 +23,19 @@ public class AuctionController {
         this.actionEntityServis = actionEntityServis;
     }
 
-//    @GetMapping
-//    List<Auction> getPageWithAuctionsBasedOnTitle(
-//            @PathVariable int page,
-//            @RequestParam String title) {
-//
-//        if(title == null){
-//            title = "";
-//        }
-//        return actionEntityServis.findTenByTitle(title, page).getContent();
-//    }
-
-//    @GetMapping
-//    Iterable<Auction> getFilteredAuctions(
-//            @RequestParam(required = false) String title,
-//            @RequestParam(required = false) Double price,
-//            @RequestParam(required = false) String category,
-//            @RequestParam(required = false) boolean showAll,
-//            @RequestParam int page) {
-//
-//        AuctionStatus status = null;
-//
-//        if(title == null){
-//            title = "";
-//        }
-//
-//        if (!showAll) {
-//            status = AuctionStatus.OPEN;
-//        }
-//
-//        if (price == null) {
-//            price = Double.MAX_VALUE;
-//        }
-//
-//        if (category == null) {
-//            if (showAll) {
-//                return actionEntityServis.findFilteredAuctionsAllCategories(title, price);
-//            } else {
-//                return actionEntityServis.findFilteredAuctionsOpenAllCategories(title, price, status);
-//            }
-//        } else {
-//            if (showAll) {
-//                return actionEntityServis.findFilteredAuctionsWithCategory(title, price, category);
-//            } else {
-//                return actionEntityServis.findFilteredAuctionsOpenWithCategory(title, price, category, status);
-//            }
-//        }
-//
-//    }
-
     @GetMapping
     List<AuctionJsonClass> getFilteredAuctions(
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) Double price,
-            @RequestParam(required = false) Integer page) {
+            @RequestParam(required = false, defaultValue = "") String title,
+            @RequestParam(required = false, defaultValue = "0") Double page){
 
-        if (title == null) {
-            title = "";
-        }
-        if (price == null) {
-            price = Double.MAX_VALUE;
-        }
-        if (page == null) {
-            page = 0;
-        }
-
-
-        return actionEntityServis.findTenByTitle(title, page);
+        return actionEntityServis.findFiveByTitle(title, page.intValue());
     }
+
+    @GetMapping("/count")
+    Integer getAuctionCount(@RequestParam(required = false, defaultValue = "") String title){
+        return actionEntityServis.countAuctionsByTitleContaining(title);
+    }
+
 
     @PostMapping
     public HttpEntity<AuctionJsonClass> createActionEntity(@Validated @RequestBody AuctionFormJsonClass auction,

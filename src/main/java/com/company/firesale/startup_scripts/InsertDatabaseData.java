@@ -25,21 +25,21 @@ public class InsertDatabaseData implements CommandLineRunner {
     private UserService userService;
     private RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder;
-    private AuctionEntityRepository auctionEntityRepository;
+    private final AuctionEntityRepository auctionEntityRepository;
     private AuctionService auctionService;
     private CategoryRepository categoryRepository;
     private BidRepository bidRepository;
 
     @Autowired
-    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder, AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository) {
+    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder, AuctionEntityRepository auctionEntityRepository, AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository) {
         this.userService = userService;
         this.roleRepository = roleRepository;
 
         this.encoder = encoder;
+        this.auctionEntityRepository = auctionEntityRepository;
 
 
         ///nya
-        this.auctionEntityRepository = auctionEntityRepository;
         this.auctionService = auctionService;
         this.categoryRepository = categoryRepository;
         this.bidRepository = bidRepository;
@@ -286,8 +286,47 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .closingTime(Timestamp.valueOf(ldt8).toLocalDateTime())
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
         user4.addAuction(auction8);
         auctionService.addAuction(auction8);
+
+        LocalDateTime ldt9 = LocalDateTime.of(2019, 3, 5, 12, 00);
+        Auction auction9 = Auction.builder()
+                .title("A chair")
+                .description("BRUM BRUM")
+                .buyOutPrice(Double.parseDouble("2000"))
+                .startUpPrice(Double.parseDouble("100"))
+                .closingTime(Timestamp.valueOf(ldt9).toLocalDateTime())
+                .category(categories.get(2))
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
+        user4.addAuction(auction9);
+        auctionService.addAuction(auction9);
+
+        LocalDateTime ldt10 = LocalDateTime.of(2019, 7, 1, 12, 00);
+        Auction auction10 = Auction.builder()
+                .title("A flower")
+                .description("BRUM BRUM")
+                .buyOutPrice(Double.parseDouble("300"))
+                .startUpPrice(Double.parseDouble("10"))
+                .closingTime(Timestamp.valueOf(ldt10).toLocalDateTime())
+                .category(categories.get(2))
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
+        user4.addAuction(auction10);
+        auctionService.addAuction(auction10);
+
+        LocalDateTime ldt11 = LocalDateTime.of(2019, 6, 28, 12, 00);
+        Auction auction11 = Auction.builder()
+                .title("A bench")
+                .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum")
+                .buyOutPrice(Double.parseDouble("500"))
+                .startUpPrice(Double.parseDouble("200"))
+                .closingTime(Timestamp.valueOf(ldt11).toLocalDateTime())
+                .category(categories.get(2))
+                .status(AuctionStatus.OPEN).build()
+                .addImage(Image.builder().filepath("/images/10.jpg").build());
+        user2.addAuction(auction11);
+        auctionService.addAuction(auction11);
     }
 }
