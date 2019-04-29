@@ -4,6 +4,7 @@ import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
 import bidService from '@/services/bid'
+import socketService from './services/socket'
 
 Vue.use(Vuex);
 
@@ -113,17 +114,56 @@ export default new Vuex.Store({
                 });
         },
         async getMoreAuctionsOnScroll(context, params) {
-                params.page = this.state.page;
-                console.log("loading", params);
-                await AuctionService().getFilteredAuctions(params)
-                    .then(response => {
-                        if(response.data.currentPage < response.data.totalPages) {
-                            context.commit('loadMoreAuctionsOnScroll', response.data.list);
-                            this.state.page = response.data.currentPage + 1;
-                        }
-                    }).catch(error => console.log(error)) ;
+            params.page = this.state.page;
+            await AuctionService().getFilteredAuctions(params)
+                .then(response => {
+                    if(response.data.currentPage < response.data.totalPages) {
+                        context.commit('loadMoreAuctionsOnScroll', response.data.list);
+                        this.state.page = response.data.currentPage + 1;
+                    }
+                }).catch(error => console.log(error)) ;
+
+                let messageHandler = payload => {
+                    let bid = JSON.parse(payload.body);
+                    let auctionId = bid.auctionId;
+                    let auctions = this.state.auctions;
+                    auctions.filter(a => a.id === auctionId).forEach(a => a.highestBid = bid);
+
+                    this.commit("setAuctions", auctions);
+                };
+
+                socketService().unsubscribeAllAuctionBids();
+                this.state.auctions.forEach(a => {
+                    socketService().subscribeToAuctionBids(a.id, messageHandler)
+                });
+            }
         },
         async getCurrentViewedAuction(context, id) {
+            socketService().unsubscribeAllAuctionBids();
+
+            socketService().subscribeToAuctionBids(id, payload => {
+
+                let bid = JSON.parse(payload.body);
+
+                let viewedBids = this.state.viewedAuctionBids;
+
+                if (!viewedBids) {
+                    viewedBids = []
+                }
+                viewedBids.push(bid);
+
+                let currentViewedAuction = this.state.currentViewedAuction;
+
+                currentViewedAuction.highestBid = bid;
+
+                this.commit("setCurrentViewedAuction", currentViewedAuction);
+
+                this.commit("setViewedAuctionBids", viewedBids);
+
+            });
+
+            console.log('loading auction with id: ' + id);
+
             let response = await AuctionService().getAuctionById(id);
             this.commit('setCurrentViewedAuction', response.data);
             this.commit("setViewedAuctionBids", []);

@@ -112,7 +112,6 @@ public class AuctionService {
                     System.out.println("Couldn't save image: " + e.getMessage());
                 }
             });
-            userService.saveUser(user);
             actionEntityRepository.save(DBAuction);
 
             return new ResponseEntity<>(new AuctionJsonClass(DBAuction), HttpStatus.CREATED);
