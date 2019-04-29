@@ -18,6 +18,7 @@ export default new Vuex.Store({
             selectedCategory: 'All',
             maxPrice: 0,
         },
+        listItemBidFieldSwitch: null,
         urlQuery: {},
         numberOfAuctionsOnHome: 5,
         currentViewedAuction: null,
@@ -79,11 +80,14 @@ export default new Vuex.Store({
         setCurrentViewedAuction(state, params) {
             state.currentViewedAuction = params;
         },
-        setPageNumber(state, value){
+        setPageNumber(state, value) {
             state.page = value;
         },
         setViewedAuctionBids(state, value) {
             this.state.viewedAuctionBids = value;
+        },
+        setListItemBidFieldSwtich(state, value) {
+            this.state.listItemBidFieldSwitch = value;
         }
     },
     actions: {
