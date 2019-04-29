@@ -32,10 +32,7 @@
             async loadMore() {
                 this.busy = true;
                 setTimeout(() => {
-                    let query = this.$route.query;
-                    console.log('query before', query);
-                    this.$store.dispatch('getMoreAuctionsOnScroll', query);
-                    console.log('query after', query);
+                    this.$store.dispatch('getMoreAuctionsOnScroll', this.$route.query);
                     this.busy = false;
                 }, 1000);
             },
@@ -50,9 +47,6 @@
             this.$store.commit('setAuctions', []);
             this.$store.commit('setPageNumber', 0);
             // this.loadMore();
-            //
-            // console.log(this.$route.query);
-            // console.log(this.$store.state.auctions);
         }
     }
 

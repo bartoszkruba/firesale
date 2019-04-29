@@ -85,16 +85,13 @@ export default new Vuex.Store({
                 let auctionId = bid.auctionId;
                 let auctions = this.state.auctions;
                 auctions.filter(a => a.id === auctionId).forEach(a => a.highestBid = bid);
-
                 this.commit("setAuctions", auctions);
             };
 
-            // socketService().unsubscribeAllAuctionBids();
+            socketService().unsubscribeAllAuctionBids();
             this.state.auctions.forEach(a => {
-                if(!state.subscribedAuctions.includes(a.id)) {
-                    socketService().subscribeToAuctionBids(a.id, messageHandler);
-                    state.subscribedAuctions.push(a.id);
-                }
+                socketService().subscribeToAuctionBids(a.id, messageHandler);
+                state.subscribedAuctions.push(a.id);
             });
 
         },
@@ -132,27 +129,19 @@ export default new Vuex.Store({
                 });
         },
         async getMoreAuctionsOnScroll(context, params) {
-                params.page = this.state.page;
-                console.log('params.page in store (getMore)', params);
-
-                await AuctionService().getFilteredAuctions(params)
-                    .then(response => {
-                        console.log('CURRETNPAGE', response.data);
-                        console.log('CURRETNPAGE');
-                        if (response.data.currentPage < response.data.totalPages) {
-                            context.commit('loadMoreAuctionsOnScroll', response.data.list);
-
-                            context.commit('setPageNumber', response.data.currentPage + 1);
-                        }
-                    }).catch(error => {
-                        // context.commit('setPageNumber', this.state.page + 1);
-                        this.commit('setAuctions', []);
-                        this.commit('setPageNumber', 0);
-                        console.log(error)
-                    });
-
-
-            }
+            params.page = this.state.page;
+            await AuctionService().getFilteredAuctions(params)
+                .then(response => {
+                    if (response.data.currentPage < response.data.totalPages) {
+                        context.commit('loadMoreAuctionsOnScroll', response.data.list);
+                        context.commit('setPageNumber', response.data.currentPage + 1);
+                    }
+                }).catch(error => {
+                    //Error caused multiple auctions loading on homepage
+                    this.commit('setAuctions', []);
+                    this.commit('setPageNumber', 0);
+                    console.log(error)
+                })
 
         },
         async getCurrentViewedAuction(context, id) {
@@ -202,5 +191,5 @@ export default new Vuex.Store({
                 page.forEach(p => this.state.viewedAuctionBids.unshift(p));
             }
         }
-
+    }
 });
