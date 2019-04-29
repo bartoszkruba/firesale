@@ -88,12 +88,7 @@ public class BidService {
     }
 
     public Bid curentHigestBid(Long id){
-        List<BidJsonClass> bids = new ArrayList<>();
-        Pageable PageWithFive = PageRequest.of(0, 5);
-        bidRepository.findByAuction_IdOrderByValueDesc(id,PageWithFive).forEach(b -> bids.add(new BidJsonClass(b)));
-        Bid b = new Bid();
-        b.setValue(bids.get(0).getValue());
-        return b;
+        return bidRepository.findTop1ByAuction_IdOrderByValueDesc(id);
     }
 
 
