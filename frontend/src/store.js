@@ -55,7 +55,7 @@ export default new Vuex.Store({
         setUrlQuery(state, value) {
             this.state.urlQuery = value;
         },
-        flipShowFilters(state) {
+        flipShowFilters() {
             this.state.showFilters = !this.state.showFilters;
         },
         setLoggedIn(state, value) {
@@ -65,6 +65,7 @@ export default new Vuex.Store({
             for (let category of value) {
                 this.state.categories.push(category.name);
             }
+            state.categories.sort();
         },
         setFilterParams(state, params) {
             state.filterParams = params;

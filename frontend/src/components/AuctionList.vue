@@ -35,8 +35,6 @@
             //     this.$router.push({path: 'auction', query: {id}});
             // }
         },
-        created(){
-        },
         beforeMount() {
             this.$store.commit('setAuctions', []);
             this.$store.commit('setPageNumber', 0);
