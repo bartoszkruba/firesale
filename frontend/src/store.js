@@ -130,12 +130,8 @@ export default new Vuex.Store({
                 this.commit("setLoggedIn", response);
                 // let response = await auth.getCurrentUser();
                 this.dispatch("getCurrentUser");
-
-                console.log('subscribing to notifications');
-
                 socketService().subscribeNotifications((payload) => {
-                    console.log('notification!!!!!!!');
-                    console.log(payload);
+                    console.log(payload.body);
                 })
             }
         },
@@ -177,12 +173,9 @@ export default new Vuex.Store({
 
                 let currentViewedAuction = this.state.currentViewedAuction;
 
-                console.log('changing current highest bid to ' + bid.value);
+                currentViewedAuction.highestBid = bid;
 
-                this.state.currentViewedAuction.highestBid = bid;
-
-                // this.commit("setCurrentViewedAuction", currentViewedAuction);
-
+                this.commit("setCurrentViewedAuction", currentViewedAuction);
                 this.commit("setViewedAuctionBids", viewedBids);
 
             });

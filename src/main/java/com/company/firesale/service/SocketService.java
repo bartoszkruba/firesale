@@ -29,6 +29,6 @@ public class SocketService {
 
     public void BroadcastNotification(Bid bid, String username) {
         System.out.println("Broadcasting notifications to user: " + username);
-        messagingTemplate.convertAndSendToUser(username, "/queue/notify", new BidNotificationJsonClass(bid));
+        messagingTemplate.convertAndSendToUser(username, "/queue/notifications", new BidNotificationJsonClass(bid));
     }
 }

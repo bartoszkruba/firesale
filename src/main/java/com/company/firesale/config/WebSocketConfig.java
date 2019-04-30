@@ -13,30 +13,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
-//        .setHandshakeHandler(new DefaultHandshakeHandler() {
-//
-//            public boolean beforeHandshake(
-//                    ServerHttpRequest request,
-//                    ServerHttpResponse response,
-//                    WebSocketHandler wsHandler,
-//                    Map attributes) throws Exception {
-//
-//                if (request instanceof ServletServerHttpRequest) {
-//                    ServletServerHttpRequest servletRequest
-//                            = (ServletServerHttpRequest) request;
-//                    HttpSession session = servletRequest
-//                            .getServletRequest().getSession();
-//                    attributes.put("sessionId", session.getId());
-//                }
-//                return true;
-//            }}).withSockJS();
+
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/auctionBids", "/notifications", "/queue");
-//        registry.enableSimpleBroker("/notifications");
-//        registry.setUserDestinationPrefix("/user");
+        registry.enableSimpleBroker("/auctionBids", "/queue");
     }
 }

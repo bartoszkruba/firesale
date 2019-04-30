@@ -61,7 +61,7 @@ export default () => {
 
             stompRequests.push({
                 type: "subscribe",
-                route: "/user/queue/notify",
+                route: "/user/queue/notifications",
                 messageHandler: messageHandler
             });
         }
