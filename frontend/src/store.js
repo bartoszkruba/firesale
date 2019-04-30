@@ -51,7 +51,15 @@ export default new Vuex.Store({
             //     "username": "ChrisL"
             // }
         ],
-        currentUser: null
+        currentUser: null,
+        showNotification: true,
+        currentNotification: {
+            auctionTitle: "Gibson Les Paul 1995",
+            auctionId: 1,
+            newHighestBid: 5000,
+            username: "John123",
+            userId: 1
+        }
 
     },
     mutations: {
@@ -111,6 +119,9 @@ export default new Vuex.Store({
         },
         setCurrentUser(state, params) {
             state.currentUser = params;
+        },
+        setNotification(state, value) {
+            this.state.showNotification = value;
         }
     },
     actions: {

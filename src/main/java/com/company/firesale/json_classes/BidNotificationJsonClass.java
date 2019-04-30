@@ -15,9 +15,11 @@ public class BidNotificationJsonClass {
     private Long auctionId;
     private Double newHighestBid;
     private String username;
+    private String auctionTitle;
     private Long userId;
 
     public BidNotificationJsonClass(Bid bid) {
+        this.auctionTitle = bid.getAuction().getTitle();
         this.auctionId = bid.getAuction().getId();
         this.newHighestBid = bid.getValue();
         this.username = bid.getUser().getUsername();
