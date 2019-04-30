@@ -48,5 +48,15 @@ export default {
         } catch (ex) {
             return false;
         }
+    },
+
+    async getCurrentUser(){
+        try {
+            let response = await Api().get("/login/account_details");
+            return response.data
+        }
+        catch (e) {
+            return false
+        }
     }
 }
