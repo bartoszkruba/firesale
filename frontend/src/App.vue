@@ -43,7 +43,6 @@
 
     #bottomspacer {
         height: 10vh;
-        /*background-color: ;*/
     }
 
 </style>

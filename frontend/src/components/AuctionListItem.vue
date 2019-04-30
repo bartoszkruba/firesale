@@ -1,5 +1,9 @@
 <template>
     <div>
+        <v-layout
+                justify-center
+                wrap
+        >
         <v-card class="listitempanel">
             <div id="auctionimgcontainer">
             <span v-if="imagesExist">
@@ -29,10 +33,18 @@
             </v-btn>
         </v-card>
         <v-card id="bid_panel" v-if="showBidBar">
+            <v-flex>
+
             <v-text-field name="Amount (SEK)" label="Amount (SEK)" @keydown="allowOnlyNumbers"
                           @keydown.enter="bid" :error-messages="bidFieldError" v-model="bidField"></v-text-field>
-            <v-btn color="primary" @click="bid">Bid</v-btn>
+
+                <v-card-actions>
+                    <v-btn color="primary" @click="bid">Bid</v-btn>
+                </v-card-actions>
+
+            </v-flex>
         </v-card>
+        </v-layout>
     </div>
 </template>
 
