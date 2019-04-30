@@ -3,6 +3,7 @@
         <v-icon large color="primary" class="pa-3">account_circle</v-icon>
         <v-card-text class="text-xs-center pa-3">
             <h3 class="title">{{currentUser.username}}</h3>
+            <h4 class="subheading">{{currentUser.firstName}} {{currentUser.lastName}}</h4>
             <h4 class="subheading">{{currentUser.phoneNumber}}</h4>
             <h4 class="subheading">{{currentUser.email}}</h4>
 <!--            <div v-for="auctionId in currentUser.auctions" v-bind:key=auctionId @click=toAuctionDetails(auctionId)>-->

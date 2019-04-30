@@ -16,18 +16,16 @@
             <v-spacer></v-spacer>
                 <router-link to="/new_auction">
                     <v-btn icon>
-                        <v-icon>add_circle</v-icon>
+                        <v-icon>message</v-icon>
                     </v-btn>
                 </router-link>
             <v-spacer></v-spacer>
             <v-menu :nudge-width="100">
                 <template v-slot:activator="{ on }">
                     <v-toolbar-title v-on="on">
-                        <router-link to="/" style="color: black; text-decoration: none">
                         <v-btn icon>
                             <v-icon>account_circle</v-icon>
                         </v-btn>
-                        </router-link>
                     </v-toolbar-title>
                 </template>
                 <v-list>
