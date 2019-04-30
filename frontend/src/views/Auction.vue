@@ -38,11 +38,11 @@
                             font-weight-bold"></h2>
 
                     <v-card-text>
-                        <h4 v-show="!loggedIn">
+                        <h4 v-show="!loggedIn && !closed">
                             <router-link to="/login">Log in</router-link>
                             to place your bid
                         </h4>
-                        <div v-show="loggedIn">
+                        <div v-show="loggedIn && !closed">
                             <h3>Your Bid (SEK): </h3>
                             <v-text-field type="text" @keydown="allowOnlyNumber"
                                           prepend-icon="money" name="Amount" label="Amount"
@@ -134,6 +134,7 @@
                 return `/user?id=${this.$store.state.currentViewedAuction.user.id}`
             },
             closingTime() {
+
                 var options = {
                     year: 'numeric',
                     month: 'long',
@@ -144,6 +145,10 @@
                     second: "numeric"
                 };
                 let time = new Date(this.$store.state.currentViewedAuction.closingTime);
+
+                if (time < new Date()) {
+                    return "Closed"
+                }
                 return time.toLocaleDateString('en-EN', options)
             },
             createdTime() {
@@ -169,6 +174,11 @@
             },
             viewedAuctionBids() {
                 return this.$store.state.viewedAuctionBids;
+            },
+            closed() {
+                let time = new Date(this.$store.state.currentViewedAuction.closingTime);
+
+                return time < new Date();
             }
         },
         methods: {
@@ -186,6 +196,8 @@
                     if (response.status === 201) {
                         this.bidField = "";
                         alert("Bid placed")
+                    } else {
+                        alert("Something went wrong, please refresh site and try again")
                     }
                 }
             },

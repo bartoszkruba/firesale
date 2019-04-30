@@ -11,31 +11,13 @@
                                     :autofocus=true
                                     clearable
                                     label="Search"
-                                    color="primary"
-                                    dark
                             ></v-text-field>
                         </v-flex>
                     </v-container>
                     <transition name="fade">
                         <v-container id="filters-container" xs12 pa-0
-                                 v-show=true>
-<!--                                v-show="this.$store.state.showFiltersOnHome"-->
+                                v-show="this.$store.state.showExtendedFilters">
                             <v-layout row wrap>
-                                <v-container id="filter-slider" xs12 pa-0>
-                                    <v-flex xs12 mt-2>
-                                        <v-slider
-                                                v-model="filterParams.maxPrice"
-                                                :max="10000"
-                                                :min="0"
-                                                :step="100"
-                                                :value=this.$store.state.filterParams.maxPrice
-                                                thumb-label="always"
-                                                label="Max price: "
-                                                color="primary"
-                                                dark
-                                        ></v-slider>
-                                    </v-flex>
-                                </v-container>
                                 <v-container id="filter-categories" xs12 md5 pa-0>
                                     <v-layout wrap justify-space-between>
                                         <v-flex xs12 sm6>
@@ -43,7 +25,6 @@
                                                     v-model="filterParams.selectedCategory"
                                                     :items="items"
                                                     label="Category"
-                                                    dark
 
                                             ></v-select>
                                         </v-flex>
@@ -51,8 +32,6 @@
                                             <v-switch
                                                     v-model="filterParams.showAllAuctions"
                                                     :label="`${filterParams.showAllAuctions ? 'Hide ended auctions' : 'Show all auctions'}`"
-                                                    color="primary"
-                                                    dark
 
                                             ></v-switch>
                                         </v-flex>
@@ -64,7 +43,7 @@
                     <v-container pa-0 id="container-buttons">
                         <v-flex>
                             <v-layout justify-center>
-                                <v-btn @click="toggleFilters" color="primary" v-show=false>
+                                <v-btn @click="toggleFilters" color="primary">
                                     <v-icon>filter_list</v-icon>
                                 </v-btn>
                                 <v-btn @click="clickSearch" color="primary">
@@ -101,23 +80,17 @@
                 this.$store.commit('setFilterParams', this.filterParams);
                 let generatedQuery = this.generateFilterQuery();
                 this.$router.push({path: '/auctions', query: generatedQuery});
-
                 generatedQuery.page = this.$store.state.page;
                 this.$store.dispatch('getMoreAuctionsOnScroll', generatedQuery);
                 this.$store.commit('flipShowFilters');
             },
             toggleFilters() {
-                this.$store.commit('toggleShowFiltersOnHome');
+                this.$store.commit('toggleExtendedFilters');
             },
             generateFilterQuery() {
                 let urlQuery = {};
                 if (this.filterParams.searchText != null) {
                     urlQuery.title = this.filterParams.searchText;
-                } else {
-                    urlQuery.title = '';
-                }
-                if (this.filterParams.maxPrice > 0) {
-                    urlQuery.price = this.filterParams.maxPrice;
                 }
                 if (this.filterParams.selectedCategory !== 'All') {
                     urlQuery.category = this.filterParams.selectedCategory;
@@ -145,7 +118,6 @@
     #filter-slider {
         display: flex;
         flex-direction: row;
-        color: white !important;
     }
 
     .fade-enter-active {

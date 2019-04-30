@@ -1,8 +1,15 @@
+
 <template>
-    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
-        <div v-for="auction in this.$store.state.auctions" v-bind:key=auction.id @click=toAuctionDetails(auction.id)>
-            <AuctionListItem :auction=auction />
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+<!--        <div v-if="this.$store.state.auctions.length === 0"><h2 class="text-xs-center">No auctions found</h2></div>-->
+        <div class="text-xs-center" v-if="this.$store.state.auctions.length === 0">
+            <v-progress-circular
+                    :size="50"
+                    color="primary"
+                    indeterminate
+            ></v-progress-circular>
         </div>
+        <AuctionListItem v-for="auction in this.$store.state.auctions" v-bind:key=auction.id :auction=auction />
     </div>
 </template>
 
@@ -10,13 +17,13 @@
     import AuctionListItem from '../components/AuctionListItem.vue'
 
     export default {
-        namne: "AuctionList",
+        name: "AuctionList",
         components: {
             AuctionListItem,
         },
         data() {
             return {
-                busy: false
+                busy: false,
                 // auctions: this.$store.state.auctions
             }
         },
@@ -29,14 +36,17 @@
                     this.busy = false;
                 }, 1000);
             },
-            toAuctionDetails(id) {
-                this.$router.push({path: 'auction', query: {id}});
-            }
+            // toAuctionDetails(id) {
+            //     this.$router.push({path: 'auction', query: {id}});
+            // }
+        },
+        beforeCreate(){
+
         },
         beforeMount() {
             this.$store.commit('setAuctions', []);
             this.$store.commit('setPageNumber', 0);
-            this.loadMore();
+            // this.loadMore();
         }
     }
 

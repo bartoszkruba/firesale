@@ -4,7 +4,6 @@ import com.company.firesale.data.entity.*;
 import com.company.firesale.data.repository.AuctionEntityRepository;
 import com.company.firesale.json_classes.AuctionFormJsonClass;
 import com.company.firesale.json_classes.AuctionJsonClass;
-import lombok.Lombok;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AuctionService {
@@ -43,25 +39,36 @@ public class AuctionService {
         return new AuctionJsonClass(actionEntityRepository.findAuctionById(id));
     }
 
-    public List<AuctionJsonClass> findFiveByTitle(String title, Integer page) {
-        Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
-        List<AuctionJsonClass> auctions = new ArrayList<>();
-        actionEntityRepository.findByTitleContaining(title, pageWithFive).forEach(a -> auctions.add(new AuctionJsonClass(a)));
-        return auctions;
-    }
-
-    public Integer countAuctionsByTitleContaining(String title){
-        return actionEntityRepository.countAuctionsByTitleIsContaining(title);
-    }
-
-    public List<Auction> findByTitleContainingAndStartUpPriceIsLessThanEqual(String title, Double price, Integer page) {
-        Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
-        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithFive);
-    }
-//    public List<Auction> findTenByTitleAndBuyoutPrice(String title, Double price, Integer page) {
-//        Pageable pageWithTen = PageRequest.of(page, 5, Sort.by("closingTime"));
-//        return actionEntityRepository.findByTitleContainingAndStartUpPriceIsLessThanEqual(title, price, pageWithTen);
+//    public PageJSONAuctions findFiveByTitle(String title, Integer page) {
+//        Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
+//        Set<AuctionJsonClass> auctions = new HashSet<>();
+//        Page pageWithAuctions = actionEntityRepository.findByTitleContaining(title, pageWithFive);
+//        pageWithAuctions.forEach(a -> auctions.add(new AuctionJsonClass((Auction) a)));
+//        return PageJSONAuctions.builder().currentPage(pageWithAuctions.getNumber()).totalPages(pageWithAuctions.getTotalPages()).list(auctions).build();
 //    }
+
+    public PageJSONAuctions findFiveByTitleAndStatus(String title, String cat, Boolean showAll, Integer page) {
+        Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
+        Set<AuctionJsonClass> auctions = new HashSet<>();
+        Page pageWithAuctions;
+        if(showAll){
+            if(cat.equals("All")){
+                pageWithAuctions = actionEntityRepository.findByTitleContaining(title, pageWithFive);
+            } else {
+                Category category = categoryService.findCategoryByName(cat);
+                pageWithAuctions = actionEntityRepository.findByTitleContainingAndCategoryLike(title, category, pageWithFive);
+            }
+        } else {
+            if(cat.equals("All")){
+                pageWithAuctions = actionEntityRepository.findByTitleContainingAndStatus(title, AuctionStatus.OPEN, pageWithFive);
+            } else {
+                Category category = categoryService.findCategoryByName(cat);
+                pageWithAuctions = actionEntityRepository.findByTitleContainingAndCategoryLikeAndStatus(title, category, AuctionStatus.OPEN, pageWithFive);
+            }
+        }
+        pageWithAuctions.forEach(a -> auctions.add(new AuctionJsonClass((Auction) a)));
+        return PageJSONAuctions.builder().currentPage(pageWithAuctions.getNumber()).totalPages(pageWithAuctions.getTotalPages()).list(auctions).build();
+    }
 
     public Page<Auction> findTenByDate(int page) {
         Pageable PageWithTen = PageRequest.of(page, 10, Sort.by("closingTime"));
@@ -105,7 +112,6 @@ public class AuctionService {
                     System.out.println("Couldn't save image: " + e.getMessage());
                 }
             });
-            userService.saveUser(user);
             actionEntityRepository.save(DBAuction);
 
             return new ResponseEntity<>(new AuctionJsonClass(DBAuction), HttpStatus.CREATED);

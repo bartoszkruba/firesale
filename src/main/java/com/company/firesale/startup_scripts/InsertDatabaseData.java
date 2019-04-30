@@ -7,6 +7,7 @@ import com.company.firesale.data.repository.BidRepository;
 import com.company.firesale.data.repository.CategoryRepository;
 import com.company.firesale.data.repository.RoleRepository;
 import com.company.firesale.service.AuctionService;
+import com.company.firesale.service.ConversationService;
 import com.company.firesale.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,29 +26,40 @@ public class InsertDatabaseData implements CommandLineRunner {
     private UserService userService;
     private RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder;
-    private AuctionEntityRepository auctionEntityRepository;
+    private final AuctionEntityRepository auctionEntityRepository;
     private AuctionService auctionService;
     private CategoryRepository categoryRepository;
     private BidRepository bidRepository;
+    private final ConversationService conversationService;
 
     @Autowired
-    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder, AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository) {
+    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder, AuctionEntityRepository auctionEntityRepository, AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository, ConversationService conversationService) {
         this.userService = userService;
         this.roleRepository = roleRepository;
 
         this.encoder = encoder;
+        this.auctionEntityRepository = auctionEntityRepository;
 
 
         ///nya
-        this.auctionEntityRepository = auctionEntityRepository;
         this.auctionService = auctionService;
         this.categoryRepository = categoryRepository;
         this.bidRepository = bidRepository;
+        this.conversationService = conversationService;
     }
 
     @Override
     @Transactional
     public void run(String... args) throws Exception {
+
+        //Categories
+        List<Category> categories = new ArrayList<>();
+        categories.add(Category.builder().name("All").build());
+        categories.add(Category.builder().name("Cars").build());
+        categories.add(Category.builder().name("Electronics").build());
+        categories.add(Category.builder().name("Furniture").build());
+        categories.add(Category.builder().name("Misc").build());
+        categories.forEach(category -> categoryRepository.save(category));
 
         //Roles
         Role adminRole = new Role("ADMIN");
@@ -119,15 +131,9 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .addRole(userRole);
         userService.saveUser(user5);
 
-        //Categories
-        List<Category> categories = new ArrayList<>();
-        categories.add(Category.builder().name("All").build());
-        categories.add(Category.builder().name("Cars").build());
-        categories.add(Category.builder().name("Electronics").build());
-        categories.add(Category.builder().name("Furniture").build());
-        categories.forEach(category -> categoryRepository.save(category));
 
-        LocalDateTime ldt1 = LocalDateTime.of(2019, 4, 18, 10, 30);
+
+        LocalDateTime ldt1 = LocalDateTime.of(2019, 5, 18, 10, 30);
         Auction auction1 = Auction.builder()
                 .title("A RED CAR")
                 .description("BRUM BRUM")
@@ -145,7 +151,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         user1.addAuction(auction1);
         auctionService.addAuction(auction1);
 
-        LocalDateTime ldt2 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        LocalDateTime ldt2 = LocalDateTime.of(2019, 5, 5, 11, 00);
         Auction auction2 = Auction.builder()
                 .title("A Blue CAR")
                 .description("BRUM BRUM")
@@ -158,7 +164,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         user1.addAuction(auction2);
         auctionService.addAuction(auction2);
 
-        LocalDateTime ldt3 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        LocalDateTime ldt3 = LocalDateTime.of(2019, 5, 5, 11, 00);
         Auction auction3 = Auction.builder()
                 .title("A DVD")
                 .description("A DVD Don`t know whats on it becus has no DVD player")
@@ -171,7 +177,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         user5.addAuction(auction3);
         auctionService.addAuction(auction3);
 
-        LocalDateTime ldt4 = LocalDateTime.of(2019, 4, 5, 11, 30);
+        LocalDateTime ldt4 = LocalDateTime.of(2019, 7, 5, 11, 30);
         Auction auction4 = Auction.builder()
                 .title("Table")
                 .description("Oak tabel")
@@ -251,7 +257,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         user4.addAuction(auction5);
         auctionService.addAuction(auction5);
 
-        LocalDateTime ldt6 = LocalDateTime.of(2019, 4, 5, 11, 00);
+        LocalDateTime ldt6 = LocalDateTime.of(2019, 5, 20, 11, 00);
         Auction auction6 = Auction.builder()
                 .title("A White CAR")
                 .description("BRUM BRUM")
@@ -286,7 +292,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .closingTime(Timestamp.valueOf(ldt8).toLocalDateTime())
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
         user4.addAuction(auction8);
         auctionService.addAuction(auction8);
 
@@ -299,11 +305,11 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .closingTime(Timestamp.valueOf(ldt9).toLocalDateTime())
                 .category(categories.get(2))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
         user4.addAuction(auction9);
         auctionService.addAuction(auction9);
 
-        LocalDateTime ldt10 = LocalDateTime.of(2019, 3, 1, 12, 00);
+        LocalDateTime ldt10 = LocalDateTime.of(2019, 7, 1, 12, 00);
         Auction auction10 = Auction.builder()
                 .title("A flower")
                 .description("BRUM BRUM")
@@ -312,21 +318,57 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .closingTime(Timestamp.valueOf(ldt10).toLocalDateTime())
                 .category(categories.get(2))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+                .addImage(Image.builder().filepath("/images/3.jpg").build());
         user4.addAuction(auction10);
         auctionService.addAuction(auction10);
 
-        LocalDateTime ldt11 = LocalDateTime.of(2019, 3, 28, 12, 00);
+        LocalDateTime ldt11 = LocalDateTime.of(2019, 6, 28, 12, 00);
         Auction auction11 = Auction.builder()
                 .title("A bench")
-                .description("BRUM BRUM")
+                .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum")
                 .buyOutPrice(Double.parseDouble("500"))
                 .startUpPrice(Double.parseDouble("200"))
                 .closingTime(Timestamp.valueOf(ldt11).toLocalDateTime())
                 .category(categories.get(2))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpeg").build());
+                .addImage(Image.builder().filepath("/images/10.jpg").build());
         user2.addAuction(auction11);
         auctionService.addAuction(auction11);
+
+
+        Conversation between_john_and_mary = Conversation.builder().build()
+                .addMember(user1)
+                .addMember(user2)
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Sup?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user2).textContent("All Good").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user2).textContent("U?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Good too").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Wanna sell some stuff?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user2).textContent("Yeah sure").build());
+
+        Conversation between_john_and_cindy = Conversation.builder().build()
+                .addMember(user1)
+                .addMember(user5)
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Sup?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user5).textContent("All Good").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user5).textContent("U?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Good too").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("Wanna sell some stuff?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user5).textContent("Yeah sure").build());
+
+        conversationService.saveConversation(between_john_and_mary);
+        conversationService.saveConversation(between_john_and_cindy);
     }
 }

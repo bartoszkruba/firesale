@@ -1,6 +1,8 @@
 package com.company.firesale.json_classes;
 
 import com.company.firesale.data.entity.Auction;
+import com.company.firesale.data.entity.AuctionStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class AuctionJsonClass {
     private Long id;
     private String title;
@@ -26,6 +29,7 @@ public class AuctionJsonClass {
     private String category;
     private UserJsonClass user;
     private BidJsonClass highestBid;
+    private AuctionStatus status;
 
     @Builder.Default
     private Set<ImageJsonClass> images = new HashSet<>();
@@ -39,6 +43,7 @@ public class AuctionJsonClass {
         this.startUpPrice = auction.getStartUpPrice();
         this.buyOutPrice = auction.getBuyOutPrice();
         this.category = auction.getCategory().getName();
+        this.status = auction.getStatus();
 
         if (auction.getUser() != null) {
             UserJsonClass u = new UserJsonClass(auction.getUser());
