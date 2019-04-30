@@ -53,7 +53,6 @@ export default new Vuex.Store({
         ],
         currentUser: null
 
-
     },
     mutations: {
         setUrlQuery(state, value) {
