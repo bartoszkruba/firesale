@@ -35,7 +35,7 @@
                     <v-list-tile v-if="loggedIn">
                         <router-link to="/profile" style="color: black; text-decoration: none">
                             <v-list-tile-title>
-                                Profile
+                                {{showeUserName}}
                             </v-list-tile-title>
                         </router-link>
                     </v-list-tile>
@@ -96,6 +96,9 @@
             },
             showFilters() {
                 return this.$store.state.showFilters;
+            },
+            showeUserName(){
+                return this.$store.state.currentUser.username;
             }
         },
         methods: {

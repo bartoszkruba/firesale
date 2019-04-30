@@ -128,8 +128,8 @@
                 return `/auction?id=${this.auction.id}`
             },
             description() {
-                let description = this.auction.description.substring(0, 200);
-                if (this.auction.description.length > 200) {
+                let description = this.auction.description.substring(0, 50);
+                if (this.auction.description.length > 50) {
                     description = description + "...";
                 }
                 return description
