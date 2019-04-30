@@ -30,7 +30,10 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<String>
-    updateUser(@Validated @RequestBody User user) {return userService.updateUser(user); }
+    updateUser(@Validated @RequestBody User user) {
+
+        return userService.updateUser(user);
+    }
 }

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
     @Builder
     public class UserDetailsJsonClass {
         private Long id;
-        private String username;
+        private String userName;
         private String email;
         private String phoneNumber;
         private String firstName;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
         public UserDetailsJsonClass(User user) {
             this.id = user.getId();
-            this.username = user.getUsername();
+            this.userName = user.getUsername();
             this.email = user.getEmail();
             this.phoneNumber = user.getPhoneNumber();
             this.firstName = user.getFirstName();

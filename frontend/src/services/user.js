@@ -8,6 +8,6 @@ export default {
         return Api().get('/user/' + user.id)
     },
     async updateAccount(accountData) {
-        return await Api().put("/user", accountData)
+        return await Api().put("/user/", accountData)
     }
 }

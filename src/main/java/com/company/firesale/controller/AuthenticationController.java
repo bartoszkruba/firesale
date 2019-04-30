@@ -35,7 +35,6 @@ public class AuthenticationController {
     public UserDetailsJsonClass getMyUserDetails(Principal principal) {
         return new UserDetailsJsonClass(userService.getUserByUsername(principal.getName()));
     }
-
     @GetMapping("/{id}")
     public UserJsonClass getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
