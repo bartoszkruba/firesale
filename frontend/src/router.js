@@ -8,6 +8,7 @@ import Auction from "./views/Auction";
 import About from "./views/About";
 import UserProfile from "./views/UserProfile";
 import Profile from "./views/Profile";
+import Profile from "./views/Profile";
 
 
 Vue.use(Router);
@@ -50,6 +51,11 @@ export default new Router({
             path: '/about',
             name: 'About',
             component: About
+        },
+        {
+            path: '/profile',
+            name: 'Profile',
+            component: Profile
         },
         {
             path: '/user',
