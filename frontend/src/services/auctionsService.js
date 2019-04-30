@@ -10,6 +10,7 @@ export default () => {
         },
         getAuctionById(id){
             return Api().get("/auctions/id/" + id)
-        }
+        },
+
     }
 }

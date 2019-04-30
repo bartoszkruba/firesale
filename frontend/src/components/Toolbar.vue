@@ -114,12 +114,12 @@
             async logout() {
                 let response = await auth.logout();
 
-                if (response === true) {
+                if (response === true)
+                    this.$store.commit("setCurrentUser", null);
                     this.$store.commit("setListItemBidFieldSwtich", null);
                     this.$store.commit("setLoggedIn", false);
                 }
             }
-        }
     }
 </script>
 

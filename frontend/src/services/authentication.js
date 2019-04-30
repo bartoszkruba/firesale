@@ -52,12 +52,11 @@ export default {
 
     async getCurrentUser(){
         try {
-            let response = await Api().get("/account_details");
+            let response = await Api().get("/login/account_details");
             return response.data
         }
         catch (e) {
             return false
-
         }
     }
 }

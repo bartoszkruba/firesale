@@ -50,13 +50,9 @@ export default new Vuex.Store({
             //     "username": "ChrisL"
             // }
         ],
-        currentUser: {
-            "id": 4,
-            "username": "Morenorator",
-            "email": "ruben.moreno87@example.com",
-            "phoneNumber": "(247)-425-7475",
-            "auctions": []
-        }
+        currentUser: null
+
+
     },
     mutations: {
         setUrlQuery(state, value) {
@@ -129,6 +125,11 @@ export default new Vuex.Store({
         },
         async checkIfLoggedIn() {
             let response = await auth.checkIfLoggedIn();
+            if(response){
+                console.log('response true about to get current user');
+                let response = await auth.getCurrentUser();
+                this.state.currentUser = response;
+            }
             this.commit("setLoggedIn", response)
         },
         async getCategories(context) {
@@ -183,12 +184,8 @@ export default new Vuex.Store({
             this.commit('setCurrentViewedAuction', response.data)
         },
         async getCurrentUser() {
-            let response = await auth().getCurrentUser();
-            console.log(response.data);
-            this.commit('setCurrentUser', response.data)
-            this.commit('setCurrentViewedAuction', response.data);
-            this.commit("setViewedAuctionBids", []);
-            this.dispatch("loadBidPage");
+            let response = await auth.getCurrentUser();
+            this.commit('setCurrentUser', response);
         },
         async loadBidPage() {
             if (this.state.currentViewedAuction != null) {
