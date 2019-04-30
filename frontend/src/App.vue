@@ -37,12 +37,13 @@
 </script>
 
 <style>
-    * {
-        font-family: "Segoe UI", arial, sans-serif;
+    a {
+        text-decoration: none;
     }
 
     #bottomspacer {
         height: 10vh;
         /*background-color: ;*/
     }
+
 </style>

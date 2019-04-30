@@ -188,20 +188,17 @@
     }
 
     #auctiontitle {
-        font-family: "Segoe UI";
         text-align: left;
         font-size: medium;
     }
 
     #auctiondescription {
-        font-family: "Segoe UI";
         text-align: left;
         font-size: small;
         padding-bottom: 5px;
     }
 
     #auctionprice {
-        font-family: "Segoe fUI";
         text-align: left;
         font-size: small;
         padding-bottom: 5px;
