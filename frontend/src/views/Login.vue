@@ -85,7 +85,7 @@
                     if (status) {
                         this.$store.commit("setLoggedIn", true);
                         this.$router.push("/");
-                        this.$store.dispatch('getCurrentuser');
+                        this.$store.dispatch('getCurrentUser');
                     }
                 }
             },

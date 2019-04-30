@@ -4,6 +4,7 @@ import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
 import socketService from '@/services/socket';
+import bidService from './services/bid';
 
 Vue.use(Vuex);
 
@@ -114,7 +115,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        showFilters(context){
+        showFilters(context) {
             this.commit('showFilters')
         },
         async getAuctions(context, params) {
@@ -125,12 +126,18 @@ export default new Vuex.Store({
         },
         async checkIfLoggedIn() {
             let response = await auth.checkIfLoggedIn();
-            if(response){
-                console.log('response true about to get current user');
-                let response = await auth.getCurrentUser();
-                this.state.currentUser = response;
+            if (response) {
+                this.commit("setLoggedIn", response);
+                // let response = await auth.getCurrentUser();
+                this.dispatch("getCurrentUser");
+
+                console.log('subscribing to notifications');
+
+                socketService().subscribeNotifications((payload) => {
+                    console.log('notification!!!!!!!');
+                    console.log(payload);
+                })
             }
-            this.commit("setLoggedIn", response)
         },
         async getCategories(context) {
             await CategoryService().getCategories()
@@ -179,11 +186,9 @@ export default new Vuex.Store({
                 this.commit("setViewedAuctionBids", viewedBids);
 
             });
-
-            console.log('loading auction with id: ' + id);
-
             let response = await AuctionService().getAuctionById(id);
-            this.commit('setCurrentViewedAuction', response.data)
+            this.commit('setCurrentViewedAuction', response.data);
+            this.dispatch("loadBidPage");
         },
         async getCurrentUser() {
             let response = await auth.getCurrentUser();

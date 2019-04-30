@@ -24,12 +24,14 @@ public class BidService {
     private BidRepository bidRepository;
     private final UserService userService;
     private AuctionService auctionService;
+    private final SocketService socketService;
 
     @Autowired
-    public BidService(BidRepository bidRepository, UserService userService, AuctionService auctionService) {
+    public BidService(BidRepository bidRepository, UserService userService, AuctionService auctionService, SocketService socketService) {
         this.bidRepository = bidRepository;
         this.userService = userService;
         this.auctionService = auctionService;
+        this.socketService = socketService;
     }
 
     public void addBid(Bid bid) {
@@ -61,6 +63,7 @@ public class BidService {
             DBBid.setValue(bid.getValue());
             DBBid.setAuction(auction);
             DBBid.setUser(user);
+            this.sendNotification(DBBid);
             bidRepository.save(DBBid);
             return new ResponseEntity<>(new BidJsonClass(DBBid), HttpStatus.CREATED);
         }
@@ -92,6 +95,17 @@ public class BidService {
         } else {
             return bid.getValue();
         }
+    }
+
+    private void sendNotification(Bid bid) {
+        Bid latestBid = bidRepository.findTop1ByAuction_IdOrderByValueDesc(
+                bid.getAuction().getId());
+        if (latestBid != null &&
+                !latestBid.getUser().getUsername().equals(bid.getUser().getUsername())) {
+            String username = latestBid.getUser().getUsername();
+            socketService.BroadcastNotification(bid, username);
+        }
+
     }
 
 
