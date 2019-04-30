@@ -1,12 +1,14 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div id="mainmenu">
         <AuctionsFilter v-show="showFilters"></AuctionsFilter>
-        <v-toolbar  color="primary">
+        <v-toolbar color="primary">
 
             <v-spacer></v-spacer>
+            <router-link to="/">
             <v-btn icon @click="goToHome">
                 <v-icon>home</v-icon>
             </v-btn>
+            </router-link>
             <v-spacer></v-spacer>
             <v-btn icon @click="searchClick">
                 <v-icon>search</v-icon>
@@ -85,18 +87,23 @@
             }
         },
         methods: {
-            goToHome(){
+            goToHome() {
                 this.$store.commit('setAuctions', []);
                 this.$store.commit('setPageNumber', 0);
-                this.$router.push({path: '/auctions', query: {}});
+                if(this.$store.state.showFilters === true){
+                    this.$store.commit('flipShowFilters');
+                }
+
             },
             searchClick() {
-                    this.$store.commit('flipShowFilters');
-                },
+                this.$store.commit('flipShowFilters');
+            },
 
             async logout() {
                 let response = await auth.logout();
+
                 if (response === true) {
+                    this.$store.commit("setListItemBidFieldSwtich", null);
                     this.$store.commit("setLoggedIn", false);
                 }
             }

@@ -10,14 +10,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        subscribedAuctions: [],
         loggedIn: false,
         showFilters: false,
+        showExtendedFilters: false,
         auctions: [],
         categories: [],
         filterParams: {
             searchText: null,
             selectedCategory: 'All',
-            maxPrice: 0,
         },
         listItemBidFieldSwitch: null,
         urlQuery: {},
@@ -55,7 +56,7 @@ export default new Vuex.Store({
         setUrlQuery(state, value) {
             this.state.urlQuery = value;
         },
-        flipShowFilters(state) {
+        flipShowFilters( ) {
             this.state.showFilters = !this.state.showFilters;
         },
         setLoggedIn(state, value) {
@@ -65,18 +66,34 @@ export default new Vuex.Store({
             for (let category of value) {
                 this.state.categories.push(category.name);
             }
+            state.categories.sort();
         },
         setFilterParams(state, params) {
             state.filterParams = params;
         },
-        toggleShowFiltersOnHome(state) {
-            state.showFiltersOnHome = !state.showFiltersOnHome;
+        toggleExtendedFilters(state) {
+            state.showExtendedFilters = !state.showExtendedFilters;
         },
         setAuctions(state, params) {
             state.auctions = params;
         },
         loadMoreAuctionsOnScroll(state, params) {
             state.auctions = state.auctions.concat(params);
+
+            let messageHandler = payload => {
+                let bid = JSON.parse(payload.body);
+                let auctionId = bid.auctionId;
+                let auctions = this.state.auctions;
+                auctions.filter(a => a.id === auctionId).forEach(a => a.highestBid = bid);
+                this.commit("setAuctions", auctions);
+            };
+
+            socketService().unsubscribeAllAuctionBids();
+            this.state.auctions.forEach(a => {
+                socketService().subscribeToAuctionBids(a.id, messageHandler);
+                state.subscribedAuctions.push(a.id);
+            });
+
         },
         setCurrentViewedAuction(state, params) {
             state.currentViewedAuction = params;
@@ -92,7 +109,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        showFilters(context) {
+        showFilters() {
             this.commit('showFilters')
         },
         async getAuctions(context, params) {
@@ -112,15 +129,20 @@ export default new Vuex.Store({
                 });
         },
         async getMoreAuctionsOnScroll(context, params) {
-            let numberOfTotalAuctions = await AuctionService().countAuctionsBasedOnTitle(params).then(response => response.data);
-            if (numberOfTotalAuctions > this.state.auctions.length) {
-                params.page = this.state.page;
-                await AuctionService().getFilteredAuctions(params)
-                    .then(response => {
-                        context.commit('loadMoreAuctionsOnScroll', response.data);
-                    });
-                this.state.page++;
-            }
+            params.page = this.state.page;
+            await AuctionService().getFilteredAuctions(params)
+                .then(response => {
+                    if (response.data.currentPage < response.data.totalPages) {
+                        context.commit('loadMoreAuctionsOnScroll', response.data.list);
+                        context.commit('setPageNumber', response.data.currentPage + 1);
+                    }
+                }).catch(error => {
+                    //Error caused multiple auctions loading on homepage
+                    this.commit('setAuctions', []);
+                    this.commit('setPageNumber', 0);
+                    console.log(error)
+                })
+
         },
         async getCurrentViewedAuction(context, id) {
             socketService().unsubscribeAllAuctionBids();
@@ -159,16 +181,14 @@ export default new Vuex.Store({
                 let incompletePageBids = this.state.viewedAuctionBids.length % 5;
                 let bids = this.state.viewedAuctionBids;
                 for (let i = 0; i < incompletePageBids; i++) {
-                    bids.pop();
+                    bids.shift();
                 }
 
                 let pageToLoad = (this.state.viewedAuctionBids.length / 5) | 0;
 
                 let response = await bidService().loadBids(this.state.currentViewedAuction.id, pageToLoad);
                 let page = response.data;
-                page.forEach(p => this.state.viewedAuctionBids.push(p));
-
-                // this.commit("setViewedAuctionBids", bids);
+                page.forEach(p => this.state.viewedAuctionBids.unshift(p));
             }
         }
     }

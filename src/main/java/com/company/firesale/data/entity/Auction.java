@@ -1,5 +1,8 @@
 package com.company.firesale.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,13 +13,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 @Data
+@ToString(exclude = {"category", "bids", "user", "images"})
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"category", "bids", "username", "images"})
+@EqualsAndHashCode(exclude = {"category", "bids", "user", "images"})
 @Builder
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class Auction {
 
     @Id

@@ -2,6 +2,7 @@ package com.company.firesale.json_classes;
 
 import com.company.firesale.data.entity.Auction;
 import com.company.firesale.data.entity.AuctionStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class AuctionJsonClass {
     private Long id;
     private String title;

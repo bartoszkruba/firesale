@@ -1,9 +1,10 @@
 package com.company.firesale.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -12,16 +13,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@ToString(exclude = {"roles", "auctions"})
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"roles", "auctions"})
+@EqualsAndHashCode(exclude = {"roles", "auctions", "conversations"})
+@ToString(exclude = {"conversations", "roles", "auctions"})
 @Builder
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     @NotEmpty
     private String username;
@@ -62,6 +67,13 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @Builder.Default
     private Set<Bid> bids = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_conversation",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "conversation_id"))
+    @Builder.Default
+    private Set<Conversation> conversations = new HashSet<>();
 
     public User addAuction(Auction auction) {
         this.auctions.add(auction);

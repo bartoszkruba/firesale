@@ -1,17 +1,19 @@
 package com.company.firesale.service;
 
-import com.company.firesale.data.entity.*;
+import com.company.firesale.data.entity.Auction;
+import com.company.firesale.data.entity.Bid;
+import com.company.firesale.data.entity.User;
 import com.company.firesale.data.repository.BidRepository;
 import com.company.firesale.json_classes.AuctionJsonClass;
 import com.company.firesale.json_classes.BidJsonClass;
 import com.company.firesale.json_classes.BidNewJsonClass;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.Console;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +43,12 @@ public class BidService {
     }*/
 
 
-
     public List<BidJsonClass> findFiveByValue(int page, Long id) {
         List<BidJsonClass> bids = new ArrayList<>();
         Pageable PageWithTen = PageRequest.of(page, 5);
-        bidRepository.findByAuction_IdOrderByValueDesc(id,PageWithTen).forEach(b -> bids.add(new BidJsonClass(b)));
+        bidRepository.findByAuction_IdOrderByValueDesc(id, PageWithTen).forEach(b -> bids.add(new BidJsonClass(b)));
         return bids;
     }
-
 
 
     public ResponseEntity<BidJsonClass> createNewBid(BidNewJsonClass bid) {
@@ -67,32 +67,31 @@ public class BidService {
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    private boolean validateBidForm(BidNewJsonClass bid ,Long id) {
+    private boolean validateBidForm(BidNewJsonClass bid, Long id) {
         LocalDateTime currentTime = LocalDateTime.now();
         AuctionJsonClass auction = auctionService.getAuctionJsonClassById(id);
 
         User user = userService.getUserByUsername(bid.getUsername());
 
-
         if (auction.getClosingTime().isBefore(currentTime)) { // Ej utgången aucktion
             return false;
-        } else if (user.getId() == auction.getUser().getId()) { // Ej buda på egen auction
+        } else if (user.getId()
+                == auction.getUser().getId()) { // Ej buda på egen auction
             return false;
-        } else if (bid == null) { // Måste buba mer än nuvarande bud)
-            if (bid.getValue() <= auction.getStartUpPrice()) {
-                return true;
-            } else if (bid.getValue() <= curentHigestBid(id).getValue()) {
-                return false;
-            }else {
-                return true;
-            }
+        } else if (bid.getValue() <= currentPrice(auction)) { // Måste buba mer än nuvarande bud
+            return false;
         } else {
             return true;
         }
     }
 
-    public Bid curentHigestBid(Long id){
-        return bidRepository.findTop1ByAuction_IdOrderByValueDesc(id);
+    public Double currentPrice(AuctionJsonClass auction) {
+        Bid bid = bidRepository.findTop1ByAuction_IdOrderByValueDesc(auction.getId());
+        if (bid == null) {
+            return auction.getStartUpPrice();
+        } else {
+            return bid.getValue();
+        }
     }
 
 

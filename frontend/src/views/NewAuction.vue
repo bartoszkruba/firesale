@@ -5,7 +5,7 @@
             <v-card>
                 <v-toolbar>
                     <v-layout align-center justify-center>
-                        <v-toolbar-title>Create Your account</v-toolbar-title>
+                        <v-toolbar-title>Create new auction</v-toolbar-title>
                     </v-layout>
                 </v-toolbar>
                 <v-container>
@@ -89,7 +89,8 @@
         },
         computed: {
             categories() {
-                return this.$store.state.categories
+                let cats = this.$store.state.categories;
+                return cats.filter(cat => cat !== "All");
             },
             imagesCount() {
                 return this.pickedImages.length;
@@ -215,6 +216,11 @@
                 if (e.key !== "enter") {
                     this.buyoutPriceError = "";
                 }
+            }
+        },
+        beforeMount() {
+            if (!this.$store.state.loggedIn) {
+                this.$router.push("/");
             }
         }
     }
