@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
+import socketService from '@/services/socket';
 
 Vue.use(Vuex);
 
