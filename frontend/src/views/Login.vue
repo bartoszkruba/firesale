@@ -79,16 +79,15 @@
                 this.showError = false;
                 this.usernameError = "";
                 this.passwordError = "";
-
                 if (this.validateUsername() && this.validatePassword()) {
                     let status = await auth.login(this.username, this.password);
                     this.showError = !status;
                     if (status) {
                         this.$store.commit("setLoggedIn", true);
-                        this.$router.push("/")
+                        this.$router.push("/");
+                        this.$store.dispatch('getCurrentuser');
                     }
                 }
-
             },
             validateUsername() {
                 if (this.username === "") {

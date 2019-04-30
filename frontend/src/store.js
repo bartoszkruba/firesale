@@ -3,8 +3,7 @@ import Vuex from 'vuex'
 import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
-import bidService from '@/services/bid'
-import socketService from './services/socket'
+import socketService from '@/services/socket';
 
 Vue.use(Vuex);
 
@@ -50,13 +49,16 @@ export default new Vuex.Store({
             //     "userId": 3,
             //     "username": "ChrisL"
             // }
-        ]
+        ],
+        currentUser: null
+
+
     },
     mutations: {
         setUrlQuery(state, value) {
             this.state.urlQuery = value;
         },
-        flipShowFilters( ) {
+        flipShowFilters() {
             this.state.showFilters = !this.state.showFilters;
         },
         setLoggedIn(state, value) {
@@ -106,10 +108,13 @@ export default new Vuex.Store({
         },
         setListItemBidFieldSwtich(state, value) {
             this.state.listItemBidFieldSwitch = value;
+        },
+        setCurrentUser(state, params) {
+            state.currentUser = params;
         }
     },
     actions: {
-        showFilters() {
+        showFilters(context){
             this.commit('showFilters')
         },
         async getAuctions(context, params) {
@@ -120,6 +125,11 @@ export default new Vuex.Store({
         },
         async checkIfLoggedIn() {
             let response = await auth.checkIfLoggedIn();
+            if(response){
+                console.log('response true about to get current user');
+                let response = await auth.getCurrentUser();
+                this.state.currentUser = response;
+            }
             this.commit("setLoggedIn", response)
         },
         async getCategories(context) {
@@ -160,9 +170,11 @@ export default new Vuex.Store({
 
                 let currentViewedAuction = this.state.currentViewedAuction;
 
-                currentViewedAuction.highestBid = bid;
+                console.log('changing current highest bid to ' + bid.value);
 
-                this.commit("setCurrentViewedAuction", currentViewedAuction);
+                this.state.currentViewedAuction.highestBid = bid;
+
+                // this.commit("setCurrentViewedAuction", currentViewedAuction);
 
                 this.commit("setViewedAuctionBids", viewedBids);
 
@@ -171,9 +183,11 @@ export default new Vuex.Store({
             console.log('loading auction with id: ' + id);
 
             let response = await AuctionService().getAuctionById(id);
-            this.commit('setCurrentViewedAuction', response.data);
-            this.commit("setViewedAuctionBids", []);
-            this.dispatch("loadBidPage");
+            this.commit('setCurrentViewedAuction', response.data)
+        },
+        async getCurrentUser() {
+            let response = await auth.getCurrentUser();
+            this.commit('setCurrentUser', response);
         },
         async loadBidPage() {
             if (this.state.currentViewedAuction != null) {
