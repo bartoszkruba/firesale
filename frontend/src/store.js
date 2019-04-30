@@ -56,7 +56,7 @@ export default new Vuex.Store({
         setUrlQuery(state, value) {
             this.state.urlQuery = value;
         },
-        flipShowFilters( ) {
+        flipShowFilters() {
             this.state.showFilters = !this.state.showFilters;
         },
         setLoggedIn(state, value) {
@@ -160,9 +160,11 @@ export default new Vuex.Store({
 
                 let currentViewedAuction = this.state.currentViewedAuction;
 
-                currentViewedAuction.highestBid = bid;
+                console.log('changing current highest bid to ' + bid.value);
 
-                this.commit("setCurrentViewedAuction", currentViewedAuction);
+                this.state.currentViewedAuction.highestBid = bid;
+
+                // this.commit("setCurrentViewedAuction", currentViewedAuction);
 
                 this.commit("setViewedAuctionBids", viewedBids);
 
