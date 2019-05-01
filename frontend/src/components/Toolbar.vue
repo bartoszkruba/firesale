@@ -5,28 +5,28 @@
 
             <v-spacer></v-spacer>
             <router-link to="/">
-            <v-btn icon @click="goToHome">
-                <v-icon>home</v-icon>
-            </v-btn>
+                <v-btn icon @click="goToHome">
+                    <v-icon>home</v-icon>
+                </v-btn>
             </router-link>
             <v-spacer></v-spacer>
             <v-btn icon @click="searchClick">
                 <v-icon>search</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-                <router-link to="/new_auction">
-                    <v-btn icon>
-                        <v-icon>add_circle</v-icon>
-                    </v-btn>
-                </router-link>
+            <router-link to="/new_auction">
+                <v-btn icon>
+                    <v-icon>add_circle</v-icon>
+                </v-btn>
+            </router-link>
             <v-spacer></v-spacer>
             <v-menu :nudge-width="100">
                 <template v-slot:activator="{ on }">
                     <v-toolbar-title v-on="on">
                         <router-link to="/" style="color: black; text-decoration: none">
-                        <v-btn icon>
-                            <v-icon>account_circle</v-icon>
-                        </v-btn>
+                            <v-btn icon>
+                                <v-icon>account_circle</v-icon>
+                            </v-btn>
                         </router-link>
                     </v-toolbar-title>
                 </template>
@@ -84,6 +84,7 @@
 <script>
     import auth from '../services/authentication'
     import AuctionsFilter from "../components/AuctionsFilter";
+    import socketService from '../services/socket';
 
     export default {
         name: "Toolbar",
@@ -97,7 +98,10 @@
             showFilters() {
                 return this.$store.state.showFilters;
             },
-            showeUserName(){
+            showeUserName() {
+                if (!this.$store.state.currentUser) {
+                    return "";
+                }
                 return this.$store.state.currentUser.username;
             }
         },
@@ -105,7 +109,7 @@
             goToHome() {
                 this.$store.commit('setAuctions', []);
                 this.$store.commit('setPageNumber', 0);
-                if(this.$store.state.showFilters === true){
+                if (this.$store.state.showFilters === true) {
                     this.$store.commit('flipShowFilters');
                 }
 
@@ -119,10 +123,11 @@
 
                 if (response === true)
                     this.$store.commit("setCurrentUser", null);
-                    this.$store.commit("setListItemBidFieldSwtich", null);
-                    this.$store.commit("setLoggedIn", false);
-                }
+                this.$store.commit("setListItemBidFieldSwtich", null);
+                this.$store.commit("setLoggedIn", false);
+                socketService().unsubscribeNotifications();
             }
+        }
     }
 </script>
 

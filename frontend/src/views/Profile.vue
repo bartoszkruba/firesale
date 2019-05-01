@@ -90,8 +90,6 @@
 </template>
 
 <script>
-    import userService from '../services/user'
-    import auth from '../services/authentication'
 
     export default {
         name: "Profile",
