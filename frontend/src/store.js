@@ -4,8 +4,8 @@ import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
 import socketService from '@/services/socket';
-import userService from '@/services/user';
 import bidService from '@/services/bid';
+import conversationService from "./services/conversationService";
 
 Vue.use(Vuex);
 
@@ -54,8 +54,6 @@ export default new Vuex.Store({
         ],
         currentUser: null,
         conversations: [],
-
-        currentUser: null,
         showNotification: false,
         currentNotification: null,
         // currentNotification: {
@@ -160,7 +158,7 @@ export default new Vuex.Store({
     },
     actions: {
         async getConversations(context) {
-            await userService.getConversations().then(response => {
+            await conversationService.getConversations().then(response => {
                 context.commit('setConversations', response.data);
             })
         },
@@ -180,6 +178,7 @@ export default new Vuex.Store({
                 // let response = await auth.getCurrentUser();
                 this.dispatch("getCurrentUser");
                 this.dispatch("subscribeToNotifications");
+                this.dispatch('getConversations');
             }
         },
         async getCategories(context) {

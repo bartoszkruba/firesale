@@ -9,8 +9,5 @@ export default {
     },
     async updateAccount(accountData) {
         return await Api().put("/user", accountData)
-    },
-    async getConversations(){
-        return await Api().get('/conversation/my_conversations');
     }
 }
