@@ -181,6 +181,9 @@
                 return time < new Date();
             },
             ownAuction() {
+                if (!this.$store.state.currentUser) {
+                    return false;
+                }
                 return this.$store.state.currentViewedAuction.user.id === this.$store.state.currentUser.id;
             }
         },

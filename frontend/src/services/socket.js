@@ -11,7 +11,6 @@ let notificationSubscription;
 
 let stompRequests = [];
 
-let socket = new SockJS(url);
 
 let stompLoop = () => {
     setTimeout(() => {
@@ -22,6 +21,11 @@ let stompLoop = () => {
                 subscriptions = [];
             } else if (request.type === "subscribe") {
                 stompClient.subscribe(request.route, request.messageHandler);
+            } else if (request.type === "subscribe notifications") {
+                if (notificationSubscription != null) {
+                    notificationSubscription.unsubscribe();
+                }
+                notificationSubscription = stompClient.subscribe(request.route, request.messageHandler)
             } else if (request.type === "unsubscribe notifications") {
                 if (notificationSubscription !== null) {
                     notificationSubscription.unsubscribe();
@@ -33,6 +37,7 @@ let stompLoop = () => {
     }, 500)
 };
 
+let socket = new SockJS(url);
 stompClient = Stomp.over(socket);
 stompClient.connect({}, stompLoop);
 stompClient.debug = null;
@@ -64,6 +69,20 @@ export default () => {
                 route: "/user/queue/notifications",
                 messageHandler: messageHandler
             });
+        },
+        reconnect(callback) {
+            subscriptions.forEach(s => s.unsubscribe());
+            subscriptions = [];
+            if (notificationSubscription) {
+                notificationSubscription.unsubscribe();
+                notificationSubscription = null;
+            }
+            stompClient.disconnect();
+            stompRequests = [];
+            socket = new SockJS(url);
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, callback);
+            stompClient.debug = null;
         }
     }
 }

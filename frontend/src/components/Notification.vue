@@ -3,7 +3,7 @@
         <v-snackbar multi-line top right v-model="showSnackbar" :timeout="timeout">
             <div>
                 <router-link :to="userLink">{{username}}</router-link>
-                placed new bid ({{bidValue}}) to auction "{{auctionTitle}}"
+                placed new bid ({{bidValue}} SEK) to auction "{{auctionTitle}}"
             </div>
             <v-btn flat @click="showAuction">show</v-btn>
             <v-btn flat @click="hideSnackbar">close</v-btn>
@@ -21,15 +21,13 @@
         },
         methods: {
             hideSnackbar() {
-                this.$store.commit("setNotification", false);
-                setTimeout(() => {
-                    this.$store.commit("setNotification", true);
-                }, 500)
+                this.$store.dispatch("closeNotification");
+
             },
             showAuction() {
                 let currentNotification = this.$store.state.currentNotification;
                 if (currentNotification) {
-                    this.$router.push("/auction?id=" + currentNotification.auctionId)
+                    this.$router.push("/auction?id=" + currentNotification.auctionId);
                     this.hideSnackbar();
                 }
             }
@@ -58,7 +56,7 @@
                 let currentNotification = this.$store.state.currentNotification;
                 if (currentNotification) {
                     let title = currentNotification.auctionTitle;
-                    if (title.length > 53) {
+                    if (title && title.length > 53) {
                         return title.sub(0, 50) + "..."
                     }
                     return title
