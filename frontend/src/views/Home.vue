@@ -1,7 +1,7 @@
 <template>
     <div>
         <HelloWorld/>
-        <AuctionList :key="this.$route.query"/>
+        <AuctionList :key="+this.$route.query"/>
     </div>
 </template>
 

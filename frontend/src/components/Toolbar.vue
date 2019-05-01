@@ -105,6 +105,9 @@
                 return this.$store.state.showFilters;
             },
             showeUserName(){
+                if(!this.$store.state.currentUser){
+                    return '';
+                }
                 return this.$store.state.currentUser.username;
             }
         },

@@ -120,12 +120,12 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        async getConversations(context){
-          await userService.getConversations().then(response => {
-              context.commit('setConversations', response.data);
-          })
+        async getConversations(context) {
+            await userService.getConversations().then(response => {
+                context.commit('setConversations', response.data);
+            })
         },
-        showFilters(context){
+        showFilters(context) {
             this.commit('showFilters')
         },
         async getAuctions(context, params) {
@@ -136,7 +136,7 @@ export default new Vuex.Store({
         },
         async checkIfLoggedIn() {
             let response = await auth.checkIfLoggedIn();
-            if(response){
+            if (response) {
                 console.log('response true about to get current user');
                 let response = await auth.getCurrentUser();
                 this.state.currentUser = response;
@@ -195,6 +195,7 @@ export default new Vuex.Store({
 
             let response = await AuctionService().getAuctionById(id);
             this.commit('setCurrentViewedAuction', response.data)
+
         },
         async getCurrentUser() {
             let response = await auth.getCurrentUser();
@@ -219,5 +220,6 @@ export default new Vuex.Store({
         /*async getOwendAuctionByUser(){///TODO
             return  AuctionService.getAuctionsByUserName();
         }*/
+
     }
 });
