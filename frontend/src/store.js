@@ -54,8 +54,6 @@ export default new Vuex.Store({
         ],
         currentUser: null,
         conversations: [],
-
-        currentUser: null,
         showNotification: false,
         currentNotification: null,
         // currentNotification: {
@@ -91,7 +89,7 @@ export default new Vuex.Store({
 
     },
     mutations: {
-        setConversations(state, value){
+        setConversations(state, value) {
             this.state.conversations = value;
         },
         setUrlQuery(state, value) {
@@ -125,7 +123,7 @@ export default new Vuex.Store({
                 let bid = JSON.parse(payload.body);
                 let auctionId = bid.auctionId;
                 let auctions = this.state.auctions;
-                auctions.filter(a => a.id === auctionId).forEach(a => a.highestBid = bid);
+                auctions.filter(a => a.id === auctionId).forEach(a => a.currentPrice = bid.value);
                 this.commit("setAuctions", auctions);
             };
 
@@ -221,12 +219,14 @@ export default new Vuex.Store({
                 let currentViewedAuction = this.state.currentViewedAuction;
 
                 currentViewedAuction.highestBid = bid;
+                currentViewedAuction.currentPrice = bid.value;
 
                 this.commit("setCurrentViewedAuction", currentViewedAuction);
                 this.commit("setViewedAuctionBids", viewedBids);
 
             });
             let response = await AuctionService().getAuctionById(id);
+
             this.commit('setCurrentViewedAuction', response.data);
             this.dispatch("loadBidPage");
         },

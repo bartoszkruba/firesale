@@ -2,6 +2,7 @@ package com.company.firesale.json_classes;
 
 import com.company.firesale.data.entity.Auction;
 import com.company.firesale.data.entity.AuctionStatus;
+import com.company.firesale.data.entity.Bid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +29,8 @@ public class AuctionJsonClass {
     private Double buyOutPrice;
     private String category;
     private UserJsonClass user;
-    private BidJsonClass highestBid;
+    //    private BidJsonClass highestBid;
+    private Double currentPrice;
     private AuctionStatus status;
 
     @Builder.Default
@@ -59,9 +61,12 @@ public class AuctionJsonClass {
                     .collect(Collectors.toSet());
         }
         if (auction.getBids() != null && auction.getBids().size() > 0) {
-            this.highestBid = new BidJsonClass(auction.getBids().stream()
+            Bid highestBid = auction.getBids().stream()
                     .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
-                    .collect(Collectors.toList()).get(0));
+                    .collect(Collectors.toList()).get(0);
+            this.currentPrice = highestBid.getValue();
+        } else {
+            this.currentPrice = startUpPrice;
         }
     }
 

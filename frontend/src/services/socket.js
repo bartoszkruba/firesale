@@ -8,6 +8,7 @@ let stompClient;
 let subscriptions = [];
 
 let notificationSubscription;
+let chatSubscription;
 
 let stompRequests = [];
 
@@ -63,12 +64,18 @@ export default () => {
             })
         },
         subscribeNotifications(messageHandler) {
-
             stompRequests.push({
-                type: "subscribe",
+                type: "subscribe notifications",
                 route: "/user/queue/notifications",
                 messageHandler: messageHandler
             });
+        },
+        subscribeChat(messageHandler) {
+            stompRequests.push({
+                type: "subscribe",
+                route: "/user/queue/chat",
+                messageHandler: messageHandler
+            })
         },
         reconnect(callback) {
             subscriptions.forEach(s => s.unsubscribe());
