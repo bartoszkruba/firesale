@@ -31,7 +31,7 @@
                                         <v-flex xs12 sm4>
                                             <v-switch
                                                     v-model="filterParams.showAllAuctions"
-                                                    :label="`${filterParams.showAllAuctions ? 'Hide ended auctions' : 'Show all auctions'}`"
+                                                    :label="`${filterParams.showAllAuctions ? 'Hiding ended auctions' : 'Showing all auctions'}`"
 
                                             ></v-switch>
                                         </v-flex>
@@ -112,9 +112,10 @@
     #filter-container {
         font-weight: 700;
         color: white;
-        background-color: rgba(114, 114, 114, 1);
+        background-color: rgba(255, 255, 255, 1);
         padding-top: 20px;
     }
+
     #filter-slider {
         display: flex;
         flex-direction: row;
