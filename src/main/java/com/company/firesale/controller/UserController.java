@@ -1,6 +1,7 @@
 package com.company.firesale.controller;
 
 import com.company.firesale.data.entity.User;
+import com.company.firesale.data.entity.UserUpdate;
 import com.company.firesale.json_classes.UserJsonClass;
 import com.company.firesale.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,6 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<String>
-    updateUser(@Validated @RequestBody User user) {
-
-        return userService.updateUser(user);
+    updateUser(@Validated @RequestBody UserUpdate userForm) {return userService.updateUser(userForm);
     }
 }

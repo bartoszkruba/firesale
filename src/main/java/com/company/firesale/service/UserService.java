@@ -2,6 +2,7 @@ package com.company.firesale.service;
 
 import com.company.firesale.data.entity.Role;
 import com.company.firesale.data.entity.User;
+import com.company.firesale.data.entity.UserUpdate;
 import com.company.firesale.data.repository.RoleRepository;
 import com.company.firesale.data.repository.UserRepository;
 import com.company.firesale.json_classes.UserJsonClass;
@@ -44,9 +45,15 @@ public class UserService {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    public ResponseEntity<String> updateUser(User user) {
-        if(userRepository.findDistinctFirstByUsernameIgnoreCase(user.getUsername()) != null){
+    public ResponseEntity<String> updateUser(UserUpdate userForm) {
+            User user = userRepository.findDistinctFirstByUsernameIgnoreCase(userForm.getUserName());
+        if(user != null){
+            user.setFirstName(userForm.getFirstName());
+            user.setLastName(userForm.getLastName());
+            user.setEmail(userForm.getEmail());
+            user.setPhoneNumber(userForm.getPhoneNumber());
            saveUser(user);
+
            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         else {
