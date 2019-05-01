@@ -17,22 +17,41 @@ let stompLoop = () => {
     setTimeout(() => {
         while (stompRequests.length > 0) {
             let request = stompRequests.shift();
-            if (request.type === "unsubscribe all auction bids") {
-                subscriptions.forEach(s => s.unsubscribe());
-                subscriptions = [];
-            } else if (request.type === "subscribe") {
-                stompClient.subscribe(request.route, request.messageHandler);
-            } else if (request.type === "subscribe notifications") {
-                if (notificationSubscription != null) {
-                    notificationSubscription.unsubscribe();
-                }
-                notificationSubscription = stompClient.subscribe(request.route, request.messageHandler)
-            } else if (request.type === "unsubscribe notifications") {
-                if (notificationSubscription !== null) {
-                    notificationSubscription.unsubscribe();
-                }
-                notificationSubscription = null;
+            switch (request.type) {
+                case 0:
+                    subscriptions.push(stompClient.subscribe(request.route, request.messageHandler));
+                    break;
+                case 1:
+                    subscriptions.forEach(s => s.unsubscribe());
+                    subscriptions = [];
+                    break;
+                case 2:
+                    if (notificationSubscription !== null) {
+                        notificationSubscription.unsubscribe();
+                        notificationSubscription = null;
+                    }
+                    notificationSubscription = null;
+                    break;
+                case 3:
+                    if (notificationSubscription != null) {
+                        notificationSubscription.unsubscribe();
+                    }
+                    notificationSubscription = stompClient.subscribe(request.route, request.messageHandler);
+                    break;
+                case 4:
+                    if (chatSubscription != null) {
+                        chatSubscription.unsubscribe();
+                    }
+                    chatSubscription = stompClient.subscribe(request.route, request.messageHandler);
+                    break;
+                case 5:
+                    if (chatSubscription !== null) {
+                        chatSubscription.unsubscribe();
+                        chatSubscription = null;
+                    }
+                    break;
             }
+
         }
         stompLoop();
     }, 500)
@@ -48,33 +67,38 @@ export default () => {
         subscribeToAuctionBids(auctionId, messageHandler) {
 
             stompRequests.push({
-                type: "subscribe",
+                type: 0,
                 route: "/auctionBids/" + auctionId,
                 messageHandler: messageHandler
             });
         },
         unsubscribeAllAuctionBids() {
             stompRequests.push({
-                type: "unsubscribe all auction bids"
+                type: 1
             });
         },
         unsubscribeNotifications() {
             stompRequests.push({
-                type: "unsubscribe notifications"
+                type: 2
             })
         },
         subscribeNotifications(messageHandler) {
             stompRequests.push({
-                type: "subscribe notifications",
+                type: 3,
                 route: "/user/queue/notifications",
                 messageHandler: messageHandler
             });
         },
         subscribeChat(messageHandler) {
             stompRequests.push({
-                type: "subscribe",
+                type: 4,
                 route: "/user/queue/chat",
                 messageHandler: messageHandler
+            })
+        },
+        unsubscribeChat() {
+            stompRequests.push({
+                type: 5
             })
         },
         reconnect(callback) {

@@ -178,6 +178,7 @@ export default new Vuex.Store({
                 // let response = await auth.getCurrentUser();
                 this.dispatch("getCurrentUser");
                 this.dispatch("subscribeToNotifications");
+                this.dispatch("subscribeChat");
             }
         },
         async getCategories(context) {
@@ -276,6 +277,12 @@ export default new Vuex.Store({
                     this.state.notifications.unshift(notification);
                     this.dispatch("closeNotification");
                 }
+            })
+        },
+        subscribeChat() {
+            socketService().subscribeChat((payload) => {
+                let message = JSON.parse(payload.body);
+                console.log(message);
             })
         }
         /*async getOwendAuctionByUser(){///TODO
