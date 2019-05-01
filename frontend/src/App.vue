@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app id="background">
         <Notification></Notification>
         <!--        <v-content>-->
         <!--            <v-container fluid fill-height>-->
@@ -40,8 +40,13 @@
 </script>
 
 <style>
-    * {
-        font-family: "Segoe UI", arial, sans-serif;
+    a {
+        text-decoration: none;
+    }
+
+    #background {
+        background-image: url("assets/auction.jpg");
+        background-size: cover;
     }
 
     #bottomspacer {

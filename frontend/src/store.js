@@ -266,5 +266,8 @@ export default new Vuex.Store({
                 }
             })
         }
+        /*async getOwendAuctionByUser(){///TODO
+            return  AuctionService.getAuctionsByUserName();
+        }*/
     }
 });

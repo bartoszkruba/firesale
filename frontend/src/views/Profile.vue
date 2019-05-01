@@ -72,14 +72,24 @@
                     </v-card-text>
                     <v-btn color="primary" @click="editProfile=!editProfile" v-show="!editProfile">Edit</v-btn>
                 </v-card>
+<!--
+
+                <v-card class="text-xs-center pa-5">
+                    <v-icon large color="primary" class="pa-3">myAuctions</v-icon>
+                    <v-card-text class="text-xs-center pa-3">
+                        {{getOwneAuctions}}
+                        <v-spacer></v-spacer>
+                    </v-card-text>
+                </v-card>
+-->
+
+
             </v-flex>
         </v-layout>
     </v-container>
 </template>
 
 <script>
-    import userService from '../services/user'
-    import auth from '../services/authentication'
 
     export default {
         name: "Profile",
@@ -109,9 +119,11 @@
         },
         computed: {
             getCurrentuser() {
-               return this.$store.state.currentUser;
+                return this.$store.state.currentUser;
             },
-
+            /*getOwneAuctions(){///TODO
+                return this.$store.state.getOwendAuctionByUser;
+            }*/
         },
         methods: {
            /* async submitEditedProfile() {
