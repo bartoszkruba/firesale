@@ -4,6 +4,8 @@ import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
 import socketService from '@/services/socket';
+import userService from '@/services/user';
+import bidService from '@/services/bid';
 
 Vue.use(Vuex);
 
@@ -50,11 +52,15 @@ export default new Vuex.Store({
             //     "username": "ChrisL"
             // }
         ],
-        currentUser: null
+        currentUser: null,
+        conversations: [],
 
 
     },
     mutations: {
+        setConversations(state, value){
+            this.state.conversations = value;
+        },
         setUrlQuery(state, value) {
             this.state.urlQuery = value;
         },
@@ -114,6 +120,11 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async getConversations(context){
+          await userService.getConversations().then(response => {
+              context.commit('setConversations', response.data);
+          })
+        },
         showFilters(context){
             this.commit('showFilters')
         },
