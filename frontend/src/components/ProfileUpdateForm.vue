@@ -16,29 +16,35 @@
                                     <v-text-field prepend-icon="face" name="firstName" label="First Name*"
                                                   type="text" color="primary" v-model="firstName"
                                                   :error-messages="firstNameError"
-                                                  @keydown.enter="register"
-                                                  @keydown="clearFirstNameError"></v-text-field>
+                                                  @keydown.enter="postAccountUpdate"
+                                    >
+<!--                                                  @keydown="clearFirstNameError">-->
+
+                                    </v-text-field>
 
                                     <v-text-field prepend-icon="face" name="lastName" label="Last Name*"
                                                   type="text" color="primary" v-model="lastName"
                                                   :error-messages="lastNameError"
-                                                  @keydown.enter="register"
-                                                  @keydown="clearLastNameError"></v-text-field>
+                                                  @keydown.enter="postAccountUpdate"
+                                    >
+<!--                                                  @keydown="clearLastNameError"-->
+
+                                    </v-text-field>
 
                                     <v-text-field prepend-icon="email" name="email" label="Email*"
                                                   type="email" color="primary" v-model="email"
-                                                  :error-messages="emailError"
-                                                  @keydown.enter="register"
-                                                  @keydown="clearEmailError"
+                                                  :error-messages="emailError">
+<!--                                                  @keydown.enter="register"-->
+<!--                                                  @keydown="clearEmailError"-->
                                                   @keydown.space="(event) => event.preventDefault()"></v-text-field>
 
                                     <v-text-field prepend-icon="phone" name="phone" label="Contact Number*"
                                                   type="enter" color="primary" v-model="phone"
                                                   :error-messages="phoneError"
-                                                  @keydown.enter="register"
-                                                  @keydown="preventUnwantedCharacters"></v-text-field>
+                                                  @keydown.enter="postAccountUpdate"></v-text-field>
+<!--                                                  @keydown="preventUnwantedCharacters"></v-text-field>-->
 
-                                    <v-btn color="success" style="width: 100% " @click="postAccountUpdate">Update</v-btn>
+                                    <v-btn color="success" style="width: 100% " @click=postAccountUpdate>Update</v-btn>
                                     <v-spacer></v-spacer>
                                 </v-form>
                             </v-card-text>
@@ -77,7 +83,9 @@
         },
         methods: {
             getUserData() {
+
                 let userData = this.$store.state.currentUser;
+                console.log(userData);
                 this.userId = userData.userId;
                 this.userName = userData.userName;
                 this.firstName = userData.firstName;
@@ -85,7 +93,6 @@
                 this.email = userData.email;
                 this.phone = userData.phone;
             },
-        },
         async postAccountUpdate() {
             if (this.validateFields()) {
                 console.log('Fields validated >>> broadcasting');
@@ -103,77 +110,77 @@
                 }
             }
         },
-            validateFields() {
+        validateFields() {
 
-                this.usernameError = "";
-                this.passwordError = "";
-                this.repeatedPasswordError = "";
-                this.firstNameError = "";
-                this.lastNameError = "";
-                this.emailError = "";
-                this.phoneError = "";
+            this.usernameError = "";
+            this.passwordError = "";
+            this.repeatedPasswordError = "";
+            this.firstNameError = "";
+            this.lastNameError = "";
+            this.emailError = "";
+            this.phoneError = "";
 
-                let validation = true;
+            let validation = true;
 
-                // todo add regex to replace all double space with single one
-                this.firstName = this.firstName.trim();
+            // todo add regex to replace all double space with single one
+            this.firstName = this.firstName.trim();
 
-                if (this.firstName === "") {
-                    this.firstNameError = "Field cannot be empty";
-                    validation = false;
-                }
-                this.lastName = this.lastName.trim();
-                if (this.lastName === "") {
-                    this.lastNameError = "Field cannot be empty";
-                    validation = false;
-                }
-                if (this.email === "") {
-                    this.emailError = "Field cannot be empty";
-                    validation = false;
-                } else {
+            if (this.firstName === "") {
+                this.firstNameError = "Field cannot be empty";
+                validation = false;
+            }
+            this.lastName = this.lastName.trim();
+            if (this.lastName === "") {
+                this.lastNameError = "Field cannot be empty";
+                validation = false;
+            }
+            if (this.email === "") {
+                this.emailError = "Field cannot be empty";
+                validation = false;
+            } else {
 // eslint-disable-next-line
-                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    if (!re.test(String(this.email).toLowerCase())) {
-                        this.emailError = "Invalid email";
-                        validation = false;
-                    }
-                }
-                this.phone.trim();
-                if (this.phone === "") {
-                    this.phoneError = "Field cannot be empty";
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if (!re.test(String(this.email).toLowerCase())) {
+                    this.emailError = "Invalid email";
                     validation = false;
-                }
-                return validation;
-            },
-            preventUnwantedCharacters(e) {
-                this.clearPhoneError(e);
-                let re = /[0-9 ()-]|Backspace/;
-                if (!e.key.toString().match(re)) {
-                    e.preventDefault()
-                }
-            },
-            clearFirstNameError(e) {
-                if (e.key !== 'enter') {
-                    this.firstNameError = "";
-                }
-            },
-            clearLastNameError(e) {
-                if (e.key !== 'enter') {
-                    this.lastNameError = "";
-                }
-            },
-            clearEmailError(e) {
-                if (e.key !== 'enter') {
-                    this.emailError = "";
-                }
-            },
-            clearPhoneError(e) {
-                if (e.key !== 'enter') {
-                    this.phoneError = "";
                 }
             }
-
+            this.phone.trim();
+            if (this.phone === "") {
+                this.phoneError = "Field cannot be empty";
+                validation = false;
+            }
+            return validation;
+        },
+        preventUnwantedCharacters(e) {
+            this.clearPhoneError(e);
+            let re = /[0-9 ()-]|Backspace/;
+            if (!e.key.toString().match(re)) {
+                e.preventDefault()
+            }
+        },
+        clearFirstNameError(e) {
+            if (e.key !== 'enter') {
+                this.firstNameError = "";
+            }
+        },
+        clearLastNameError(e) {
+            if (e.key !== 'enter') {
+                this.lastNameError = "";
+            }
+        },
+        clearEmailError(e) {
+            if (e.key !== 'enter') {
+                this.emailError = "";
+            }
+        },
+        clearPhoneError(e) {
+            if (e.key !== 'enter') {
+                this.phoneError = "";
+            }
+        }
     }
+}
 </script>
 
 <style scoped>
