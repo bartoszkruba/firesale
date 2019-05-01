@@ -50,6 +50,11 @@ let stompLoop = () => {
                         chatSubscription = null;
                     }
                     break;
+                case 6:
+                    console.log('sending message');
+                    stompClient.send("/app/chat.sendMessage", {},
+                        JSON.stringify(request.message));
+                    break;
             }
 
         }
@@ -99,6 +104,12 @@ export default () => {
         unsubscribeChat() {
             stompRequests.push({
                 type: 5
+            })
+        },
+        sendMessage(message) {
+            stompRequests.push({
+                type: 6,
+                message: message
             })
         },
         reconnect(callback) {
