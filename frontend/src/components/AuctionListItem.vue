@@ -1,5 +1,9 @@
 <template>
     <div>
+        <v-layout
+                justify-center
+                wrap
+        >
         <v-card class="listitempanel">
             <div id="auctionimgcontainer">
             <span v-if="imagesExist">
@@ -10,15 +14,15 @@
                 <span v-else>no image</span>
             </div>
 
-            <div id="auctiontextcontent">
-                <h1 id="auctiontitle">
+            <div id="auctiontextcontent" class="text-truncate">
+                <h1 id="auctiontitle" class="title font-weight-black">
                     <router-link :to="auctionLink" style="color: black">
                         {{auction.title}} <span v-if="closed">(Closed)</span>
                     </router-link>
                 </h1>
-                <span id="auctiondescription">{{description}}</span>
-                <h3 id="auctionprice">Current price: {{currentPrice}} SEK</h3>
-                <h3 id="auctiontime">Ends at: {{closingTime}}</h3>
+                <p id="auctiondescription" class="body-1 text-truncate">{{description}}</p>
+                <h3 id="auctionprice" class="body-2">Current price: {{currentPrice}} SEK</h3>
+                <h3 id="auctiontime" class="body-2">Ends at: {{closingTime}}</h3>
             </div>
             <v-btn id="buybutton"
                    color="primary"
@@ -29,10 +33,18 @@
             </v-btn>
         </v-card>
         <v-card id="bid_panel" v-if="showBidBar">
+            <v-flex>
+
             <v-text-field name="Amount (SEK)" label="Amount (SEK)" @keydown="allowOnlyNumbers"
                           @keydown.enter="bid" :error-messages="bidFieldError" v-model="bidField"></v-text-field>
-            <v-btn color="primary" @click="bid">Bid</v-btn>
+
+                <v-card-actions>
+                    <v-btn color="primary" @click="bid">Bid</v-btn>
+                </v-card-actions>
+
+            </v-flex>
         </v-card>
+        </v-layout>
     </div>
 </template>
 
@@ -128,8 +140,8 @@
                 return `/auction?id=${this.auction.id}`
             },
             description() {
-                let description = this.auction.description.substring(0, 200);
-                if (this.auction.description.length > 200) {
+                let description = this.auction.description.substring(0, 50);
+                if (this.auction.description.length > 50) {
                     description = description + "...";
                 }
                 return description
@@ -153,13 +165,14 @@
         display: flex;
         flex-direction: row;
         background-color: whitesmoke;
-        /*box-shadow: 5px 5px black;*/
+        box-shadow: 5px 5px black;
         height: 120px;
         width: 90%;
         margin-top: 20px;
         /*margin-bottom: 20px;*/
         margin-left: 5%;
         margin-right: 5%;
+        padding-right: 10px;
     }
 
     #bid_panel {
@@ -188,35 +201,38 @@
     }
 
     #auctiontitle {
-        font-family: "Segoe UI";
         text-align: left;
-        font-size: medium;
+        margin-top: 10px;
     }
 
     #auctiondescription {
-        font-family: "Segoe UI";
         text-align: left;
         font-size: small;
         padding-bottom: 5px;
+        margin-top: 10px;
     }
 
     #auctionprice {
-        font-family: "Segoe fUI";
         text-align: left;
         font-size: small;
         padding-bottom: 5px;
     }
 
     #auctiontime {
-        font-family: "Segoe UI";
         text-align: left;
-        font-size: small;
         padding-bottom: 5px;
     }
 
     #buybutton {
         color: black;
-        margin-bottom: 35px;
+        margin-bottom: 15px;
+    }
+
+    #bid_panel{
+        padding: 15px;
+
+        box-shadow: 5px 5px black;
+        width: 90%;
     }
 
 

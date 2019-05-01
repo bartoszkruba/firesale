@@ -146,6 +146,9 @@ public class AuctionService {
             return true;
         }
     }
+    /*public List<Bid> getAuctionsByUserName(){// eller id ///TODO
 
+        return
+    }*/
 
 }

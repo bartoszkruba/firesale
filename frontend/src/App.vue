@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app id="background">
         <!--        <v-content>-->
         <!--            <v-container fluid fill-height>-->
         <!--                <v-layout align-center justify-center>-->
@@ -37,8 +37,12 @@
 </script>
 
 <style>
-    * {
-        font-family: "Segoe UI", arial, sans-serif;
+    a {
+        text-decoration: none;
+    }
+    #background{
+        background-image: url("assets/auction.jpg");
+        background-size: cover;
     }
 
     #bottomspacer {
