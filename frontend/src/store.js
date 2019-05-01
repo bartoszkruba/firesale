@@ -204,6 +204,9 @@ export default new Vuex.Store({
                 let page = response.data;
                 page.forEach(p => this.state.viewedAuctionBids.unshift(p));
             }
-        }
+        },
+        /*async getOwendAuctionByUser(){///TODO
+            return  AuctionService.getAuctionsByUserName();
+        }*/
     }
 });
