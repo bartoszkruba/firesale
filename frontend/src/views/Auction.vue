@@ -165,11 +165,26 @@
                 return time.toLocaleDateString('en-EN', options)
             },
             currentPrice() {
-                let highestBid = this.$store.state.currentViewedAuction.highestBid;
-                if (highestBid) {
-                    return highestBid.value;
+                return this.$store.state.currentViewedAuction.currentPrice;
+
+                // let highestBid = this.$store.state.currentViewedAuction.highestBid;
+                // if (highestBid) {
+                //     return highestBid.value;
+                // } else {
+                //     return this.$store.state.currentViewedAuction.startUpPrice;
+                // }
+            },
+            highestBid() {
+                if (this.$store.state.currentViewedAuction) {
+                    return this.$store.state.currentViewedAuction.highestBid;
+                }
+                return null;
+            },
+            startupPrice() {
+                if (this.$store.state.currentViewedAuction) {
+                    return this.$store.state.currentViewedAuction.startUpPrice
                 } else {
-                    return this.$store.state.currentViewedAuction.startUpPrice;
+                    return null;
                 }
             },
             viewedAuctionBids() {

@@ -87,7 +87,8 @@
                         this.$store.commit("setLoggedIn", true);
                         this.$store.dispatch('getCurrentUser');
                         socketService().reconnect(() => {
-                            this.$store.dispatch('subscribeToNotifications')
+                            this.$store.dispatch("subscribeChat");
+                            this.$store.dispatch('subscribeToNotifications');
                             this.$router.push("/");
                         });
                     }

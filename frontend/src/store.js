@@ -89,7 +89,7 @@ export default new Vuex.Store({
 
     },
     mutations: {
-        setConversations(state, value){
+        setConversations(state, value) {
             this.state.conversations = value;
         },
         setUrlQuery(state, value) {
@@ -178,6 +178,7 @@ export default new Vuex.Store({
                 // let response = await auth.getCurrentUser();
                 this.dispatch("getCurrentUser");
                 this.dispatch("subscribeToNotifications");
+                this.dispatch("subscribeChat");
                 this.dispatch('getConversations');
             }
         },
@@ -220,12 +221,14 @@ export default new Vuex.Store({
                 let currentViewedAuction = this.state.currentViewedAuction;
 
                 currentViewedAuction.highestBid = bid;
+                currentViewedAuction.currentPrice = bid.value;
 
                 this.commit("setCurrentViewedAuction", currentViewedAuction);
                 this.commit("setViewedAuctionBids", viewedBids);
 
             });
             let response = await AuctionService().getAuctionById(id);
+
             this.commit('setCurrentViewedAuction', response.data);
             this.dispatch("loadBidPage");
         },
@@ -275,6 +278,12 @@ export default new Vuex.Store({
                     this.state.notifications.unshift(notification);
                     this.dispatch("closeNotification");
                 }
+            })
+        },
+        subscribeChat() {
+            socketService().subscribeChat((payload) => {
+                let message = JSON.parse(payload.body);
+                console.log(message);
             })
         }
         /*async getOwendAuctionByUser(){///TODO

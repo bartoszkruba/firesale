@@ -14,20 +14,18 @@
                 <v-icon>search</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <router-link to="/new_auction">
+            <router-link to="/chat">
                 <v-btn icon>
-                    <v-icon>add_circle</v-icon>
+                    <v-icon>message</v-icon>
                 </v-btn>
             </router-link>
             <v-spacer></v-spacer>
             <v-menu :nudge-width="100">
                 <template v-slot:activator="{ on }">
                     <v-toolbar-title v-on="on">
-                        <router-link to="/" style="color: black; text-decoration: none">
-                            <v-btn icon>
-                                <v-icon>account_circle</v-icon>
-                            </v-btn>
-                        </router-link>
+                        <v-btn icon>
+                            <v-icon>account_circle</v-icon>
+                        </v-btn>
                     </v-toolbar-title>
                 </template>
                 <v-list>
@@ -128,11 +126,13 @@
             async logout() {
                 let response = await auth.logout();
 
-                if (response === true)
+                if (response === true) {
                     this.$store.commit("setCurrentUser", null);
-                this.$store.commit("setListItemBidFieldSwtich", null);
-                this.$store.commit("setLoggedIn", false);
-                socketService().unsubscribeNotifications();
+                    this.$store.commit("setListItemBidFieldSwtich", null);
+                    this.$store.commit("setLoggedIn", false);
+                    socketService().unsubscribeNotifications();
+                    socketService().unsubscribeChat();
+                }
             }
         }
     }
