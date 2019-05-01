@@ -123,7 +123,7 @@ export default new Vuex.Store({
                 let bid = JSON.parse(payload.body);
                 let auctionId = bid.auctionId;
                 let auctions = this.state.auctions;
-                auctions.filter(a => a.id === auctionId).forEach(a => a.highestBid = bid);
+                auctions.filter(a => a.id === auctionId).forEach(a => a.currentPrice = bid.value);
                 this.commit("setAuctions", auctions);
             };
 
@@ -269,6 +269,7 @@ export default new Vuex.Store({
         subscribeToNotifications() {
             socketService().subscribeNotifications((payload) => {
                 let notification = JSON.parse(payload.body);
+                notification.type = "bid";
                 let currentNotification = this.state.currentNotification;
                 if (!currentNotification) {
                     this.commit("setCurrentNotification", notification);
@@ -283,6 +284,8 @@ export default new Vuex.Store({
         subscribeChat() {
             socketService().subscribeChat((payload) => {
                 let message = JSON.parse(payload.body);
+
+                console.log('received message:');
                 console.log(message);
             })
         }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-snackbar multi-line top right v-model="showSnackbar" :timeout="timeout">
+        <v-snackbar v-if="type === 'bid'" multi-line top right v-model="showSnackbar" :timeout="timeout">
             <div>
                 <router-link :to="userLink">{{username}}</router-link>
                 placed new bid ({{bidValue}} SEK) to auction "{{auctionTitle}}"
@@ -70,6 +70,14 @@
                     return "/user?id=" + currentNotification.userId
                 } else {
                     return "/"
+                }
+            },
+            type() {
+                let currentNotification = this.$store.state.currentNotification;
+                if (currentNotification) {
+                    return currentNotification.type;
+                } else {
+                    return '';
                 }
             }
         }
