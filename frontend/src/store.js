@@ -4,6 +4,7 @@ import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
 import socketService from '@/services/socket';
+import bidService from './services/bid';
 
 Vue.use(Vuex);
 
@@ -50,8 +51,39 @@ export default new Vuex.Store({
             //     "username": "ChrisL"
             // }
         ],
-        currentUser: null
-
+        currentUser: null,
+        showNotification: false,
+        currentNotification: null,
+        // currentNotification: {
+        //     auctionTitle: "Gibson Les Paul 1995",
+        //     auctionId: 1,
+        //     newHighestBid: 5000,
+        //     username: "John123",
+        //     userId: 1
+        // },
+        notifications: [
+            // {
+            //     auctionTitle: "Gibson Les Paul 1995",
+            //     auctionId: 1,
+            //     newHighestBid: 5000,
+            //     username: "John13",
+            //     userId: 1
+            // },
+            // {
+            //     auctionTitle: "Gibson Les Paul 1995",
+            //     auctionId: 1,
+            //     newHighestBid: 5000,
+            //     username: "John19",
+            //     userId: 1
+            // },
+            // {
+            //     auctionTitle: "Gibson Les Paul 1995",
+            //     auctionId: 1,
+            //     newHighestBid: 5000,
+            //     username: "John111",
+            //     userId: 1
+            // }
+        ]
 
     },
     mutations: {
@@ -111,10 +143,16 @@ export default new Vuex.Store({
         },
         setCurrentUser(state, params) {
             state.currentUser = params;
+        },
+        setCurrentNotification(state, value) {
+            this.state.currentNotification = value;
+        },
+        setNotification(state, value) {
+            this.state.showNotification = value;
         }
     },
     actions: {
-        showFilters(context){
+        showFilters(context) {
             this.commit('showFilters')
         },
         async getAuctions(context, params) {
@@ -125,12 +163,12 @@ export default new Vuex.Store({
         },
         async checkIfLoggedIn() {
             let response = await auth.checkIfLoggedIn();
-            if(response){
-                console.log('response true about to get current user');
-                let response = await auth.getCurrentUser();
-                this.state.currentUser = response;
+            if (response) {
+                this.commit("setLoggedIn", response);
+                // let response = await auth.getCurrentUser();
+                this.dispatch("getCurrentUser");
+                this.dispatch("subscribeToNotifications");
             }
-            this.commit("setLoggedIn", response)
         },
         async getCategories(context) {
             await CategoryService().getCategories()
@@ -170,20 +208,15 @@ export default new Vuex.Store({
 
                 let currentViewedAuction = this.state.currentViewedAuction;
 
-                console.log('changing current highest bid to ' + bid.value);
+                currentViewedAuction.highestBid = bid;
 
-                this.state.currentViewedAuction.highestBid = bid;
-
-                // this.commit("setCurrentViewedAuction", currentViewedAuction);
-
+                this.commit("setCurrentViewedAuction", currentViewedAuction);
                 this.commit("setViewedAuctionBids", viewedBids);
 
             });
-
-            console.log('loading auction with id: ' + id);
-
             let response = await AuctionService().getAuctionById(id);
-            this.commit('setCurrentViewedAuction', response.data)
+            this.commit('setCurrentViewedAuction', response.data);
+            this.dispatch("loadBidPage");
         },
         async getCurrentUser() {
             let response = await auth.getCurrentUser();
@@ -205,6 +238,34 @@ export default new Vuex.Store({
                 page.forEach(p => this.state.viewedAuctionBids.unshift(p));
             }
         },
+        closeNotification() {
+            this.commit("setNotification", false);
+            if (this.state.notifications.length > 0) {
+                let notification = this.state.notifications.shift();
+
+                console.log(notification.auctionTitle);
+                setTimeout(() => {
+                    this.commit("setCurrentNotification", notification);
+                    this.commit("setNotification", true);
+                }, 500)
+            } else {
+                this.commit("setCurrentNotification", null);
+            }
+        },
+        subscribeToNotifications() {
+            socketService().subscribeNotifications((payload) => {
+                let notification = JSON.parse(payload.body);
+                let currentNotification = this.state.currentNotification;
+                if (!currentNotification) {
+                    this.commit("setCurrentNotification", notification);
+                    this.commit("setNotification", true)
+                } else {
+                    this.state.notifications.unshift(currentNotification);
+                    this.state.notifications.unshift(notification);
+                    this.dispatch("closeNotification");
+                }
+            })
+        }
         /*async getOwendAuctionByUser(){///TODO
             return  AuctionService.getAuctionsByUserName();
         }*/

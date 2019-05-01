@@ -27,7 +27,7 @@
             <v-btn id="buybutton"
                    color="primary"
                    absolute bottom right fab
-                   v-if="!closed && loggedIn"
+                   v-if="!closed && loggedIn && !ownAuction"
                    @click="switchBidBar">
                 <v-icon>attach_money</v-icon>
             </v-btn>
@@ -153,6 +153,9 @@
             },
             showBidBar() {
                 return this.$store.state.listItemBidFieldSwitch === this.auction.id;
+            },
+            ownAuction() {
+                return this.auction.user.id === this.$store.state.currentUser.id;
             }
         }
     }
