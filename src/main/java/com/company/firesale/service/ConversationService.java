@@ -39,4 +39,8 @@ public class ConversationService {
 
         return conversations.stream().map(ConversationJsonClass::new).collect(Collectors.toSet());
     }
+
+    public Conversation getConversationById(Long id) {
+        return conversationRepository.findById(id).orElse(null);
+    }
 }

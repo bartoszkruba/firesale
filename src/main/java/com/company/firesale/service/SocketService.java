@@ -4,6 +4,7 @@ package com.company.firesale.service;
 import com.company.firesale.data.entity.Bid;
 import com.company.firesale.json_classes.BidJsonClass;
 import com.company.firesale.json_classes.BidNotificationJsonClass;
+import com.company.firesale.json_classes.ChatMessageJsonClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class SocketService {
         this.messagingTemplate = messagingTemplate;
     }
 
-    public void BroadcastBid(BidJsonClass bid) {
+    public void broadcastBid(BidJsonClass bid) {
         if (bid.getAuctionId() != null) {
             String channel = "/auctionBids/" + bid.getAuctionId();
             messagingTemplate.convertAndSend(channel, bid);
@@ -27,8 +28,11 @@ public class SocketService {
         }
     }
 
-    public void BroadcastNotification(Bid bid, String username) {
-        System.out.println("Broadcasting notifications to user: " + username);
+    public void broadcastNotification(Bid bid, String username) {
         messagingTemplate.convertAndSendToUser(username, "/queue/notifications", new BidNotificationJsonClass(bid));
+    }
+
+    public void broadcastChatMessage(ChatMessageJsonClass message, String username) {
+        messagingTemplate.convertAndSendToUser(username, "/queue/chat/messages", message);
     }
 }
