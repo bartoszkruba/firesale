@@ -37,9 +37,8 @@
 </script>
 
 <style>
-    * {
-        font-family: "Segoe UI", arial, sans-serif;
-
+    a {
+        text-decoration: none;
     }
     #background{
         background-image: url("assets/auction.jpg");
@@ -50,5 +49,4 @@
         height: 10vh;
         /*background-color: ;*/
     }
-
 </style>
