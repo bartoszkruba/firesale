@@ -103,7 +103,7 @@ public class BidService {
         if (latestBid != null &&
                 !latestBid.getUser().getUsername().equals(bid.getUser().getUsername())) {
             String username = latestBid.getUser().getUsername();
-            socketService.BroadcastNotification(bid, username);
+            socketService.broadcastNotification(bid, username);
         }
 
     }

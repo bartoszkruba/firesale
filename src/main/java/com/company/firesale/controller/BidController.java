@@ -50,7 +50,7 @@ public class BidController {
 
         if (response.getStatusCode().equals(HttpStatus.CREATED)
                 && response.hasBody()) {
-            socketService.BroadcastBid(response.getBody());
+            socketService.broadcastBid(response.getBody());
         }
 
         return response;

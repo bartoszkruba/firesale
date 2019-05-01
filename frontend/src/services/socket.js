@@ -51,7 +51,6 @@ let stompLoop = () => {
                     }
                     break;
                 case 6:
-                    console.log('sending message');
                     stompClient.send("/app/chat.sendMessage", {},
                         JSON.stringify(request.message));
                     break;
@@ -97,7 +96,7 @@ export default () => {
         subscribeChat(messageHandler) {
             stompRequests.push({
                 type: 4,
-                route: "/user/queue/chat",
+                route: "/user/queue/chat/messages",
                 messageHandler: messageHandler
             })
         },
