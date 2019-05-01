@@ -284,9 +284,19 @@ export default new Vuex.Store({
         subscribeChat() {
             socketService().subscribeChat((payload) => {
                 let message = JSON.parse(payload.body);
+                message.type = "message";
 
-                console.log('received message:');
-                console.log(message);
+                let currentNotification = this.state.currentNotification;
+
+                if (!currentNotification) {
+                    this.commit("setCurrentNotification", message);
+                    this.commit("setNotification", true)
+                } else {
+                    this.state.notifications.unshift(currentNotification);
+                    this.state.notifications.unshift(message);
+                    this.dispatch("closeNotification");
+                }
+
             })
         }
         /*async getOwendAuctionByUser(){///TODO

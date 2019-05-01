@@ -1,7 +1,6 @@
 package com.company.firesale.json_classes;
 
 import com.company.firesale.data.entity.ChatMessage;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,14 +15,14 @@ import java.time.LocalDateTime;
 @Builder
 public class ChatMessageJsonClass {
 
-    private Long id;
+    private Long userId;
     private Long conversationId;
     private String username;
     private String textContent;
     private LocalDateTime createdAt;
 
     public ChatMessageJsonClass(ChatMessage chatMessage) {
-        this.id = chatMessage.getId();
+        this.userId = chatMessage.getId();
         this.conversationId = chatMessage.getConversation().getId();
         this.username = chatMessage.getSender().getUsername();
         this.textContent = chatMessage.getTextContent();

@@ -20,10 +20,6 @@ public class ChatController {
 
     @MessageMapping("/chat.sendMessage")
     public void sendChatMessage(ChatMessageJsonClass message, Principal principal) {
-        System.out.println("Message Received from user: " + principal);
-        System.out.println("Message: " + message.getTextContent());
-        System.out.println("Sending to conversation ID: " + message.getConversationId());
-
         chatMessageService.postMessage(message, principal.getName());
     }
 }
