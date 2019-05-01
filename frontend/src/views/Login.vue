@@ -59,6 +59,7 @@
 
 <script>
     import auth from '../services/authentication'
+    import socketService from '../services/socket'
 
     export default {
 
@@ -84,8 +85,11 @@
                     this.showError = !status;
                     if (status) {
                         this.$store.commit("setLoggedIn", true);
-                        this.$router.push("/");
                         this.$store.dispatch('getCurrentUser');
+                        socketService().reconnect(() => {
+                            this.$store.dispatch('subscribeToNotifications')
+                            this.$router.push("/");
+                        });
                     }
                 }
             },

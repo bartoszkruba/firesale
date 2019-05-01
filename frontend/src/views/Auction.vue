@@ -38,11 +38,11 @@
                             font-weight-bold"></h2>
 
                     <v-card-text>
-                        <h4 v-show="!loggedIn && !closed">
+                        <h4 v-show="!loggedIn && !closed && !ownAuction">
                             <router-link to="/login">Log in</router-link>
                             to place your bid
                         </h4>
-                        <div v-show="loggedIn && !closed">
+                        <div v-show="loggedIn && !closed && !ownAuction">
                             <h3>Your Bid (SEK): </h3>
                             <v-text-field type="text" @keydown="allowOnlyNumber"
                                           prepend-icon="money" name="Amount" label="Amount"
@@ -179,6 +179,12 @@
                 let time = new Date(this.$store.state.currentViewedAuction.closingTime);
 
                 return time < new Date();
+            },
+            ownAuction() {
+                if (!this.$store.state.currentUser) {
+                    return false;
+                }
+                return this.$store.state.currentViewedAuction.user.id === this.$store.state.currentUser.id;
             }
         },
         methods: {
