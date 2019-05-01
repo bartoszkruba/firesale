@@ -61,10 +61,5 @@ export default new Router({
             name: 'UserProfile',
             component: UserProfile
         },
-        {
-            path: '/profile',
-            name: 'Profile',
-            component: Profile
-        },
     ]
 })
