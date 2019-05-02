@@ -47,7 +47,6 @@ public class ConversationController {
             return new ResponseEntity<>(conversationService
                     .getConversationBetweenUsers(users, principal.getName()), HttpStatus.OK);
         } catch (RuntimeException e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

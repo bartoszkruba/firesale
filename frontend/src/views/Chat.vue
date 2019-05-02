@@ -1,22 +1,22 @@
 <template>
 
     <v-container id="chat" style="max-height: 100vh;" class="pa-2 scroll-y">
-        <div class="text-xs-center" v-if="getConversations.length === 0">
-            <v-progress-circular
-                    :size="50"
-                    color="primary"
-                    indeterminate
-            ></v-progress-circular>
-        </div>
+<!--        <div class="text-xs-center" v-if="getConversations.length === 0">-->
+<!--            <v-progress-circular-->
+<!--                    :size="50"-->
+<!--                    color="primary"-->
+<!--                    indeterminate-->
+<!--            ></v-progress-circular>-->
+<!--        </div>-->
         <v-layout column fluid>
             <v-container id="top-row" style="height: 100%; padding: 0;" white >
 
                 <v-layout column align-center>
-<!--                    <h2>Conversation with {{ getSenderUsername(this.currentConversation.members)}}</h2>-->
+                    <h2>Conversations </h2>
                     <v-container v-show="showConversationList" class="pa-1">
                         <v-container id="new-conversation" class="pa-2">
                             <v-layout row justify-center>
-                                <v-text-field v-model="newChatUsername" id="input-username" label="New conversation" class="pa-0" :error-messages="newChatError"></v-text-field>
+                                <v-text-field v-model="newChatUsername" id="input-username" label="New conversation" class="pa-0" :error-messages="newChatError" @keydown.enter="startChat"></v-text-field>
                                 <v-icon medium @click="startChat"> chat</v-icon>
                             </v-layout>
                         </v-container>
@@ -126,8 +126,7 @@
 
             },
             async loadMessagesOnEnter(id){
-                this.currentConversation = this.conversations.find(con => con.id == id);
-                console.log(this.currentConversation);
+                this.currentConversation = this.$store.state.conversations.find(con => con.id == id);
                 this.$store.commit('setCurrentConversationId', this.currentConversation.id);
 
                 await conversationService.getMessagesInConversation(id).then(response => {
@@ -182,6 +181,11 @@
                 await conversationService.newConversation(username).then(response => {
                     if(!this.$store.state.conversations.find(con => con.id === response.data.id)) {
                         this.$store.commit('addConversation', response.data);
+                        this.conversations.push(response.data);
+                        this.showConversationList = false;
+                        let id = response.data.id;
+                        this.$router.push({ path: '/chat/conversation', query: {id}});
+
                     }
                 }).catch((error) => {
                     if(error.response.status === 400){
@@ -199,7 +203,7 @@
             this.conversations = await conversationService.getConversations().then(response => response.data);
             if (this.$route.query.id !== undefined) {
                 this.loadMessagesOnEnter(this.$route.query.id)
-            } else {
+            } else if(this.conversations.length > 0){
                 this.loadMessagesOnEnter(this.conversations[0].id)
             }
 
