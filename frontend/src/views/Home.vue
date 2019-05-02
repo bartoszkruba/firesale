@@ -1,18 +1,18 @@
 <template>
     <div>
-        <HelloWorld/>
+        <Logo/>
         <AuctionList :key="+this.$route.query"/>
     </div>
 </template>
 
 <script>
-    import HelloWorld from '../components/HelloWorld'
+    import Logo from '../components/Logo'
     import AuctionList from "../components/AuctionList";
 
     export default {
         components: {
             AuctionList,
-            HelloWorld,
+            Logo,
         },
         data(){
             return {
