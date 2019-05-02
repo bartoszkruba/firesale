@@ -1,14 +1,21 @@
 <template>
-    <div>
-        <v-snackbar multi-line top right v-model="showSnackbar" :timeout="timeout">
-            <div>
-                <router-link :to="userLink">{{username}}</router-link>
-                placed new bid ({{bidValue}} SEK) to auction "{{auctionTitle}}"
-            </div>
-            <v-btn flat @click="showAuction">show</v-btn>
-            <v-btn flat @click="hideSnackbar">close</v-btn>
-        </v-snackbar>
-    </div>
+    <v-snackbar v-if="type === 'bid'" multi-line top right v-model="showSnackbar" :timeout="timeout"
+                color="teal darken-4">
+        <div>
+            <router-link :to="userLink">{{username}}</router-link>
+            placed new bid ({{bidValue}} SEK) to auction "{{auctionTitle}}"
+        </div>
+        <v-btn flat @click="showAuction">show</v-btn>
+        <v-btn flat @click="hideSnackbar">close</v-btn>
+    </v-snackbar>
+    <v-snackbar v-else multi-line top right v-model="showSnackbar" :timeout="timeout" color="blue-grey darken-4">
+        <div>
+            <router-link :to="userLink">{{username}}</router-link>
+            : {{message}}
+        </div>
+        <v-btn flat>show</v-btn>
+        <v-btn flat @click="hideSnackbar">close</v-btn>
+    </v-snackbar>
 </template>
 
 <script>
@@ -70,6 +77,22 @@
                     return "/user?id=" + currentNotification.userId
                 } else {
                     return "/"
+                }
+            },
+            type() {
+                let currentNotification = this.$store.state.currentNotification;
+                if (currentNotification) {
+                    return currentNotification.type;
+                } else {
+                    return '';
+                }
+            },
+            message() {
+                let currentNotification = this.$store.state.currentNotification;
+                if (currentNotification) {
+                    return currentNotification.textContent;
+                } else {
+                    return '';
                 }
             }
         }

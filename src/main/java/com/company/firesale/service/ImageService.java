@@ -20,7 +20,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
 
-    private static String uploadDir = System.getProperty("user.dir") + "/target/classes/static/images";
+    private static String uploadDir = System.getProperty("user.dir") + "/images";
 
     @Autowired
     public ImageService(ImageRepository imageRepository) {
@@ -41,8 +41,6 @@ public class ImageService {
 
     @Transactional(rollbackOn = Exception.class)
     protected Image uploadImage(String imageString) throws Exception {
-
-        System.out.println("Uploading image to " + uploadDir);
 
         Image image = new Image();
         image = saveImage(image);
@@ -68,11 +66,7 @@ public class ImageService {
 
     public ImageJsonClass getImageById(Long id) {
         Optional<Image> optionalImage = imageRepository.findById(id);
-        if (optionalImage.isPresent()) {
-            return new ImageJsonClass(optionalImage.get());
-        } else {
-            return null;
-        }
+        return optionalImage.map(ImageJsonClass::new).orElse(null);
     }
 
 }
