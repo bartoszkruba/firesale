@@ -126,15 +126,16 @@
 
             },
             async loadMessagesOnEnter(id){
-                this.currentConversation = this.$store.state.conversations.find(con => con.id == id);
-                this.$store.commit('setCurrentConversationId', this.currentConversation.id);
+                if(this.$store.state.conversations.length > 0) {
+                    this.currentConversation = this.$store.state.conversations.find(con => con.id == id);
+                    this.$store.commit('setCurrentConversationId', this.currentConversation.id);
 
-                await conversationService.getMessagesInConversation(id).then(response => {
-                    this.$store.commit('setMessages', response.data);
-                    this.messages = this.$store.state.messages;
-                    this.messages.sort((a, b) => a.createdAt > b.createdAt ? 1 : -1)
-                });
-
+                    await conversationService.getMessagesInConversation(id).then(response => {
+                        this.$store.commit('setMessages', response.data);
+                        this.messages = this.$store.state.messages;
+                        this.messages.sort((a, b) => a.createdAt > b.createdAt ? 1 : -1)
+                    });
+                }
 
             },
             toggleConversationList() {
@@ -171,7 +172,7 @@
                 return time.toLocaleDateString('en-EN', options)
             },
             getSenderUsername(members) {
-                if (members != null) {
+                if (members != null && this.$store.state.currentUser !== null) {
                     return this.$store.state.currentUser.id !== members[0].id ? members[0].username : members[1].username;
                 } else {
                     return ''
@@ -196,7 +197,7 @@
         },
         computed: {
              getConversations() {
-                return this.$store.state.conversations;
+                return this.conversations;
             }
         },
         async beforeMount() {
