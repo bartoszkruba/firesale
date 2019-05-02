@@ -1,6 +1,6 @@
 <template>
 
-    <v-container id="chat" style="max-height: 100vh;" class="pa-2">
+    <v-container id="chat" style="max-height: 100vh;" class="pa-2 scroll-y">
         <div class="text-xs-center" v-if="getConversations.length === 0">
             <v-progress-circular
                     :size="50"
@@ -93,7 +93,8 @@
         methods: {
             async getMessagesInConversation(conversation) {
                 await conversationService.getMessagesInConversation(conversation.id).then(response => {
-                    this.messages = response.data;
+                    this.$store.commit('setMessages', response.data);
+                    this.messages = this.$store.state.messages;
                     this.messages.sort((a, b) => a.createdAt > b.createdAt ? 1 : -1)
                 });
                 this.currentConversation = conversation;
@@ -107,7 +108,8 @@
             async loadMessagesOnEnter(id){
                 this.currentConversation = this.conversations.find(con => con.id == id);
                 await conversationService.getMessagesInConversation(id).then(response => {
-                    this.messages = response.data;
+                    this.$store.commit('setMessages', response.data);
+                    this.messages = this.$store.state.messages;
                     this.messages.sort((a, b) => a.createdAt > b.createdAt ? 1 : -1)
                 });
                 let container = document.getElementById('messages');

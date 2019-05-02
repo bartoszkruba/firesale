@@ -13,7 +13,7 @@
             <router-link :to="userLink">{{username}}</router-link>
             : {{message}}
         </div>
-        <v-btn flat>show</v-btn>
+        <v-btn flat @click="showConversation">show</v-btn>
         <v-btn flat @click="hideSnackbar">close</v-btn>
     </v-snackbar>
 </template>
@@ -35,6 +35,15 @@
                 let currentNotification = this.$store.state.currentNotification;
                 if (currentNotification) {
                     this.$router.push("/auction?id=" + currentNotification.auctionId);
+                    this.hideSnackbar();
+                }
+
+            },
+            showConversation() {
+                let currentNotification = this.$store.state.currentNotification;
+                let id = currentNotification.conversationId;
+                if (currentNotification) {
+                    this.$router.push({path: '/chat/conversation', query: {id}});
                     this.hideSnackbar();
                 }
             }
