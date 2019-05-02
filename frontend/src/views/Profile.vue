@@ -65,9 +65,10 @@
                     <v-icon large color="primary" class="pa-3">account_circle</v-icon>
                     <v-card-text class="text-xs-center pa-3">
                         <h3 class="title">{{getCurrentuser.username}}</h3>
+                        <h4 class="subheading">{{getCurrentuser.firstName}} {{getCurrentuser.lastName}}</h4>
                         <h4 class="subheading">{{getCurrentuser.phoneNumber}}</h4>
                         <h4 class="subheading">{{getCurrentuser.email}}</h4>
-                        <h4 class="subheading">{{getCurrentuser.firstName}}</h4>
+
                         <v-spacer></v-spacer>
                     </v-card-text>
 <!--                    <v-btn color="primary" @click="editProfile=!editProfile" v-show="!editProfile">Edit</v-btn>-->
