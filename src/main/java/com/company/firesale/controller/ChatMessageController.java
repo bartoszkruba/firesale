@@ -26,6 +26,7 @@ public class ChatMessageController {
 
     @GetMapping("/{id}")
     private ResponseEntity<List<ChatMessageJsonClass>> getMyMessages(@PathVariable long id, Principal principal) {
+
         try {
             List<ChatMessageJsonClass> messages =
                     chatMessageService.getChatMessagesByConversation(id, principal.getName());
