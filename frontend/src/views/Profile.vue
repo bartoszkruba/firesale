@@ -70,7 +70,7 @@
                         <h4 class="subheading">{{getCurrentuser.firstName}}</h4>
                         <v-spacer></v-spacer>
                     </v-card-text>
-                    <v-btn color="primary" @click="editProfile=!editProfile" v-show="!editProfile">Edit</v-btn>
+<!--                    <v-btn color="primary" @click="editProfile=!editProfile" v-show="!editProfile">Edit</v-btn>-->
                 </v-card>
 <!--
 
