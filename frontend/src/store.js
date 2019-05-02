@@ -284,6 +284,9 @@ export default new Vuex.Store({
         subscribeChat() {
             socketService().subscribeChat((payload) => {
                 let message = JSON.parse(payload.body);
+
+                if (message.username === this.state.currentUser.username) return;
+
                 message.type = "message";
 
                 let currentNotification = this.state.currentNotification;
