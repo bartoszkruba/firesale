@@ -16,8 +16,8 @@
                     <v-container v-show="showConversationList" class="pa-1">
                         <v-container id="new-conversation" class="pa-2">
                             <v-layout row justify-center>
-                                <v-text-field id="input-username" label="New conversation" class="pa-0"></v-text-field>
-                                <v-icon medium> chat</v-icon>
+                                <v-text-field v-model="newChatUsername" id="input-username" label="New conversation" class="pa-0" :error-messages="newChatError"></v-text-field>
+                                <v-icon medium @click="startChat"> chat</v-icon>
                             </v-layout>
                         </v-container>
                         <v-card id="conversation-list" v-for="conversation in this.getConversations"
@@ -79,17 +79,31 @@
         data() {
             return {
                 newMessage: '',
+                newChatUsername: '',
                 messages: [],
                 showConversationList: false,
                 currentConversation: {},
                 rules: [
                     v => v != null && v.length <= 100 || 'Max 100 characters'
                 ],
+                newChatError: '',
                 conversations: []
 
             }
         },
         methods: {
+            startChat(){
+                if(this.newChatUsername !== undefined){
+                    for(let con of this.conversations) {
+                        if(this.newChatUsername === this.getSenderUsername(con.members)) {
+                            this.newChatError = 'Conversation already exists';
+                        } else {
+                            this.newChatError = '';
+                            
+                        }
+                    }
+                }
+            },
             async getMessagesInConversation(conversation) {
                 await conversationService.getMessagesInConversation(conversation.id).then(response => {
                     this.$store.commit('setMessages', response.data);
