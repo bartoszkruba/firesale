@@ -202,6 +202,7 @@
         display: flex;
         flex-direction: column;
         padding: 5px;
+        margin-left: 15px;
     }
 
     #auctiontitle {
@@ -212,8 +213,7 @@
     #auctiondescription {
         text-align: left;
         font-size: small;
-        padding-bottom: 5px;
-        margin-top: 10px;
+        padding-top: 5px;
     }
 
     #auctionprice {
