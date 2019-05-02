@@ -1,6 +1,5 @@
 package com.company.firesale.controller;
 
-import com.company.firesale.data.entity.ChatMessage;
 import com.company.firesale.json_classes.ConversationJsonClass;
 import com.company.firesale.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +37,20 @@ public class ConversationController {
             e.printStackTrace();
             System.out.println("Couldn't get conversations: " + e);
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/with/{username}")
+    public ResponseEntity<ConversationJsonClass> createConversation(@PathVariable String username, Principal principal) {
+
+        String[] users = {username, principal.getName()};
+
+        try {
+            return new ResponseEntity<>(conversationService
+                    .getConversationBetweenUsers(users, principal.getName()), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
