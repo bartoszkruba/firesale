@@ -34,7 +34,7 @@
                     </v-icon>
                 </v-layout>
             </v-container>
-            <v-container id="chat-window" class="pa-0 mt-1 mb-1" v-show="messages.length > 0">
+            <v-container id="chat-window" class="pa-0 mt-1 mb-1">
                 <v-container id="messages" class="scroll-y pa-0 mt-1 mb-1"
                              style="max-height: 58vh; min-height: 58vh; max-width: 100vw;" background>
                     <v-layout
@@ -95,11 +95,11 @@
             startChat(){
                 if(this.newChatUsername !== undefined){
                     for(let con of this.conversations) {
-                        if(this.newChatUsername === this.getSenderUsername(con.members)) {
+                        if(this.newChatUsername.trim() === this.getSenderUsername(con.members) || this.newChatUsername.trim() === this.$store.state.currentUser.username) {
                             this.newChatError = 'Conversation already exists';
                         } else {
                             this.newChatError = '';
-                            
+                            this.newConversation(this.newChatUsername.trim());
                         }
                     }
                 }
@@ -169,6 +169,11 @@
                 } else {
                     return ''
                 }
+            },
+            async newConversation(username){
+                await conversationService.newConversation(username).then(response => {
+                    this.$store.commit('addConversation', response.data);
+                })
             }
         },
         computed: {

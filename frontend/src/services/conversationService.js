@@ -6,5 +6,9 @@ export default {
     },
     async getMessagesInConversation(id){
         return await Api().get('/conversation/id/' + id);
+    },
+    async newConversation(username){
+        return await Api().get('/conversation/withUser/' + username);
     }
+
 }

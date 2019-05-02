@@ -100,6 +100,9 @@ export default new Vuex.Store({
         setMessages(state, value){
             this.state.messages = value;
         },
+        addConversation(state, value){
+          this.state.conversations.push(value);
+        },
         setConversations(state, value) {
             this.state.conversations = value;
         },
