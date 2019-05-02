@@ -22,7 +22,7 @@
             <v-spacer></v-spacer>
             <v-menu :nudge-width="100">
                 <template v-slot:activator="{ on }">
-                    <v-toolbar-title v-on="on">
+                    <v-toolbar-title v-on="on" class="ma-0">
                         <v-btn icon>
                             <v-icon>account_circle</v-icon>
                         </v-btn>
@@ -58,13 +58,13 @@
                             </v-list-tile-title>
                         </router-link>
                     </v-list-tile>
-                    <v-list-tile v-if="loggedIn">
-                        <router-link to="/chat" style="color: black; text-decoration: none">
-                            <v-list-tile-title>
-                                Chat
-                            </v-list-tile-title>
-                        </router-link>
-                    </v-list-tile>
+<!--                    <v-list-tile v-if="loggedIn">-->
+<!--                        <router-link to="/chat" style="color: black; text-decoration: none">-->
+<!--                            <v-list-tile-title>-->
+<!--                                Chat-->
+<!--                            </v-list-tile-title>-->
+<!--                        </router-link>-->
+<!--                    </v-list-tile>-->
                     <v-list-tile v-if="loggedIn" @click="logout">
                         <router-link to="/" style="color: black; text-decoration: none">
                             <v-list-tile-title>

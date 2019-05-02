@@ -1,6 +1,5 @@
 <template>
     <v-app id="background">
-        <Tester></Tester>
         <Notification></Notification>
         <!--        <v-content>-->
         <!--            <v-container fluid fill-height>-->

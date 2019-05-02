@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Data
@@ -28,6 +29,5 @@ public class ChatMessageJsonClass {
         this.username = chatMessage.getSender().getUsername();
         this.textContent = chatMessage.getTextContent();
         this.createdAt = chatMessage.getCreatedAt();
-
     }
 }

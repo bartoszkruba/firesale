@@ -177,9 +177,9 @@ export default new Vuex.Store({
                 this.commit("setLoggedIn", response);
                 // let response = await auth.getCurrentUser();
                 this.dispatch("getCurrentUser");
+                this.dispatch('getConversations');
                 this.dispatch("subscribeToNotifications");
                 this.dispatch("subscribeChat");
-                this.dispatch('getConversations');
             }
         },
         async getCategories(context) {
