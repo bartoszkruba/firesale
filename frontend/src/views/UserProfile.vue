@@ -14,6 +14,8 @@
 <script>
     import UserService from '@/services/user'
     import AuctionService from '@/services/auctionsService'
+    import conversationService from '@/services/conversationService'
+
 
     export default {
         name: "UserProfile",
@@ -38,7 +40,7 @@
             },
             async redirectToChat() {
                 if (this.$store.state.loggedIn) {
-                    let response = await conversationService.newConversation(this.getViewedAuction.user.username);
+                    let response = await conversationService.newConversation(this.currentUser.username);
 
                     let conversations = this.$store.state.conversations;
 

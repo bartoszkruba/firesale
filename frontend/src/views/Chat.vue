@@ -128,8 +128,9 @@
             async loadMessagesOnEnter(id){
                 if(this.$store.state.conversations.length > 0) {
                     this.currentConversation = this.$store.state.conversations.find(con => con.id == id);
-                    this.$store.commit('setCurrentConversationId', this.currentConversation.id);
-
+                    if(this.currentConversation !== undefined) {
+                        this.$store.commit('setCurrentConversationId', this.currentConversation.id);
+                    }
                     await conversationService.getMessagesInConversation(id).then(response => {
                         this.$store.commit('setMessages', response.data);
                         this.messages = this.$store.state.messages;
