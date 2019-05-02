@@ -29,8 +29,8 @@
         },
         methods: {
           async getUser(){
-            this.currentUser = await UserService.getUserById(this.$route.query);
-            this.currentUser = this.currentUser.data;
+            let u = await UserService.getUserById(this.$route.query);
+            this.currentUser = u.data;
           },
             async getAuctionById(id){
                 let auction = await AuctionService().getAuctionById(id);
