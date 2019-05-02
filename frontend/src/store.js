@@ -300,8 +300,14 @@ export default new Vuex.Store({
             socketService().subscribeChat((payload) => {
                 let message = JSON.parse(payload.body);
 
+
+                console.log('message', message);
                 if(this.state.currentConversationId === message.conversationId){
                     this.state.messages.push(message);
+                }
+
+                if(this.state.conversations.filter(a => a.id === message.conversationId).length === 0){
+                    conversationService.newConversation(message.username).then(response => this.state.conversations.push(response.data));
                 }
 
                 if (message.username === this.state.currentUser.username) return;

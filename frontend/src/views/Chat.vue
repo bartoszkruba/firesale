@@ -9,7 +9,7 @@
             ></v-progress-circular>
         </div>
         <v-layout column fluid>
-            <v-container id="top-row" style="height: 100%; padding: 0;" white v-if="getConversations.length > 0">
+            <v-container id="top-row" style="height: 100%; padding: 0;" white >
 
                 <v-layout column align-center>
 <!--                    <h2>Conversation with {{ getSenderUsername(this.currentConversation.members)}}</h2>-->
@@ -93,14 +93,21 @@
         },
         methods: {
             startChat(){
+                console.log('asd');
                 if(this.newChatUsername !== undefined){
+                    let conversationExists = true;
                     for(let con of this.conversations) {
-                        if(this.newChatUsername.trim() === this.getSenderUsername(con.members) || this.newChatUsername.trim() === this.$store.state.currentUser.username) {
+                        if(this.newChatUsername === this.getSenderUsername(con.members) || this.newChatUsername === this.$store.state.currentUser.username) {
                             this.newChatError = 'Conversation already exists';
+                            conversationExists = true;
                         } else {
-                            this.newChatError = '';
-                            this.newConversation(this.newChatUsername.trim());
+                            conversationExists = false;
                         }
+                    }
+                    if(!conversationExists || this.conversations.length === 0){
+                        this.newChatError = '';
+                        this.newConversation(this.newChatUsername.trim());
+                        this.newChatUsername = '';
                     }
                 }
             },
@@ -173,8 +180,12 @@
             },
             async newConversation(username){
                 await conversationService.newConversation(username).then(response => {
-                    if(this.$store.conversations.includes(con => con.id !== response.data.id)) {
+                    if(!this.$store.state.conversations.find(con => con.id === response.data.id)) {
                         this.$store.commit('addConversation', response.data);
+                    }
+                }).catch((error) => {
+                    if(error.response.status === 400){
+                        this.newChatError = 'User does not exist!'
                     }
                 })
             }
@@ -196,10 +207,11 @@
             container.scrollTop = 9999;
 
         },
-        updated() {
-                if (this.$route.query.id !== undefined) {
-                    // this.loadMessagesOnEnter(this.$route.query.id)
-                }
+        watch: {
+            $route(to, from){
+                this.loadMessagesOnEnter(to.query.id);
+            }
+
         }
     }
 </script>

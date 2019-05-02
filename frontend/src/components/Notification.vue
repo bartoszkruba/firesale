@@ -43,6 +43,7 @@
                 let currentNotification = this.$store.state.currentNotification;
                 let id = currentNotification.conversationId;
                 if (currentNotification) {
+                    this.$router.push({path: '/'});
                     this.$router.push({path: '/chat/conversation', query: {id}});
                     this.hideSnackbar();
                 }
