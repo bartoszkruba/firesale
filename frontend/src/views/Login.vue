@@ -11,7 +11,7 @@
                         </v-toolbar>
                         <v-container fluid grid-list-lg>
                             <v-card-text>
-                                <v-img :src="require('../assets/logo.svg')"
+                                <v-img :src="require('../assets/logoNoName.png')"
                                        class="my-3"
                                        contain
                                        height="100"></v-img>
