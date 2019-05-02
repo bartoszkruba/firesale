@@ -101,7 +101,10 @@ export default new Vuex.Store({
             this.state.messages = value;
         },
         addConversation(state, value){
-          this.state.conversations.push(value);
+            if(!this.state.conversations.includes(con => con.id === value.id)) {
+                this.state.conversations.push(value);
+                console.log(this.state.conversations);
+            }
         },
         setConversations(state, value) {
             this.state.conversations = value;

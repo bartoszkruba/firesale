@@ -12,7 +12,7 @@
             <v-container id="top-row" style="height: 100%; padding: 0;" white v-if="getConversations.length > 0">
 
                 <v-layout column align-center>
-                    <h2>Conversation with {{ getSenderUsername(this.currentConversation.members)}}</h2>
+<!--                    <h2>Conversation with {{ getSenderUsername(this.currentConversation.members)}}</h2>-->
                     <v-container v-show="showConversationList" class="pa-1">
                         <v-container id="new-conversation" class="pa-2">
                             <v-layout row justify-center>
@@ -120,6 +120,7 @@
             },
             async loadMessagesOnEnter(id){
                 this.currentConversation = this.conversations.find(con => con.id == id);
+                console.log(this.currentConversation);
                 this.$store.commit('setCurrentConversationId', this.currentConversation.id);
 
                 await conversationService.getMessagesInConversation(id).then(response => {
@@ -172,13 +173,15 @@
             },
             async newConversation(username){
                 await conversationService.newConversation(username).then(response => {
-                    this.$store.commit('addConversation', response.data);
+                    if(this.$store.conversations.includes(con => con.id !== response.data.id)) {
+                        this.$store.commit('addConversation', response.data);
+                    }
                 })
             }
         },
         computed: {
              getConversations() {
-                return  this.$store.state.conversations;
+                return this.$store.state.conversations;
             }
         },
         async beforeMount() {
@@ -194,9 +197,9 @@
 
         },
         updated() {
-            if (this.$route.query.id !== undefined) {
-                this.loadMessagesOnEnter(this.$route.query.id)
-            }
+                if (this.$route.query.id !== undefined) {
+                    // this.loadMessagesOnEnter(this.$route.query.id)
+                }
         }
     }
 </script>
