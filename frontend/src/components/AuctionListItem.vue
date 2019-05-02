@@ -171,6 +171,7 @@
         box-shadow: 5px 5px black;
         height: 120px;
         width: 90%;
+        max-width: 500px;
         margin-top: 20px;
         /*margin-bottom: 20px;*/
         margin-left: 5%;
