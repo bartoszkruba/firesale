@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatMessageService {
@@ -28,12 +29,19 @@ public class ChatMessageService {
         this.socketService = socketService;
     }
 
-    public Set<ChatMessageJsonClass> getChatMessagesByConversation(long id) {
-        Set<ChatMessageJsonClass> messages = new HashSet<>();
-        chatMessageRepository.findByConversation_IdOrderByCreatedAtAsc(id).forEach(message -> {
-            messages.add(new ChatMessageJsonClass(message));
-        });
-        return messages;
+    @Transactional
+    public List<ChatMessageJsonClass> getChatMessagesByConversation(Long id, String username) {
+
+        User user = userService.getUserByUsername(username);
+        if (user == null) return null;
+
+        Conversation conversation = conversationService.getConversationById(id);
+        if (conversation.getMembers().stream().noneMatch(m -> m.getUsername().equals(username))) return null;
+
+        return conversation.getMessages().stream()
+                .sorted(Comparator.comparing(ChatMessage::getCreatedAt))
+                .map(ChatMessageJsonClass::new)
+                .collect(Collectors.toList());
     }
 
 
