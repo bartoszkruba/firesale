@@ -120,7 +120,7 @@ public class InsertDatabaseData implements CommandLineRunner {
         userService.saveUser(user4);
 
         User user5 = User.builder()
-                .username("Cindirella")
+                .username("Cinderella")
                 .password(encoder.encode("poopoo"))
                 .email("ruben.moreno87@example.com")
 //                .address("1164 Adelaide Ave")
@@ -135,8 +135,8 @@ public class InsertDatabaseData implements CommandLineRunner {
 
         LocalDateTime ldt1 = LocalDateTime.of(2019, 5, 18, 10, 30);
         Auction auction1 = Auction.builder()
-                .title("A RED CAR")
-                .description("BRUM BRUM")
+                .title("My red card")
+                .description("Selling my old car.")
                 .buyOutPrice(80000D)
                 .startUpPrice(10000D)
                 .closingTime(Timestamp.valueOf(ldt1).toLocalDateTime())
@@ -153,8 +153,8 @@ public class InsertDatabaseData implements CommandLineRunner {
 
         LocalDateTime ldt2 = LocalDateTime.of(2019, 5, 5, 11, 00);
         Auction auction2 = Auction.builder()
-                .title("A Blue CAR")
-                .description("BRUM BRUM")
+                .title("Some sportcar I found")
+                .description("Someone left this at my house after a party. Selling it to pay for the burnt down garage. Seems pretty nice.")
                 .buyOutPrice(Double.parseDouble("85000"))
                 .startUpPrice(Double.parseDouble("15000"))
                 .closingTime(Timestamp.valueOf(ldt2).toLocalDateTime())
@@ -166,8 +166,8 @@ public class InsertDatabaseData implements CommandLineRunner {
 
         LocalDateTime ldt3 = LocalDateTime.of(2019, 5, 5, 11, 00);
         Auction auction3 = Auction.builder()
-                .title("A DVD")
-                .description("A DVD Don`t know whats on it becus has no DVD player")
+                .title("My sons inheritance")
+                .description("He told me God was fake and evolution was real so now I'm selling this car I was supposed to give him when he turned 12.")
                 .buyOutPrice(Double.parseDouble("20"))
                 .startUpPrice(Double.parseDouble("5"))
                 .closingTime(Timestamp.valueOf(ldt3).toLocalDateTime())
@@ -179,8 +179,8 @@ public class InsertDatabaseData implements CommandLineRunner {
 
         LocalDateTime ldt4 = LocalDateTime.of(2019, 7, 5, 11, 30);
         Auction auction4 = Auction.builder()
-                .title("Table")
-                .description("Oak tabel")
+                .title("The Love-machine")
+                .description("Three of my six children where made in this baby. Now YOU have the chance of owning this love-soaked nightstalker.")
                 .buyOutPrice(Double.parseDouble("400"))
                 .startUpPrice(Double.parseDouble("25"))
                 .closingTime(Timestamp.valueOf(ldt4).toLocalDateTime())
@@ -246,10 +246,10 @@ public class InsertDatabaseData implements CommandLineRunner {
 
         LocalDateTime ldt5 = LocalDateTime.of(2019, 4, 5, 11, 00);
         Auction auction5 = Auction.builder()
-                .title("A Black CAR")
-                .description("BRUM BRUM")
-                .buyOutPrice(Double.parseDouble("85000"))
-                .startUpPrice(Double.parseDouble("15000"))
+                .title("What's left of my car")
+                .description("Took a wrong turn, so it's far from mint condition, but I'm sure theres a few pieces of copper wire that you could grab.")
+                .buyOutPrice(Double.parseDouble("1000"))
+                .startUpPrice(Double.parseDouble("50"))
                 .closingTime(Timestamp.valueOf(ldt5).toLocalDateTime())
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
@@ -259,10 +259,10 @@ public class InsertDatabaseData implements CommandLineRunner {
 
         LocalDateTime ldt6 = LocalDateTime.of(2019, 5, 20, 11, 00);
         Auction auction6 = Auction.builder()
-                .title("A White CAR")
-                .description("BRUM BRUM")
+                .title("2017 Ford Mustang GT500")
+                .description("Fun car, toobad it's a Ford. Now I'm selling it to get a real car.")
                 .buyOutPrice(Double.parseDouble("85000"))
-                .startUpPrice(Double.parseDouble("15000"))
+                .startUpPrice(Double.parseDouble("1000"))
                 .closingTime(Timestamp.valueOf(ldt6).toLocalDateTime())
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
@@ -272,66 +272,66 @@ public class InsertDatabaseData implements CommandLineRunner {
 
         LocalDateTime ldt7 = LocalDateTime.of(2019, 4, 5, 11, 00);
         Auction auction7 = Auction.builder()
-                .title("A Gold CAR")
-                .description("BRUM BRUM")
-                .buyOutPrice(Double.parseDouble("85000"))
-                .startUpPrice(Double.parseDouble("15000"))
+                .title("Hipster-bike")
+                .description("New in town? Feel like you're not quite cool enough? Get this bike and maybe a slackline or something and you'll be all the rage. Hipsterdom, here you come!")
+                .buyOutPrice(Double.parseDouble("1000"))
+                .startUpPrice(Double.parseDouble("150"))
                 .closingTime(Timestamp.valueOf(ldt7).toLocalDateTime())
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/2.jpg").build());
+                .addImage(Image.builder().filepath("/images/6.jpg").build());
         user2.addAuction(auction7);
         auctionService.addAuction(auction7);
 
         LocalDateTime ldt8 = LocalDateTime.of(2019, 4, 5, 11, 00);
         Auction auction8 = Auction.builder()
-                .title("A Striped CAR")
-                .description("BRUM BRUM")
+                .title("2012 Cabrinha Switchblade kiteboard")
+                .description("Learned ")
                 .buyOutPrice(Double.parseDouble("85000"))
                 .startUpPrice(Double.parseDouble("15000"))
                 .closingTime(Timestamp.valueOf(ldt8).toLocalDateTime())
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpg").build());
+                .addImage(Image.builder().filepath("/images/7.jpg").build());
         user4.addAuction(auction8);
         auctionService.addAuction(auction8);
 
         LocalDateTime ldt9 = LocalDateTime.of(2019, 3, 5, 12, 00);
         Auction auction9 = Auction.builder()
-                .title("A chair")
-                .description("BRUM BRUM")
-                .buyOutPrice(Double.parseDouble("2000"))
-                .startUpPrice(Double.parseDouble("100"))
+                .title("Ugliest cat alive")
+                .description("I found him in the trash and took care of him for a while until he tried to kill me in my sleep. Please save me.")
+                .buyOutPrice(Double.parseDouble("5"))
+                .startUpPrice(Double.parseDouble("1"))
                 .closingTime(Timestamp.valueOf(ldt9).toLocalDateTime())
                 .category(categories.get(2))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpg").build());
+                .addImage(Image.builder().filepath("/images/10.jpg").build());
         user4.addAuction(auction9);
         auctionService.addAuction(auction9);
 
         LocalDateTime ldt10 = LocalDateTime.of(2019, 7, 1, 12, 00);
         Auction auction10 = Auction.builder()
-                .title("A flower")
-                .description("BRUM BRUM")
-                .buyOutPrice(Double.parseDouble("300"))
-                .startUpPrice(Double.parseDouble("10"))
+                .title("2016 K2 Darkstar")
+                .description("This is the best board I've ever ridden. Just strap in and fly away.")
+                .buyOutPrice(Double.parseDouble("400"))
+                .startUpPrice(Double.parseDouble("100"))
                 .closingTime(Timestamp.valueOf(ldt10).toLocalDateTime())
                 .category(categories.get(2))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/3.jpg").build());
+                .addImage(Image.builder().filepath("/images/8.jpg").build());
         user4.addAuction(auction10);
         auctionService.addAuction(auction10);
 
         LocalDateTime ldt11 = LocalDateTime.of(2019, 6, 28, 12, 00);
         Auction auction11 = Auction.builder()
-                .title("A bench")
-                .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum")
+                .title("2010 Macbook")
+                .description("It's slow, it's ugly but since it's a Macbook I want at least 200 for it!")
                 .buyOutPrice(Double.parseDouble("500"))
                 .startUpPrice(Double.parseDouble("200"))
                 .closingTime(Timestamp.valueOf(ldt11).toLocalDateTime())
                 .category(categories.get(2))
                 .status(AuctionStatus.OPEN).build()
-                .addImage(Image.builder().filepath("/images/10.jpg").build());
+                .addImage(Image.builder().filepath("/images/9.jpg").build());
         user2.addAuction(auction11);
         auctionService.addAuction(auction11);
 
