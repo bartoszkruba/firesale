@@ -74,7 +74,7 @@
                             </template>
                         </v-data-table>
                     </template>
-                    <v-btn color="primary" @click="loadMoreBids"><v-icon>keyboard_arrow_down</v-icon></v-btn>
+                    <v-btn color="primary" @click="loadMoreBids"><v-icon>keyboard_arrow_down</v-icon>Show More</v-btn>
                 </v-card>
             </v-container>
         </div>
