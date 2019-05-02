@@ -77,7 +77,6 @@
     export default {
         name: "Chat",
         data() {
-
             return {
                 newMessage: '',
                 messages: [],
@@ -99,32 +98,35 @@
                 });
                 this.currentConversation = conversation;
                 let id = conversation.id;
+                this.$store.commit('setCurrentConversationId', id);
                 this.showConversationList = false;
                 this.$router.push({path: '/chat/conversation', query: {id}});
-                let container = document.getElementById('messages');
-                container.scrollTop = 9999;
+
 
             },
             async loadMessagesOnEnter(id){
                 this.currentConversation = this.conversations.find(con => con.id == id);
+                this.$store.commit('setCurrentConversationId', this.currentConversation.id);
+
                 await conversationService.getMessagesInConversation(id).then(response => {
                     this.$store.commit('setMessages', response.data);
                     this.messages = this.$store.state.messages;
                     this.messages.sort((a, b) => a.createdAt > b.createdAt ? 1 : -1)
                 });
-                let container = document.getElementById('messages');
-                container.scrollTop = 9999;
+
+
             },
             toggleConversationList() {
                 this.showConversationList = !this.showConversationList;
             },
             sendMessage() {
                 if (this.newMessage.length > 0 && this.newMessage.length <= 100) {
-                    socketService().sendMessage({
+                    let message = {
                         conversationId: this.currentConversation.id,
                         username: this.$store.state.currentUser.username,
                         textContent: this.newMessage
-                    });
+                    };
+                    socketService().sendMessage(message);
                     this.newMessage = '';
                     let container = document.getElementById('messages');
                     container.scrollTop = 9999;
@@ -168,16 +170,14 @@
                 this.loadMessagesOnEnter(this.conversations[0].id)
             }
 
-
-            // this.$store.dispatch('getConversations');
+            let container = document.getElementById('messages');
+            container.scrollTop = 9999;
 
         },
-        mounted() {
-            // if (this.$route.query !== null) {
-            //     this.getMessagesInConversation(this.$store.state.conversations.find(con => con.id === this.$route.query.id));
-            // } else {
-            //     this.getMessagesInConversation(this.$store.state.conversations[0]);
-            // }
+        updated() {
+            if (this.$route.query.id !== undefined) {
+                this.loadMessagesOnEnter(this.$route.query.id)
+            }
         }
     }
 </script>

@@ -54,6 +54,7 @@ export default new Vuex.Store({
         ],
         currentUser: null,
         conversations: [],
+        currentConversationId: null,
         messages: [],
         showNotification: false,
         currentNotification: null,
@@ -90,6 +91,9 @@ export default new Vuex.Store({
 
     },
     mutations: {
+        setCurrentConversationId(state, value){
+          this.state.currentConversationId = value;
+        },
         addNewMessage(state, value){
           this.state.messages.push(value);
         },
@@ -263,8 +267,6 @@ export default new Vuex.Store({
             this.commit("setNotification", false);
             if (this.state.notifications.length > 0) {
                 let notification = this.state.notifications.shift();
-
-                console.log(notification.auctionTitle);
                 setTimeout(() => {
                     this.commit("setCurrentNotification", notification);
                     this.commit("setNotification", true);
@@ -292,8 +294,8 @@ export default new Vuex.Store({
             socketService().subscribeChat((payload) => {
                 let message = JSON.parse(payload.body);
 
-                if(this.state.conversations.find(con => con.id === message.conversationId)){
-                    console.log('testing')
+                if(this.state.currentConversationId === message.conversationId){
+                    this.state.messages.push(message);
                 }
 
                 if (message.username === this.state.currentUser.username) return;
