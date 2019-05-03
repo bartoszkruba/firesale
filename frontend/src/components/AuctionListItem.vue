@@ -32,26 +32,7 @@
                     <v-icon>attach_money</v-icon>
                 </v-btn>
             </v-card>
-            <v-card id="bid_panel" v-if="showBidBar">
-                <v-flex>
-            <div id="auctiontextcontent" class="text-truncate">
-                <h1 id="auctiontitle" class="title font-weight-black">
-                    <router-link :to="auctionLink" style="color: black">
-                        {{auction.title}} <span v-if="closed">(Closed)</span>
-                    </router-link>
-                </h1>
-                <p id="auctiondescription" class="body-1 text-truncate">{{description}}</p>
-                <h3 id="auctionprice" class="body-2">Current price: {{currentPrice}} SEK</h3>
-                <h3 id="auctiontime" class="body-2">Ends at: {{closingTime}}</h3>
-            </div>
-            <v-btn id="buybutton"
-                   color="primary"
-                   absolute bottom right fab
-                   v-if="!closed && loggedIn && !ownAuction"
-                   @click="switchBidBar">
-                <v-icon>attach_money</v-icon>
-            </v-btn>
-        </v-card>
+
         <v-card id="bid_panel"
                 v-if="showBidBar"
                 justify-center
