@@ -12,7 +12,7 @@
 
                     <v-carousel id="auctionImageCarousel" v-if="amountImages > 0">
                         <v-carousel-item :key="i.filepath" v-for="i in getViewedAuction.images">
-                            <v-img :src="i.filepath" alt=""></v-img>
+                            <v-img id="carouselimage" :src="i.filepath" alt=""></v-img>
                         </v-carousel-item>
                     </v-carousel>
 
@@ -20,7 +20,7 @@
                         <h3>Posted By: <b>
                             <router-link :to="getUserUrl">{{getViewedAuction.user.username}}</router-link>
                         </b></h3>
-                        <v-btn v-if="loggedIn && !ownAuction" @click="redirectToChat">Start Chat</v-btn>
+                        <v-btn v-if="loggedIn && !ownAuction" color="primary" @click="redirectToChat"><v-icon>send</v-icon>Chat with seller</v-btn>
                         <br>
                         <h4>Created At: {{createdTime}} </h4>
                         <h4>Closes At: {{closingTime}}</h4>
@@ -279,7 +279,7 @@
         /*background-color: whitesmoke;*/
         /*box-shadow: 5px 5px black;*/
         height: 100%;
-        max-width: 1000px;
+        max-width: 500px;
         /*align-self: center;*/
         /*margin: 0;*/
 
@@ -287,7 +287,12 @@
 
     #auctionImageCarousel {
         max-height: 35vh;
+        max-width: 500px;
         object-fit: cover;
+    }
+
+    #carouselimage{
+        object-fit: contain;
     }
 
     /*#auctioncontent {*/

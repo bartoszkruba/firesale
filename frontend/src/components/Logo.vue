@@ -4,6 +4,7 @@
                 text-xs-center
                 wrap>
             <v-flex xs12>
+                <router-link to="/about">
                 <v-img
                         :src="require('../assets/logoNoName.png')"
                         class="my-3"
@@ -14,6 +15,7 @@
                         class="my-3"
                         contain
                         height="30"></v-img>
+                </router-link>
             </v-flex>
         </v-layout>
     </v-container>

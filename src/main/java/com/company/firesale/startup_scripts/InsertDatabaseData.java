@@ -171,7 +171,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .buyOutPrice(Double.parseDouble("20"))
                 .startUpPrice(Double.parseDouble("5"))
                 .closingTime(Timestamp.valueOf(ldt3).toLocalDateTime())
-                .category(categories.get(2))
+                .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/3.jpg").build());
         user5.addAuction(auction3);
@@ -184,7 +184,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .buyOutPrice(Double.parseDouble("400"))
                 .startUpPrice(Double.parseDouble("25"))
                 .closingTime(Timestamp.valueOf(ldt4).toLocalDateTime())
-                .category(categories.get(3))
+                .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/4.jpg").build())
                 .addBid(Bid.builder()
@@ -277,7 +277,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .buyOutPrice(Double.parseDouble("1000"))
                 .startUpPrice(Double.parseDouble("150"))
                 .closingTime(Timestamp.valueOf(ldt7).toLocalDateTime())
-                .category(categories.get(1))
+                .category(categories.get(4))
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/6.jpg").build());
         user2.addAuction(auction7);
@@ -290,7 +290,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .buyOutPrice(Double.parseDouble("85000"))
                 .startUpPrice(Double.parseDouble("15000"))
                 .closingTime(Timestamp.valueOf(ldt8).toLocalDateTime())
-                .category(categories.get(1))
+                .category(categories.get(4))
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/7.jpg").build());
         user4.addAuction(auction8);
@@ -303,7 +303,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .buyOutPrice(Double.parseDouble("5"))
                 .startUpPrice(Double.parseDouble("1"))
                 .closingTime(Timestamp.valueOf(ldt9).toLocalDateTime())
-                .category(categories.get(2))
+                .category(categories.get(3))
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/10.jpg").build());
         user4.addAuction(auction9);
@@ -316,7 +316,7 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .buyOutPrice(Double.parseDouble("400"))
                 .startUpPrice(Double.parseDouble("100"))
                 .closingTime(Timestamp.valueOf(ldt10).toLocalDateTime())
-                .category(categories.get(2))
+                .category(categories.get(4))
                 .status(AuctionStatus.OPEN).build()
                 .addImage(Image.builder().filepath("/images/8.jpg").build());
         user4.addAuction(auction10);
