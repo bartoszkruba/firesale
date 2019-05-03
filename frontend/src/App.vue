@@ -1,5 +1,5 @@
 <template>
-    <v-app id="background">
+    <v-app id="app">
         <Notification></Notification>
         <!--        <v-content>-->
         <!--            <v-container fluid fill-height>-->
@@ -46,13 +46,19 @@
         text-decoration: none;
     }
 
-    #background {
-        background-image: url("assets/auction.jpg");
+    #app {
+        background-color: black;
+        background-image: linear-gradient(black, lightgrey) ;
+        background-image: url("assets/bkg6.jpg");
+        background-position: center;
         background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+
     }
 
     #bottomspacer {
-        height: 10vh;
+        height: 20vh;
         /*background-color: ;*/
     }
 </style>
