@@ -251,6 +251,7 @@
             async redirectToChat() {
                 let response = await conversationService.newConversation(this.getViewedAuction.user.username);
 
+
                 let conversations = this.$store.state.conversations;
 
                 if (conversations.filter((a) => a.id === response.data.id).length === 0) {

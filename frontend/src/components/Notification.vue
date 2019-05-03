@@ -11,7 +11,7 @@
     <v-snackbar v-else multi-line top right v-model="showSnackbar" :timeout="timeout" color="blue-grey darken-4">
         <div>
             <router-link :to="userLink">{{username}}</router-link>
-            : {{message}}
+            : {{ message }}
         </div>
         <v-btn flat @click="showConversation">show</v-btn>
         <v-btn flat @click="hideSnackbar">close</v-btn>
@@ -100,7 +100,12 @@
             message() {
                 let currentNotification = this.$store.state.currentNotification;
                 if (currentNotification) {
-                    return currentNotification.textContent;
+                    let msg = currentNotification.textContent;
+                    if (msg.length > 10) {
+                        return msg.substring(0, 10) + '...';
+                    } else {
+                        return msg;
+                    }
                 } else {
                     return '';
                 }

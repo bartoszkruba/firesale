@@ -31,7 +31,7 @@
                                         <v-flex xs12 sm4>
                                             <v-switch
                                                     v-model="filterParams.showAllAuctions"
-                                                    :label="`${filterParams.showAllAuctions ? 'Hiding ended auctions' : 'Showing all auctions'}`"
+                                                    :label="`${filterParams.showAllAuctions ? 'Showing all auctions' : 'Hiding ended auctions'}`"
 
                                             ></v-switch>
                                         </v-flex>

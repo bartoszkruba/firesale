@@ -130,6 +130,7 @@
                     this.$store.commit("setCurrentUser", null);
                     this.$store.commit("setListItemBidFieldSwtich", null);
                     this.$store.commit("setLoggedIn", false);
+                    this.$store.commit('setConversations', []);
                     socketService().unsubscribeNotifications();
                     socketService().unsubscribeChat();
                 }

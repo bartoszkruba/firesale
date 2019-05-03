@@ -91,19 +91,18 @@ export default new Vuex.Store({
 
     },
     mutations: {
-        setCurrentConversationId(state, value){
-          this.state.currentConversationId = value;
+        setCurrentConversationId(state, value) {
+            this.state.currentConversationId = value;
         },
-        addNewMessage(state, value){
-          this.state.messages.push(value);
+        addNewMessage(state, value) {
+            this.state.messages.push(value);
         },
-        setMessages(state, value){
+        setMessages(state, value) {
             this.state.messages = value;
         },
-        addConversation(state, value){
-            if(!this.state.conversations.includes(con => con.id === value.id)) {
+        addConversation(state, value) {
+            if (!this.state.conversations.includes(con => con.id === value.id)) {
                 this.state.conversations.push(value);
-                console.log(this.state.conversations);
             }
         },
         setConversations(state, value) {
@@ -175,7 +174,9 @@ export default new Vuex.Store({
     },
     actions: {
         async getConversations(context) {
+
             await conversationService.getConversations().then(response => {
+                console.log(response.data);
                 context.commit('setConversations', response.data);
             })
         },
@@ -189,6 +190,7 @@ export default new Vuex.Store({
                 });
         },
         async checkIfLoggedIn() {
+            this.state.conversations = [];
             let response = await auth.checkIfLoggedIn();
             if (response) {
                 this.commit("setLoggedIn", response);
@@ -300,13 +302,11 @@ export default new Vuex.Store({
             socketService().subscribeChat((payload) => {
                 let message = JSON.parse(payload.body);
 
-
-                console.log('message', message);
-                if(this.state.currentConversationId === message.conversationId){
+                if (this.state.currentConversationId === message.conversationId) {
                     this.state.messages.push(message);
                 }
 
-                if(this.state.conversations.filter(a => a.id === message.conversationId).length === 0){
+                if (this.state.conversations.filter(a => a.id === message.conversationId).length === 0) {
                     conversationService.newConversation(message.username).then(response => this.state.conversations.push(response.data));
                 }
 

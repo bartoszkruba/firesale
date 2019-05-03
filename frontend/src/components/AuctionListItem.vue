@@ -225,6 +225,7 @@
     #buybutton {
         color: black;
         margin-bottom: 15px;
+        margin-right: -30px;
     }
 
     #bid_panel {
