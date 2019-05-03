@@ -34,7 +34,12 @@
           },
             async getAuctionById(id){
                 let auction = await AuctionService().getAuctionById(id);
-                console.log(auction.data);
+                //console.log(auction.data);
+                return auction.data;
+            },
+            async getAuctionById(id){
+                let auction = await AuctionService().getAuctionById(id);
+                //console.log(auction.data);
                 return auction.data;
             },
         toAuctionDetails(id) {

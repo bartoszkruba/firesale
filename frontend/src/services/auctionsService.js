@@ -11,6 +11,9 @@ export default () => {
         getAuctionById(id){
             return Api().get("/auctions/id/" + id)
         },
+        getAuctionByUserId(id){
+            return Api().get("/auctions/userid/" + id)
+        },
 
     }
 }

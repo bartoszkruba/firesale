@@ -68,7 +68,6 @@
                 let currPrice = this.auction.highestBid ?
                     this.auction.highestBid.value :
                     this.auction.startUpPrice;
-
                 if (this.bidField === null || this.bidField === "") {
                     this.bidFieldError = "Must be higher than current bid"
                 } else if (parseFloat(this.bidField) <= parseFloat(currPrice)) {

@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auctions")
@@ -53,4 +54,8 @@ public class AuctionController {
         return actionEntityServis.findById(id);
     }
 
+    @GetMapping("/userid/{id}")
+    List<AuctionJsonClass> getAuctionByUserId(@PathVariable long id){
+        return actionEntityServis.getAuctionsByUserId(id);
+    }
 }

@@ -236,6 +236,7 @@ export default new Vuex.Store({
                 let response = await bidService().loadBids(this.state.currentViewedAuction.id, pageToLoad);
                 let page = response.data;
                 page.forEach(p => this.state.viewedAuctionBids.unshift(p));
+
             }
         },
         closeNotification() {
@@ -266,8 +267,5 @@ export default new Vuex.Store({
                 }
             })
         }
-        /*async getOwendAuctionByUser(){///TODO
-            return  AuctionService.getAuctionsByUserName();
-        }*/
     }
 });

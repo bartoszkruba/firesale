@@ -21,6 +21,7 @@ public interface AuctionEntityRepository extends JpaRepository<Auction, Long> {
     Page<Auction> findByTitleContainingAndCategoryLikeAndStatus(String title, Category category, AuctionStatus status, Pageable pageable);
     Page<Auction> findByTitleContainingAndCategoryLike(String title, Category category, Pageable pageable);
     List<Auction> findAllByClosingTimeBeforeAndStatus(LocalDateTime closingTime, AuctionStatus status);
+    List<Auction> findAllByUser_IdOrderByClosingTimeAsc(Long id);
 }
 
 

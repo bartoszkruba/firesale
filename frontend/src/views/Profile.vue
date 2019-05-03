@@ -1,4 +1,5 @@
 <template>
+
     <v-container
             fill-height
             fluid
@@ -71,28 +72,35 @@
                         <v-spacer></v-spacer>
                     </v-card-text>
                     <v-btn color="primary" @click="editProfile=!editProfile" v-show="!editProfile">Edit</v-btn>
+                    {{this.getAuctions}}
                 </v-card>
-<!--
 
-                <v-card class="text-xs-center pa-5">
-                    <v-icon large color="primary" class="pa-3">myAuctions</v-icon>
-                    <v-card-text class="text-xs-center pa-3">
-                        {{getOwneAuctions}}
-                        <v-spacer></v-spacer>
-                    </v-card-text>
-                </v-card>
+<!--
+                <AuctionListItem v-for="auction in this.getOwnAuctions" v-bind:key=auction.id :auction=auction />
 -->
 
-
+                <OwnActionListItem v-for="auction in this.getOwnAuctions" v-bind:key=auction.id :auction=auction />
+                <Tc />
             </v-flex>
+
         </v-layout>
+
     </v-container>
+
 </template>
 
 <script>
-
+    import OwnActionListItem from '../components/OwnActionListItem.vue'
+    import AuctionListItem from '../components/AuctionListItem.vue'
+    import AuctionService from '../services/auctionsService.js'
+    import Tc from '../components/Tc.vue'
     export default {
         name: "Profile",
+        components:{
+            OwnActionListItem,
+            Tc,
+            AuctionListItem
+        },
         data: function() {
             return {
                 editProfile: false,
@@ -111,19 +119,30 @@
                 firstNameError: "",
                 lastNameError: "",
                 emailError: "",
-                phoneError: ""
+                phoneError: "",
+
+                auctions: []
             }
         },
         beforeMount() {
-            this.$store.dispatch('getCurrentUser')
+            this.$store.dispatch('getCurrentUser');
+            this.getOwnAuctions()
         },
+
         computed: {
+             getAuctions(){
+                return this.auctions;
+            },
             getCurrentuser() {
                 return this.$store.state.currentUser;
             },
-            /*getOwneAuctions(){///TODO
-                return this.$store.state.getOwendAuctionByUser;
-            }*/
+            getCurrentUserID(){
+                if (!this.$store.state.currentUser) {
+                    return "";
+                }
+                return this.$store.state.currentUser.id;
+            },
+
         },
         methods: {
            /* async submitEditedProfile() {
@@ -148,6 +167,16 @@
                         }
                     }
                 }*/
+            async getOwnAuctions(){
+                let id = this.getCurrentUserID;
+                if(id != "")
+                {
+                    await AuctionService().getAuctionByUserId(id).then(response => this.auctions = response.data)
+                    console.log(this.auctions);
+                }else{
+                    console.log("Vafan");
+                }
+            }
             },
             validateFields() {
                 this.usernameError = "";

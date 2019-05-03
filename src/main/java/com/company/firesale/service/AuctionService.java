@@ -14,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AuctionService {
@@ -149,9 +146,10 @@ public class AuctionService {
             return true;
         }
     }
-    /*public List<Bid> getAuctionsByUserName(){// eller id ///TODO
-
-        return
-    }*/
+    public List<AuctionJsonClass> getAuctionsByUserId(Long id){///TODO
+        List<AuctionJsonClass> auctions = new ArrayList<>();
+        actionEntityRepository.findAllByUser_IdOrderByClosingTimeAsc(id).forEach(a -> auctions.add(new AuctionJsonClass(a)));
+        return auctions;
+    }
 
 }
