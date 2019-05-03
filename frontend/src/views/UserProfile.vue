@@ -48,7 +48,7 @@
                         this.$store.commit("addConversation", response.data)
                     }
 
-                    this.$router.push("/chat/conversation?id=" + response.data.id);
+                    this.$router.push("/chat/conversation");
                 } else {
                     this.$router.push("/login")
                 }
