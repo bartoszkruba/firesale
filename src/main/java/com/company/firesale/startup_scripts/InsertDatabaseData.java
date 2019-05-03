@@ -135,10 +135,10 @@ public class InsertDatabaseData implements CommandLineRunner {
 
         LocalDateTime ldt1 = LocalDateTime.of(2019, 5, 18, 10, 30);
         Auction auction1 = Auction.builder()
-                .title("My red card")
+                .title("Not a great car")
                 .description("Selling my old car.")
-                .buyOutPrice(80000D)
-                .startUpPrice(10000D)
+                .buyOutPrice(8000D)
+                .startUpPrice(1000D)
                 .closingTime(Timestamp.valueOf(ldt1).toLocalDateTime())
                 .category(categories.get(1))
                 .status(AuctionStatus.OPEN).build()
@@ -153,7 +153,7 @@ public class InsertDatabaseData implements CommandLineRunner {
 
         LocalDateTime ldt2 = LocalDateTime.of(2019, 5, 5, 11, 00);
         Auction auction2 = Auction.builder()
-                .title("Some sportcar I found")
+                .title("Some sportscar I found")
                 .description("Someone left this at my house after a party. Selling it to pay for the burnt down garage. Seems pretty nice.")
                 .buyOutPrice(Double.parseDouble("85000"))
                 .startUpPrice(Double.parseDouble("15000"))
