@@ -38,13 +38,6 @@ public class BidService {
         bidRepository.save(bid);
     }
 
-  /*  public List<BidJsonClass> findValueByAuctionId(Long id){
-        List<BidJsonClass> bids = new ArrayList<>();
-        bidRepository.findByAuction_IdOrderByValueDesc(id).forEach(b -> bids.add(new BidJsonClass(b)));
-        return bids;
-    }*/
-
-
     public List<BidJsonClass> findFiveByValue(int page, Long id) {
         List<BidJsonClass> bids = new ArrayList<>();
         Pageable PageWithTen = PageRequest.of(page, 5);

@@ -29,7 +29,6 @@ public class AuctionJsonClass {
     private Double buyOutPrice;
     private String category;
     private UserJsonClass user;
-    //    private BidJsonClass highestBid;
     private Double currentPrice;
     private AuctionStatus status;
 

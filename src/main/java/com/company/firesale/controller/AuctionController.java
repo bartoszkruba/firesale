@@ -38,16 +38,6 @@ public class AuctionController {
         return actionEntityServis.createNewAuction(auction, principal.getName());
     }
 
-//    @GetMapping("/{page}")
-//    List<Auction> getTenActionEntityOrderById(@PathVariable int page) {
-//        return actionEntityServis.findTenById(page).getContent();
-//    }
-//
-//    @GetMapping("/date/{page}")
-//    List<Auction> getTenActionEntityOrderByDate(@PathVariable int page) {
-//        return actionEntityServis.findTenByDate(page).getContent();
-//    }
-
     @GetMapping("/id/{id}")
     AuctionJsonClass getAuctionById(@PathVariable long id) {
         return actionEntityServis.findById(id);

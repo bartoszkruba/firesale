@@ -27,10 +27,6 @@ public class BidController {
         this.socketService = socketService;
     }
 
-    /*@GetMapping("/byAuction/{id}")
-    public List<BidJsonClass> getBidByAuction(@PathVariable Long id){
-        return bidService.findValueByAuctionId(id);
-    }*/
 
     @GetMapping("/byAuctionId/{id}")
     public List<BidJsonClass> getTenBidOrderByValue(@RequestParam int page, @PathVariable Long id) {
