@@ -27,30 +27,6 @@ export default new Vuex.Store({
         currentViewedAuction: null,
         page: 0,
         viewedAuctionBids: [
-            // {
-            //     "id": 4,
-            //     "value": 400,
-            //     "creationTime": "2019-04-26T11:05:57",
-            //     "auctionId": 4,
-            //     "userId": 4,
-            //     "username": "Morenorator"
-            // },
-            // {
-            //     "id": 3,
-            //     "value": 300,
-            //     "creationTime": "2019-04-26T11:05:57",
-            //     "auctionId": 4,
-            //     "userId": 5,
-            //     "username": "Cindirella"
-            // },
-            // {
-            //     "id": 2,
-            //     "value": 250,
-            //     "creationTime": "2019-04-26T11:05:57",
-            //     "auctionId": 4,
-            //     "userId": 3,
-            //     "username": "ChrisL"
-            // }
         ],
         currentUser: null,
         conversations: [],
@@ -58,35 +34,7 @@ export default new Vuex.Store({
         messages: [],
         showNotification: false,
         currentNotification: null,
-        // currentNotification: {
-        //     auctionTitle: "Gibson Les Paul 1995",
-        //     auctionId: 1,
-        //     newHighestBid: 5000,
-        //     username: "John123",
-        //     userId: 1
-        // },
         notifications: [
-            // {
-            //     auctionTitle: "Gibson Les Paul 1995",
-            //     auctionId: 1,
-            //     newHighestBid: 5000,
-            //     username: "John13",
-            //     userId: 1
-            // },
-            // {
-            //     auctionTitle: "Gibson Les Paul 1995",
-            //     auctionId: 1,
-            //     newHighestBid: 5000,
-            //     username: "John19",
-            //     userId: 1
-            // },
-            // {
-            //     auctionTitle: "Gibson Les Paul 1995",
-            //     auctionId: 1,
-            //     newHighestBid: 5000,
-            //     username: "John111",
-            //     userId: 1
-            // }
         ]
 
     },
@@ -194,7 +142,6 @@ export default new Vuex.Store({
             let response = await auth.checkIfLoggedIn();
             if (response) {
                 this.commit("setLoggedIn", response);
-                // let response = await auth.getCurrentUser();
                 this.dispatch("getCurrentUser");
                 this.dispatch('getConversations');
                 this.dispatch("subscribeToNotifications");
@@ -327,9 +274,5 @@ export default new Vuex.Store({
 
             })
         }
-        /*async getOwendAuctionByUser(){///TODO
-            return  AuctionService.getAuctionsByUserName();
-        }*/
-
     }
 });

@@ -176,7 +176,6 @@
         width: 90%;
         max-width: 500px;
         margin-top: 20px;
-        /*margin-bottom: 20px;*/
         margin-left: 5%;
         margin-right: 5%;
         padding-right: 10px;

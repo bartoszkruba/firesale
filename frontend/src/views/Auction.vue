@@ -1,7 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 
     <v-content v-if="getViewedAuction !== null">
-        <!--        <v-layout align-center>-->
         <div id="auction" class="mr-auto ml-auto">
             <v-container>
                 <v-card>
@@ -260,7 +259,6 @@
                 if (conversations.filter((a) => a.id === response.data.id).length === 0) {
 
                     this.$store.commit("addConversation", response.data);
-                    // this.$store.commit('setCurrentConversationId', response.data.id);
                 }
 
 
@@ -276,13 +274,8 @@
 
 <style scoped>
     #auction {
-        /*background-color: whitesmoke;*/
-        /*box-shadow: 5px 5px black;*/
         height: 100%;
         max-width: 500px;
-        /*align-self: center;*/
-        /*margin: 0;*/
-
     }
 
     #auctionImageCarousel {
@@ -294,23 +287,4 @@
     #carouselimage{
         object-fit: contain;
     }
-
-    /*#auctioncontent {*/
-
-    /*}*/
-    /*#auctiontitle {*/
-    /*    margin-bottom: 2px;*/
-    /*    padding: 0;*/
-    /*}*/
-    /*#auctiondates{*/
-    /*    padding-top: 0;*/
-    /*    padding-bottom: 5px;*/
-    /*    font-size: 12px;*/
-    /*    font-weight: 200;*/
-    /*}*/
-    /*#bidbutton {*/
-    /*}*/
-    /*#auctionactions {*/
-    /*    justify-content: center;*/
-    /*}*/
 </style>

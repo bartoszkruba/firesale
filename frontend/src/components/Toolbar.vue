@@ -57,13 +57,6 @@
                             </v-list-tile-title>
                         </router-link>
                     </v-list-tile>
-<!--                    <v-list-tile v-if="loggedIn">-->
-<!--                        <router-link to="/chat" style="color: black; text-decoration: none">-->
-<!--                            <v-list-tile-title>-->
-<!--                                Chat-->
-<!--                            </v-list-tile-title>-->
-<!--                        </router-link>-->
-<!--                    </v-list-tile>-->
                     <v-list-tile v-if="loggedIn" @click="logout">
                         <router-link to="/" style="color: black; text-decoration: none">
                             <v-list-tile-title>

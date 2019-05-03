@@ -1,5 +1,4 @@
 <template>
-    <!--    <v-app class="mt-4">-->
     <v-content>
         <v-container>
             <v-layout>
@@ -58,7 +57,6 @@
             </v-layout>
         </v-container>
     </v-content>
-    <!--    </v-app>-->
 </template>
 
 <script>
@@ -67,9 +65,6 @@
     export default {
         name: "NewAuction",
         mounted() {
-            // if (!this.$store.state.loggedIn) {
-            //     this.$router.push("/login")
-            // }
             this.$store.dispatch("getCategories");
         },
         data() {

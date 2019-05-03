@@ -1,7 +1,6 @@
 
 <template>
     <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-<!--        <div v-if="this.$store.state.auctions.length === 0"><h2 class="text-xs-center">No auctions found</h2></div>-->
         <div class="text-xs-center" v-if="this.$store.state.auctions.length === 0">
             <v-progress-circular
                     :size="50"
@@ -24,7 +23,6 @@
         data() {
             return {
                 busy: false,
-                // auctions: this.$store.state.auctions
             }
         },
         methods: {
@@ -36,9 +34,6 @@
                     this.busy = false;
                 }, 1000);
             },
-            // toAuctionDetails(id) {
-            //     this.$router.push({path: 'auction', query: {id}});
-            // }
         },
         beforeCreate(){
 
@@ -46,7 +41,6 @@
         beforeMount() {
             this.$store.commit('setAuctions', []);
             this.$store.commit('setPageNumber', 0);
-            // this.loadMore();
         }
     }
 

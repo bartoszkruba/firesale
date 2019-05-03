@@ -1,5 +1,4 @@
 <template>
-    <!--    <v-app id="inspire">-->
     <v-content>
         <v-container fluid fill-height>
             <v-layout align-center justify-center>
@@ -145,7 +144,6 @@
                     validation = false;
                 }
 
-                // todo add regex to replace all double space with sinngle one
                 this.firstName = this.firstName.trim();
                 if (this.firstName === "") {
                     this.firstNameError = "Field cannot be empty";

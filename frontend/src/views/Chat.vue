@@ -34,7 +34,6 @@
                         indeterminate
                 ></v-progress-circular>
             </v-container>
-            <!--            <v-card class="pa-3 mt-2" v-show="!loading && !hasConversations"><h2> No conversations </h2></v-card>-->
             <v-container id="chat-window" class="pa-0 mt-1 mb-1" v-show="hasConversations">
                 <v-card>Chatting with {{getSenderUsername(this.currentConversation.members)}}</v-card>
                 <v-container id="messages" class="scroll-y pa-0 mt-1 mb-1"
@@ -94,8 +93,6 @@
                     v => v != null && v.length <= 100 || 'Max 100 characters'
                 ],
                 newChatError: '',
-                // conversations: []
-
             }
         },
         methods: {
@@ -123,7 +120,6 @@
                 await conversationService.getMessagesInConversation(conversation.id).then(response => {
                     this.$store.commit('setMessages', response.data);
                     this.messages = this.$store.state.messages;
-                    // this.messages.sort((a, b) => a.createdAt > b.createdAt ? 1 : -1)
                 });
                 this.currentConversation = conversation;
                 let id = conversation.id;
@@ -142,7 +138,6 @@
                         await conversationService.getMessagesInConversation(id).then(response => {
                             this.$store.commit('setMessages', response.data);
                             this.messages = this.$store.state.messages;
-                            // this.messages.sort((a, b) => a.createdAt > b.createdAt ? 1 : -1)
                         });
                         this.loading = false;
                         this.hasConversations = true;
@@ -214,16 +209,13 @@
         async beforeMount() {
             this.$store.dispatch('getConversations');
             if (this.$store.state.loggedIn) {
-                // this.conversations = await conversationService.getConversations().then(response => response.data)
                 let conversations = await conversationService.getConversations().then(response => response.data);
                 if (this.$route.query.id !== undefined && conversations.length > 0) {
                     this.hasConversations = true;
                     this.currentConversation = conversations.find(con => con.id === this.$route.query.id);
                     this.loadMessagesOnEnter(this.$route.query.id)
                 } else if (conversations.length > 0) {
-                    // this.hasConversations = true;
                     this.showConversationList = true;
-                    // this.loadMessagesOnEnter(conversations[0].id)
                     this.loading = false;
                 } else {
                     this.showConversationList = true;
@@ -237,7 +229,6 @@
         },
         watch: {
             $route(to, from) {
-                // this.conversations = conversationService.getConversations().then(response => response.data);
                 this.loadMessagesOnEnter(to.query.id);
             }
 

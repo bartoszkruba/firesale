@@ -1,32 +1,21 @@
 <template>
     <v-app id="app">
         <Notification></Notification>
-        <!--        <v-content>-->
-        <!--            <v-container fluid fill-height>-->
-        <!--                <v-layout align-center justify-center>-->
-        <!--                    <v-flex xs12 sm8 md4>-->
         <router-view/>
         <Toolbar></Toolbar>
         <div id="bottomspacer"></div>
-        <!--                    </v-flex>-->
-        <!--                </v-layout>-->
-        <!--            </v-container>-->
-        <!--        </v-content>-->
-
     </v-app>
 </template>
 
 <script>
     import Toolbar from "./components/Toolbar";
     import Notification from "./components/Notification"
-    import Tester from './components/Tester'
 
     export default {
         name: 'App',
         components: {
             Toolbar,
             Notification,
-            Tester
         },
         data() {
             return {
@@ -35,7 +24,6 @@
             }
         },
         async created() {
-            // console.log(this.$route.query.id);
             this.$store.dispatch("checkIfLoggedIn");
 
         }
