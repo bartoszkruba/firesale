@@ -4,7 +4,8 @@ import AuctionService from '@/services/auctionsService'
 import auth from '@/services/authentication'
 import CategoryService from '@/services/categoryService';
 import socketService from '@/services/socket';
-import bidService from './services/bid';
+import bidService from '@/services/bid';
+import conversationService from "./services/conversationService";
 
 Vue.use(Vuex);
 
@@ -52,6 +53,9 @@ export default new Vuex.Store({
             // }
         ],
         currentUser: null,
+        conversations: [],
+        currentConversationId: null,
+        messages: [],
         showNotification: false,
         currentNotification: null,
         // currentNotification: {
@@ -87,6 +91,24 @@ export default new Vuex.Store({
 
     },
     mutations: {
+        setCurrentConversationId(state, value){
+          this.state.currentConversationId = value;
+        },
+        addNewMessage(state, value){
+          this.state.messages.push(value);
+        },
+        setMessages(state, value){
+            this.state.messages = value;
+        },
+        addConversation(state, value){
+            if(!this.state.conversations.includes(con => con.id === value.id)) {
+                this.state.conversations.push(value);
+                console.log(this.state.conversations);
+            }
+        },
+        setConversations(state, value) {
+            this.state.conversations = value;
+        },
         setUrlQuery(state, value) {
             this.state.urlQuery = value;
         },
@@ -118,7 +140,7 @@ export default new Vuex.Store({
                 let bid = JSON.parse(payload.body);
                 let auctionId = bid.auctionId;
                 let auctions = this.state.auctions;
-                auctions.filter(a => a.id === auctionId).forEach(a => a.highestBid = bid);
+                auctions.filter(a => a.id === auctionId).forEach(a => a.currentPrice = bid.value);
                 this.commit("setAuctions", auctions);
             };
 
@@ -152,6 +174,11 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async getConversations(context) {
+            await conversationService.getConversations().then(response => {
+                context.commit('setConversations', response.data);
+            })
+        },
         showFilters(context) {
             this.commit('showFilters')
         },
@@ -167,7 +194,9 @@ export default new Vuex.Store({
                 this.commit("setLoggedIn", response);
                 // let response = await auth.getCurrentUser();
                 this.dispatch("getCurrentUser");
+                this.dispatch('getConversations');
                 this.dispatch("subscribeToNotifications");
+                this.dispatch("subscribeChat");
             }
         },
         async getCategories(context) {
@@ -209,12 +238,14 @@ export default new Vuex.Store({
                 let currentViewedAuction = this.state.currentViewedAuction;
 
                 currentViewedAuction.highestBid = bid;
+                currentViewedAuction.currentPrice = bid.value;
 
                 this.commit("setCurrentViewedAuction", currentViewedAuction);
                 this.commit("setViewedAuctionBids", viewedBids);
 
             });
             let response = await AuctionService().getAuctionById(id);
+
             this.commit('setCurrentViewedAuction', response.data);
             this.dispatch("loadBidPage");
         },
@@ -242,8 +273,6 @@ export default new Vuex.Store({
             this.commit("setNotification", false);
             if (this.state.notifications.length > 0) {
                 let notification = this.state.notifications.shift();
-
-                console.log(notification.auctionTitle);
                 setTimeout(() => {
                     this.commit("setCurrentNotification", notification);
                     this.commit("setNotification", true);
@@ -255,6 +284,7 @@ export default new Vuex.Store({
         subscribeToNotifications() {
             socketService().subscribeNotifications((payload) => {
                 let notification = JSON.parse(payload.body);
+                notification.type = "bid";
                 let currentNotification = this.state.currentNotification;
                 if (!currentNotification) {
                     this.commit("setCurrentNotification", notification);
@@ -265,9 +295,41 @@ export default new Vuex.Store({
                     this.dispatch("closeNotification");
                 }
             })
+        },
+        subscribeChat() {
+            socketService().subscribeChat((payload) => {
+                let message = JSON.parse(payload.body);
+
+
+                console.log('message', message);
+                if(this.state.currentConversationId === message.conversationId){
+                    this.state.messages.push(message);
+                }
+
+                if(this.state.conversations.filter(a => a.id === message.conversationId).length === 0){
+                    conversationService.newConversation(message.username).then(response => this.state.conversations.push(response.data));
+                }
+
+                if (message.username === this.state.currentUser.username) return;
+
+                message.type = "message";
+
+                let currentNotification = this.state.currentNotification;
+
+                if (!currentNotification) {
+                    this.commit("setCurrentNotification", message);
+                    this.commit("setNotification", true)
+                } else {
+                    this.state.notifications.unshift(currentNotification);
+                    this.state.notifications.unshift(message);
+                    this.dispatch("closeNotification");
+                }
+
+            })
         }
         /*async getOwendAuctionByUser(){///TODO
             return  AuctionService.getAuctionsByUserName();
         }*/
+
     }
 });

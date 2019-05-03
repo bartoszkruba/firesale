@@ -1,10 +1,8 @@
 package com.company.firesale.data.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +12,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"conversation"})
+@ToString(exclude = {"conversation"})
 @Builder
 @Entity
 public class ChatMessage {
@@ -30,6 +30,7 @@ public class ChatMessage {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
 
     @ManyToOne
     @JoinColumn(name = "conversation_id")

@@ -5,9 +5,7 @@ import com.company.firesale.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Set;
@@ -17,6 +15,7 @@ import java.util.Set;
 public class ConversationController {
 
     private final ConversationService conversationService;
+
 
     @Autowired
     public ConversationController(ConversationService conversationService) {
@@ -35,6 +34,32 @@ public class ConversationController {
             e.printStackTrace();
             System.out.println("Couldn't get conversations: " + e);
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/withUser/{username}")
+    public ResponseEntity<ConversationJsonClass> createOrGetConversationWithUser(@PathVariable String username,
+                                                                                 Principal principal) {
+
+        String[] users = {username, principal.getName()};
+
+        try {
+            return new ResponseEntity<>(conversationService
+                    .getConversationBetweenUsers(users, principal.getName()), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/withUsers")
+    public ResponseEntity<ConversationJsonClass> createOrGetConversationWithUsers(@RequestBody String[] usernames,
+                                                                                  Principal principal) {
+        try {
+            return new ResponseEntity<>(conversationService
+                    .getConversationBetweenUsers(usernames, principal.getName()), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

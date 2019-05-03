@@ -8,6 +8,7 @@ import Auction from "./views/Auction";
 import About from "./views/About";
 import UserProfile from "./views/UserProfile";
 import Profile from "./views/Profile";
+import Chat from "./views/Chat";
 
 
 Vue.use(Router);
@@ -61,5 +62,15 @@ export default new Router({
             name: 'UserProfile',
             component: UserProfile
         },
+        {
+            path: '/chat',
+            name: 'Chat',
+            component: Chat
+        },
+        {
+            path: '/chat/conversation',
+            name: 'Conversation',
+            component: Chat
+        }
     ]
 })

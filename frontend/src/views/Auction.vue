@@ -20,6 +20,7 @@
                         <h3>Posted By: <b>
                             <router-link :to="getUserUrl">{{getViewedAuction.user.username}}</router-link>
                         </b></h3>
+                        <v-btn v-if="loggedIn && !ownAuction" @click="redirectToChat">Start Chat</v-btn>
                         <br>
                         <h4>Created At: {{createdTime}} </h4>
                         <h4>Closes At: {{closingTime}}</h4>
@@ -94,6 +95,7 @@
 
 <script>
     import bidService from '../services/bid'
+    import conversationService from '../services/conversationService'
 
     export default {
         name: "Auction",
@@ -165,11 +167,19 @@
                 return time.toLocaleDateString('en-EN', options)
             },
             currentPrice() {
-                let highestBid = this.$store.state.currentViewedAuction.highestBid;
-                if (highestBid) {
-                    return highestBid.value;
+                return this.$store.state.currentViewedAuction.currentPrice;
+            },
+            highestBid() {
+                if (this.$store.state.currentViewedAuction) {
+                    return this.$store.state.currentViewedAuction.highestBid;
+                }
+                return null;
+            },
+            startupPrice() {
+                if (this.$store.state.currentViewedAuction) {
+                    return this.$store.state.currentViewedAuction.startUpPrice
                 } else {
-                    return this.$store.state.currentViewedAuction.startUpPrice;
+                    return null;
                 }
             },
             viewedAuctionBids() {
@@ -237,6 +247,17 @@
             },
             getLinkToProfile(id) {
                 return `/user?id=${id}`
+            },
+            async redirectToChat() {
+                let response = await conversationService.newConversation(this.getViewedAuction.user.username);
+
+                let conversations = this.$store.state.conversations;
+
+                if (conversations.filter((a) => a.id === response.data.id).length === 0) {
+                    this.$store.commit("addConversation", response.data)
+                }
+
+                this.$router.push("/chat/conversation?id=" + response.data.id);
             }
         },
         beforeMount() {

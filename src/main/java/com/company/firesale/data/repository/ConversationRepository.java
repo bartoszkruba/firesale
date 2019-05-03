@@ -9,4 +9,6 @@ import java.util.Set;
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
 
     Set<Conversation> findConversationsByMembersContainingOrderByUpdatedAt(User user);
+
+    Set<Conversation> findAllByMembers(User member);
 }

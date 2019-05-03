@@ -4,16 +4,36 @@
                 justify-center
                 wrap
         >
-        <v-card class="listitempanel">
-            <div id="auctionimgcontainer">
+            <v-card class="listitempanel">
+                <div id="auctionimgcontainer">
             <span v-if="imagesExist">
                 <router-link :to="auctionLink">
                     <v-img id="auctionimg" :src="auction.images[0].filepath" alt="no image"/>
                 </router-link>
             </span>
-                <span v-else>no image</span>
-            </div>
+                    <span v-else>no image</span>
+                </div>
 
+                <div id="auctiontextcontent" class="text-truncate">
+                    <h1 id="auctiontitle" class="title font-weight-black">
+                        <router-link :to="auctionLink" style="color: black">
+                            {{auction.title}} <span v-if="closed">(Closed)</span>
+                        </router-link>
+                    </h1>
+                    <p id="auctiondescription" class="body-1 text-truncate">{{description}}</p>
+                    <h3 id="auctionprice" class="body-2">Current price: {{currentPrice}} SEK</h3>
+                    <h3 id="auctiontime" class="body-2">Ends at: {{closingTime}}</h3>
+                </div>
+                <v-btn id="buybutton"
+                       color="primary"
+                       absolute bottom right fab
+                       v-if="!closed && loggedIn && !ownAuction"
+                       @click="switchBidBar">
+                    <v-icon>attach_money</v-icon>
+                </v-btn>
+            </v-card>
+            <v-card id="bid_panel" v-if="showBidBar">
+                <v-flex>
             <div id="auctiontextcontent" class="text-truncate">
                 <h1 id="auctiontitle" class="title font-weight-black">
                     <router-link :to="auctionLink" style="color: black">
@@ -39,15 +59,16 @@
         >
             <v-flex>
 
-            <v-text-field name="Amount (SEK)" label="Amount (SEK)" @keydown="allowOnlyNumbers"
-                          @keydown.enter="bid" :error-messages="bidFieldError" v-model="bidField"></v-text-field>
+                    <v-text-field name="Amount (SEK)" label="Amount (SEK)" @keydown="allowOnlyNumbers"
+                                  @keydown.enter="bid" :error-messages="bidFieldError"
+                                  v-model="bidField"></v-text-field>
 
-                <v-card-actions>
-                    <v-btn color="primary" @click="bid">Bid</v-btn>
-                </v-card-actions>
+                    <v-card-actions>
+                        <v-btn color="primary" @click="bid">Bid</v-btn>
+                    </v-card-actions>
 
-            </v-flex>
-        </v-card>
+                </v-flex>
+            </v-card>
         </v-layout>
     </div>
 </template>
@@ -135,12 +156,7 @@
                 return time.toLocaleDateString('en-EN', options)
             },
             currentPrice() {
-                let highestBid = this.auction.highestBid;
-                if (highestBid) {
-                    return highestBid.value;
-                } else {
-                    return this.auction.startUpPrice;
-                }
+                return this.auction.currentPrice;
             },
             auctionLink() {
                 return `/auction?id=${this.auction.id}`
@@ -239,7 +255,7 @@
         margin-bottom: 15px;
     }
 
-    #bid_panel{
+    #bid_panel {
         padding: 15px;
 
         box-shadow: 5px 5px black;

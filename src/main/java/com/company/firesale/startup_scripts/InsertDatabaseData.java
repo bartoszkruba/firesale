@@ -350,7 +350,17 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .addChatMessage(ChatMessage.builder()
                         .sender(user1).textContent("Wanna sell some stuff?").build())
                 .addChatMessage(ChatMessage.builder()
-                        .sender(user2).textContent("Yeah sure").build());
+                        .sender(user2).textContent("Lol").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user2).textContent("Gimme price").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("500 million dollars").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user2).textContent("Yeah sure").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user1).textContent("200 million dollars?").build())
+                .addChatMessage(ChatMessage.builder()
+                        .sender(user2).textContent("DEAL").build());
 
         Conversation between_john_and_cindy = Conversation.builder().build()
                 .addMember(user1)

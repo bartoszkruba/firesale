@@ -19,12 +19,14 @@
 <script>
     import Toolbar from "./components/Toolbar";
     import Notification from "./components/Notification"
+    import Tester from './components/Tester'
 
     export default {
         name: 'App',
         components: {
             Toolbar,
-            Notification
+            Notification,
+            Tester
         },
         data() {
             return {
