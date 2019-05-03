@@ -123,18 +123,16 @@
             closingTime() {
 
                 let time = new Date(this.auction.closingTime);
-
                 var options = {
                     year: 'numeric',
-                    month: 'long',
+                    month: 'numeric',
                     day: 'numeric',
                     hour12: false,
                     hour: "numeric",
                     minute: "numeric",
-                    second: "numeric"
                 };
 
-                return time.toLocaleDateString('en-EN', options)
+                return time.toLocaleDateString('sv', options)
             },
             currentPrice() {
                 return this.auction.currentPrice;
@@ -151,7 +149,6 @@
             },
             closed() {
                 let time = new Date(this.auction.closingTime);
-
                 return time < new Date();
             },
             showBidBar() {
