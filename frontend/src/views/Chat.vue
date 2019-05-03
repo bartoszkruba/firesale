@@ -36,6 +36,7 @@
             </v-container>
             <!--            <v-card class="pa-3 mt-2" v-show="!loading && !hasConversations"><h2> No conversations </h2></v-card>-->
             <v-container id="chat-window" class="pa-0 mt-1 mb-1" v-show="hasConversations">
+                <v-card>Chatting with {{getSenderUsername(this.currentConversation.members)}}</v-card>
                 <v-container id="messages" class="scroll-y pa-0 mt-1 mb-1"
                              style="max-height: 58vh; max-width: 100vw;" background>
                     <v-layout
@@ -152,16 +153,16 @@
             toggleConversationList() {
                 this.showConversationList = !this.showConversationList;
             },
-            sendMessage() {
-
+            async sendMessage() {
                 if (this.newMessage.length > 0 && this.newMessage.length <= 100) {
                     let message = {
-                        conversationId: this.currentConversation.id,
+                        conversationId: this.$route.query.id,
                         username: this.$store.state.currentUser.username,
                         textContent: this.newMessage
                     };
                     socketService().sendMessage(message);
                     this.newMessage = '';
+
 
                 } else {
                     console.log("Error in message length")
@@ -220,8 +221,10 @@
                     this.currentConversation = conversations.find(con => con.id === this.$route.query.id);
                     this.loadMessagesOnEnter(this.$route.query.id)
                 } else if (conversations.length > 0) {
-                    this.hasConversations = true;
-                    this.loadMessagesOnEnter(conversations[0].id)
+                    // this.hasConversations = true;
+                    this.showConversationList = true;
+                    // this.loadMessagesOnEnter(conversations[0].id)
+                    this.loading = false;
                 } else {
                     this.showConversationList = true;
                 }

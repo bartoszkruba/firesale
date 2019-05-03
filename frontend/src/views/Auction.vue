@@ -75,7 +75,10 @@
                             </template>
                         </v-data-table>
                     </template>
-                    <v-btn color="primary" @click="loadMoreBids"><v-icon>keyboard_arrow_down</v-icon>Show More</v-btn>
+                    <v-btn color="primary" @click="loadMoreBids">
+                        <v-icon>keyboard_arrow_down</v-icon>
+                        Show More
+                    </v-btn>
                 </v-card>
             </v-container>
         </div>
@@ -255,10 +258,13 @@
                 let conversations = this.$store.state.conversations;
 
                 if (conversations.filter((a) => a.id === response.data.id).length === 0) {
-                    this.$store.commit("addConversation", response.data)
+
+                    this.$store.commit("addConversation", response.data);
+                    // this.$store.commit('setCurrentConversationId', response.data.id);
                 }
 
-                this.$router.push("/chat/conversation?id=" + response.data.id);
+
+                this.$router.push("/chat/conversation");
             }
         },
         beforeMount() {
