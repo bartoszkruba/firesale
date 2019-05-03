@@ -22,6 +22,7 @@
         padding-top: 30px;
         padding-bottom: 10px;
         width: 90%;
+        max-width: 500px;
         margin-top: 15vh;
         box-shadow: 5px 5px black;
     }

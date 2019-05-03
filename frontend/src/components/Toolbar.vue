@@ -2,7 +2,6 @@
     <div id="mainmenu">
         <AuctionsFilter v-show="showFilters"></AuctionsFilter>
         <v-toolbar color="primary">
-
             <v-spacer></v-spacer>
             <router-link to="/">
                 <v-btn icon @click="goToHome">
@@ -146,4 +145,5 @@
         bottom: 0;
         right: 0;
     }
+
 </style>

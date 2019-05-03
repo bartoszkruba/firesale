@@ -114,6 +114,7 @@
         color: white;
         background-color: rgba(255, 255, 255, 1);
         padding-top: 20px;
+        max-width: 550px;
     }
 
     #filter-slider {
