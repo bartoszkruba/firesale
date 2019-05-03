@@ -181,13 +181,6 @@
         padding-right: 10px;
     }
 
-    #bid_panel {
-        margin-left: 30%;
-        margin-right: 30%;
-        max-width: 500px;
-
-    }
-
     #auctionimgcontainer {
         height: 100%;
         width: 100%;
@@ -238,10 +231,14 @@
 
     #bid_panel {
         padding: 15px;
-
         box-shadow: 5px 5px black;
         width: 90%;
+        max-width: 500px;
     }
-
-
+    @media only screen and (min-width: 550px) {
+        #bid_panel {
+            margin-left: 30%;
+            margin-right: 30%;
+        }
+    }
 </style>
