@@ -1,7 +1,6 @@
 package com.company.firesale.data.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -50,7 +49,6 @@ public class Conversation {
 
     public Conversation addMember(User user) {
         this.members.add(user);
-//        user.getConversations().add(this);
         return this;
     }
 

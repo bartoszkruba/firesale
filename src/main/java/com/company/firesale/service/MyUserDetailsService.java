@@ -38,8 +38,6 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserDetails toUserDetails(User user) {
         String[] userRoles = user.getRoles().stream().map(Role::getDescription).toArray(String[]::new);
 
-        System.out.println(user.getRoles().size());
-
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())

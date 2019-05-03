@@ -7,6 +7,5 @@ import java.util.Set;
 
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
 
-//    Set<ChatMessage> getChatMessagesByConversation_idOrOrderByCreatedAtAsc(long id);
     Set<ChatMessage> findByConversation_IdOrderByCreatedAtAsc(long id);
 }

@@ -14,7 +14,6 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        System.out.println(System.getProperty("user.dir") + "/images");
         registry.addResourceHandler("*.*")
                 .addResourceLocations("file:src/main/resources/static/");
         registry.addResourceHandler("/images/**")

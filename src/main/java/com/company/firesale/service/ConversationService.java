@@ -48,9 +48,6 @@ public class ConversationService {
 
     @Transactional
     public ConversationJsonClass getConversationBetweenUsers(String[] usernames, String principal) {
-
-        System.out.println("Gettting conversation");
-
         User user = userService.getUserByUsername(principal);
         if (user == null) throw new RuntimeException("No user found");
 

@@ -42,14 +42,6 @@ public class AuctionService {
         return new AuctionJsonClass(actionEntityRepository.findAuctionById(id));
     }
 
-//    public PageJSONAuctions findFiveByTitle(String title, Integer page) {
-//        Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
-//        Set<AuctionJsonClass> auctions = new HashSet<>();
-//        Page pageWithAuctions = actionEntityRepository.findByTitleContaining(title, pageWithFive);
-//        pageWithAuctions.forEach(a -> auctions.add(new AuctionJsonClass((Auction) a)));
-//        return PageJSONAuctions.builder().currentPage(pageWithAuctions.getNumber()).totalPages(pageWithAuctions.getTotalPages()).list(auctions).build();
-//    }
-
     public PageJSONAuctions findFiveByTitleAndStatus(String title, String cat, Boolean showAll, Integer page) {
         Pageable pageWithFive = PageRequest.of(page, 5, Sort.by("closingTime"));
         Set<AuctionJsonClass> auctions = new HashSet<>();
@@ -149,9 +141,4 @@ public class AuctionService {
             return true;
         }
     }
-    /*public List<Bid> getAuctionsByUserName(){// eller id ///TODO
-
-        return
-    }*/
-
 }

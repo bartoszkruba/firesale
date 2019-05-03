@@ -124,7 +124,6 @@ export default new Vuex.Store({
         async getConversations(context) {
 
             await conversationService.getConversations().then(response => {
-                console.log(response.data);
                 context.commit('setConversations', response.data);
             })
         },

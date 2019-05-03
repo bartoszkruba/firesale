@@ -2,12 +2,9 @@ package com.company.firesale.startup_scripts;
 
 
 import com.company.firesale.data.entity.*;
-import com.company.firesale.data.repository.AuctionEntityRepository;
-import com.company.firesale.data.repository.BidRepository;
 import com.company.firesale.data.repository.CategoryRepository;
 import com.company.firesale.data.repository.RoleRepository;
 import com.company.firesale.service.AuctionService;
-import com.company.firesale.service.ConversationService;
 import com.company.firesale.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -23,29 +20,20 @@ import java.util.List;
 @Component
 public class InsertDatabaseData implements CommandLineRunner {
 
-    private UserService userService;
-    private RoleRepository roleRepository;
+    private final UserService userService;
+    private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder;
-    private final AuctionEntityRepository auctionEntityRepository;
-    private AuctionService auctionService;
-    private CategoryRepository categoryRepository;
-    private BidRepository bidRepository;
-    private final ConversationService conversationService;
+    private final AuctionService auctionService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder, AuctionEntityRepository auctionEntityRepository, AuctionService auctionService, CategoryRepository categoryRepository, BidRepository bidRepository, ConversationService conversationService) {
+    public InsertDatabaseData(UserService userService, RoleRepository roleRepository, BCryptPasswordEncoder encoder,
+                              AuctionService auctionService, CategoryRepository categoryRepository) {
         this.userService = userService;
         this.roleRepository = roleRepository;
-
         this.encoder = encoder;
-        this.auctionEntityRepository = auctionEntityRepository;
-
-
-        ///nya
         this.auctionService = auctionService;
         this.categoryRepository = categoryRepository;
-        this.bidRepository = bidRepository;
-        this.conversationService = conversationService;
     }
 
     @Override
@@ -73,7 +61,6 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("john69")
                 .password(encoder.encode("password1234"))
                 .email("john.doe@gmail.com")
-//                .address("4323 Oak Lawn Ave")
                 .firstName("John")
                 .lastName("Doe")
                 .phoneNumber("(127)-963-1879")
@@ -87,7 +74,6 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("mary111")
                 .password(encoder.encode("mypassword"))
                 .email("mary323@gmail.com")
-//                .address("4968 Railroad St")
                 .firstName("Mary")
                 .lastName("Poppins")
                 .phoneNumber("(277)-505-2351")
@@ -99,7 +85,6 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("ChrisL")
                 .password(encoder.encode("wyatt"))
                 .email("chris.lewis92@example.com")
-//                .address("5860 Camden Ave")
                 .firstName("Chris")
                 .lastName("Lewis")
                 .phoneNumber("(893)-121-7525")
@@ -111,7 +96,6 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("Morenorator")
                 .password(encoder.encode("reptile"))
                 .email("ruben.moreno87@example.com")
-//                .address("5860 Camden Ave")
                 .firstName("Ruben")
                 .lastName("Moreno")
                 .phoneNumber("(247)-425-7475")
@@ -123,14 +107,12 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .username("Cinderella")
                 .password(encoder.encode("poopoo"))
                 .email("ruben.moreno87@example.com")
-//                .address("1164 Adelaide Ave")
                 .firstName("Cindy")
                 .lastName("Stephens")
                 .phoneNumber("(272)-121-1765")
                 .build()
                 .addRole(userRole);
         userService.saveUser(user5);
-
 
 
         LocalDateTime ldt1 = LocalDateTime.of(2019, 5, 18, 10, 30);
@@ -334,51 +316,5 @@ public class InsertDatabaseData implements CommandLineRunner {
                 .addImage(Image.builder().filepath("/images/9.jpg").build());
         user2.addAuction(auction11);
         auctionService.addAuction(auction11);
-
-
-        Conversation between_john_and_mary = Conversation.builder().build()
-                .addMember(user1)
-                .addMember(user2)
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user1).textContent("Sup?").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user2).textContent("All Good").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user2).textContent("U?").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user1).textContent("Good too").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user1).textContent("Wanna sell some stuff?").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user2).textContent("Lol").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user2).textContent("Gimme price").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user1).textContent("500 million dollars").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user2).textContent("Yeah sure").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user1).textContent("200 million dollars?").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user2).textContent("DEAL").build());
-
-        Conversation between_john_and_cindy = Conversation.builder().build()
-                .addMember(user1)
-                .addMember(user5)
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user1).textContent("Sup?").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user5).textContent("All Good").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user5).textContent("U?").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user1).textContent("Good too").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user1).textContent("Wanna sell some stuff?").build())
-                .addChatMessage(ChatMessage.builder()
-                        .sender(user5).textContent("Yeah sure").build());
-
-        conversationService.saveConversation(between_john_and_mary);
-        conversationService.saveConversation(between_john_and_cindy);
     }
 }
