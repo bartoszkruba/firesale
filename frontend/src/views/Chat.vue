@@ -243,5 +243,7 @@
 </script>
 
 <style scoped>
-
+    #chat {
+        max-width: 500px;
+    }
 </style>

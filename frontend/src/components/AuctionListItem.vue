@@ -32,8 +32,13 @@
                     <v-icon>attach_money</v-icon>
                 </v-btn>
             </v-card>
-            <v-card id="bid_panel" v-if="showBidBar">
-                <v-flex>
+
+        <v-card id="bid_panel"
+                v-if="showBidBar"
+                justify-center
+                wrap
+        >
+            <v-flex>
 
                     <v-text-field name="Amount (SEK)" label="Amount (SEK)" @keydown="allowOnlyNumbers"
                                   @keydown.enter="bid" :error-messages="bidFieldError"
@@ -77,9 +82,11 @@
                 } else {
                     let response = await bidService().placeBid(this.auction.id,
                         parseFloat(this.bidField));
+
                     if (response.status === 201) {
                         this.bidField = "";
                         alert("Bid placed")
+                        this.switchBidBar()
                     } else {
                         alert("Something went wrong, please refresh site and try again")
                     }
@@ -167,6 +174,7 @@
         box-shadow: 5px 5px black;
         height: 120px;
         width: 90%;
+        max-width: 500px;
         margin-top: 20px;
         /*margin-bottom: 20px;*/
         margin-left: 5%;
@@ -175,9 +183,10 @@
     }
 
     #bid_panel {
-        width: 90%;
-        margin-left: 5%;
-        margin-right: 5%;
+        margin-left: 30%;
+        margin-right: 30%;
+        max-width: 500px;
+
     }
 
     #auctionimgcontainer {
@@ -197,6 +206,7 @@
         display: flex;
         flex-direction: column;
         padding: 5px;
+        margin-left: 15px;
     }
 
     #auctiontitle {
@@ -207,8 +217,7 @@
     #auctiondescription {
         text-align: left;
         font-size: small;
-        padding-bottom: 5px;
-        margin-top: 10px;
+        padding-top: 5px;
     }
 
     #auctionprice {

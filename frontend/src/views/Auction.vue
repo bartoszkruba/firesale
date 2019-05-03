@@ -6,11 +6,11 @@
             <v-container>
                 <v-card>
                     <v-toolbar>
-                        <v-toolbar-title>{{getViewedAuction.title}}</v-toolbar-title>
+                        <v-toolbar-title class="headline font-weight-black">{{getViewedAuction.title}}</v-toolbar-title>
                         <v-spacer></v-spacer>
                     </v-toolbar>
 
-                    <v-carousel v-if="amountImages > 0">
+                    <v-carousel id="auctionImageCarousel" v-if="amountImages > 0">
                         <v-carousel-item :key="i.filepath" v-for="i in getViewedAuction.images">
                             <v-img :src="i.filepath" alt=""></v-img>
                         </v-carousel-item>
@@ -43,14 +43,14 @@
                             <router-link to="/login">Log in</router-link>
                             to place your bid
                         </h4>
-                        <div v-show="loggedIn && !closed && !ownAuction">
+                        <v-card-actions v-show="loggedIn && !closed && !ownAuction">
                             <h3>Your Bid (SEK): </h3>
                             <v-text-field type="text" @keydown="allowOnlyNumber"
                                           prepend-icon="money" name="Amount" label="Amount"
                                           v-model="bidField" :error-messages="bidFieldError"
                                           @keydown.enter="bid"></v-text-field>
                             <v-btn center color="primary" id="bidbutton" @click="bid">BID</v-btn>
-                        </div>
+                        </v-card-actions>
                     </v-card-text>
                 </v-card>
                 <v-card>
@@ -75,7 +75,7 @@
                             </template>
                         </v-data-table>
                     </template>
-                    <v-btn color="primary" @click="loadMoreBids">Show More</v-btn>
+                    <v-btn color="primary" @click="loadMoreBids"><v-icon>keyboard_arrow_down</v-icon>Show More</v-btn>
                 </v-card>
             </v-container>
         </div>
@@ -279,7 +279,7 @@
 
     }
 
-    #auctionimages {
+    #auctionImageCarousel {
         max-height: 35vh;
         object-fit: cover;
     }
